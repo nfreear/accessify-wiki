@@ -26,19 +26,26 @@ javascript:(function(){var D=document,s=D.createElement('script');s.type='text/j
 
       example: "http://example.org/my/fixes.yaml"
     },
-    map = {
-      ".open.ac.uk": url.ouice,
-      ".open.edu":   url.ouice,
-      ".google.de":  url.google,
-      ".google.co.uk": url.google,
+    map = { // Converted to glob syntax.
+      "http://*.open.ac.uk/*": url.ouice,
+      "https://*.open.ac.uk/*": url.ouice,
+      "http://*.open.edu/*":   url.ouice,
+      "http://*.google.de/*":  url.google,
+      "https://*.google.de/*":  url.google,
+      "http://*.google.co.uk/*": url.google,
+      "https://*.google.co.uk/*":  url.google,
+      "http://*.google.com/*": url.google,
+      "https://*.google.com/*": url.google,
       ".google.com": url.google,
-      ".baidu.com":  url.baidu,
+      "http://*.baidu.com/*": url.baidu,
+      "http://baidu.com/*": url.baidu,
 
       // Facebook, YouTube, Yahoo, Baidu...!
       // (See, http://www.alexa.com/topsites)
       ".example.": url.example
     },
     D = document,
+    href = D.location.href,
     host = D.location.host,
     script = "https://raw.github.com/nfreear/accessifyhtml5.js/master/accessifyhtml5.js",
     callback = "__accessifyhtml5_bookmarklet_CB",
@@ -50,8 +57,9 @@ javascript:(function(){var D=document,s=D.createElement('script');s.type='text/j
   logInit();
 
   for (pat in map) {
-    re = new RegExp(pat.replace(/\./g, '\\.'));
-    if (re.exec(host)) {
+    //Was: re = new RegExp(pat.replace(/\./g, '\\.'));
+    re = globToRegex(pat);
+    if (re.exec(href)) { //Was: re.exec(host)
       go = true;
       fixes_url += encodeURIComponent(map[pat]);
 
@@ -66,7 +74,7 @@ javascript:(function(){var D=document,s=D.createElement('script');s.type='text/j
 
   if (!go) {
     log("Sorry, no domain matched.\n", host);
-    log("› To add some fixes please visit the site.");
+    log("› To add some fixes please visit our site. *");
   }
 
 
@@ -121,9 +129,34 @@ javascript:(function(){var D=document,s=D.createElement('script');s.type='text/j
 +"color:#111;opacity:.8;border:3px solid #181;padding:6px;overflow-y:auto;cursor:help;");
       //http://commons.wikimedia.org/wiki/File:Throbber_allbackgrounds_monochrome.gif
       D.body.appendChild(logp);
-      logp.innerHTML +=
+      logp.innerHTML += 
       '<a href="http://www.example.org" style="color:navy;text-decoration:underline;">Accessify HTML5</a> ...Loading... <br>\n';
     }
+  }
+
+
+  // http://stackoverflow.com/questions/5575609/javascript-regexp-to-match-strings-using-wildcards-and
+  function globToRegex (glob) {
+    var specialChars = "\\^$*+?.()|{}[]";
+    var regexChars = ["^"];
+    for (var i = 0; i < glob.length; ++i) {
+        var c = glob.charAt(i);
+        switch (c) {
+            case '?':
+                regexChars.push(".");
+                break;
+            case '*':
+                regexChars.push(".*");
+                break;
+            default:
+                if (specialChars.indexOf(c) >= 0) {
+                    regexChars.push("\\");
+                }
+                regexChars.push(c);
+        }
+    }
+    regexChars.push("$");
+    return new RegExp(regexChars.join(""), 'i');
   }
 
 })();
