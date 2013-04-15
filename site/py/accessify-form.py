@@ -3,18 +3,11 @@ import scraperwiki
 
   Copyright Nick Freear, 11 April 2013.
 
-https://views.scraperwiki.com/run/accessify-form/?form_name=accessify-1&url=https%3A//gist.github.com/nfreear/5270020/raw/wai-aria-fixes-ex1.yaml&email=a%40b.c
 https://views.scraperwiki.com/run/accessify-form/?url=http%3A//dl.dropbox.com/u/3203144/wai-aria/baidu-search-wai-aria.yaml
 
 '''
-import os, cgi, urllib2, yaml, sys, lxml.html
-#from httplib2 import Http
-import httplib2
-
-#print os.getenv("HTTP_HOST"), os.getenv("QUERY_STRING"), os.getenv("HTTP_METHOD")
-#print os.environ
-
-#form = cgi.FieldStorage()
+import os, cgi, yaml, sys, lxml.html, httplib2, hashlib
+from datetime import datetime
 
 my = scraperwiki.utils.swimport("accessify_library_v1")
 
@@ -44,20 +37,6 @@ if (rsp.status != 200):
 
 notices.append("OK, I've read your fixes file: " + url)
 
-
-#req = urllib2.Request( url )
-#req.add_header('Referer', 'https://scraperwiki.com/profiles/nfreear/')
-#req.add_header('User-agent', 'accessify-form/v1/python')
-#try:
-#    resp = urllib2.urlopen(req)
-#except:
-#    print ex
-#    my.error("Sorry, I can't read or find the YAML file: " + url, 404)
-#
-#yaml_file = resp.read()
-#print resp.code
-
-
 try:
     fixes = yaml.load(yaml_file)
 except:
@@ -85,9 +64,8 @@ notices.append("OK, the `_CONFIG_` block appears to be valid.")
 # Are all the includes valid 'http://example/*' globs?
 for inc in include:
     ok = my.re_https_url().match(inc)
-    #print inc, ok
     if (not ok):
-        my.error("Sorry, I don't recognize this `include` as a URL glob: " + inc, 500)
+        my.error("Sorry, I don't recognize this `include` as a URL glob/ pattern: " + inc, 500)
 
 notices.append("All the `include` entries appear to be valid URL globs.")
 
@@ -106,8 +84,28 @@ notices.append("Congratulations, all the CSS selectors are valid.")
 
 # TODO: Insert/ update in database.
 
+m = hashlib.md5()
+m.update( url )
+key = m.hexdigest()
 
 
+res = scraperwiki.sqlite.save(
+    unique_keys=["key"],
+    data={"key":key, "url":url, "name":name, "yaml":yaml_file, "email":email, "updated":datetime.utcnow()},
+    table_name="fixes"
+    )
+#"intouch":intouch,
+
+#notices.append(expr(res))
+
+
+for inc in include:
+    res = scraperwiki.sqlite.save(unique_keys=["key"], data={"key":key, "include":include}, table_name="include_map")
+
+
+notices.append("OK, your fixes were added to the database, key: "+ key)
 print my.render(" <p class=notice >".join(notices))
 
+
 # End.
+

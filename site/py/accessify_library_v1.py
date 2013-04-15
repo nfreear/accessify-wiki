@@ -44,6 +44,11 @@ def render(page):
     template = """
 <!doctype html><html lang="en"><meta charset="utf-8" /><title>Accessify Wiki prototype</title>
 <!--<link rel="stylesheet" href="/run/accessify-css" />-->
+<style>
+body{ background:#fcfcfc; color:#333; font:1em sans-serif; margin:3em; }
+input, button, label{ font-size:1em; display:inline-block; min-width:16em; }
+</style>
+
 <h1 role="banner"><span>Accessify Wiki</span></h1>
 <ul role="navigation">
   <li><a href="/run/accessify-wiki">Home</a>
@@ -53,9 +58,9 @@ def render(page):
 %s
 
 </div>
+<!--<script src="/run/accessify-js"></script>-->
 </html>
 """ % (page)
-
     return template
 
 
