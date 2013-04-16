@@ -21,7 +21,7 @@ if drop:
     exit()
 
 
-if (not my.form_submit()):
+if not my.form_submit():
     print my.render(my.accessifyForm())
     exit()
 
@@ -36,13 +36,12 @@ email = my.get('email', my.re_email())
 
 
 http = httplib2.Http(".cache")
-#http.add_header('User-agent', 'accessify-form/v1/python')
 try:
-    rsp, yaml_file = http.request( url )
+    resp, yaml_file = http.request(url, None, { "User-Agent":"accessify-form/v1/scraperwiki/python" })
 except httplib2.HttpLib2Error as ex:
     my.error("Sorry, I can't read the YAML file: "+ url +"<p class=ex >" + repr(ex), 500)
-if (rsp.status != 200):
-    my.error("Sorry, I can't read or find the YAML file: " + url, rsp.status)
+if resp.status != 200:
+    my.error("Sorry, I can't read or find the YAML file: " + url, resp.status)
 
 
 notices.append("OK, I've read your fixes file: " + url)
