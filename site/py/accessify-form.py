@@ -1,9 +1,10 @@
 import scraperwiki
 '''
+  Accessify Wiki form to submit fixes.
 
   Copyright Nick Freear, 11 April 2013.
 
-https://views.scraperwiki.com/run/accessify-form/?url=http%3A//dl.dropbox.com/u/3203144/wai-aria/baidu-search-wai-aria.yaml
+  https://views.scraperwiki.com/run/accessify-form/?url=http%3A//dl.dropbox.com/u/3203144/wai-aria/baidu-search-wai-aria.yaml
 
 '''
 import os, cgi, yaml, sys, lxml.html, httplib2, hashlib
@@ -11,13 +12,22 @@ from datetime import datetime
 
 my = scraperwiki.utils.swimport("accessify_library_v1")
 
+
+drop = None
+if drop:
+    res = scraperwiki.sqlite.execute("DROP TABLE IF EXISTS fixes")
+    res = scraperwiki.sqlite.execute("DROP TABLE IF EXISTS include_map")
+    print res
+    exit()
+
+
 if (not my.form_submit()):
     print my.render(my.accessifyForm())
     exit()
 
 
 notices = []
-notices.append("Thank you for submitting some accessibility fixes to us.")
+notices.append("Thank you for submitting accessibility fixes.")
 
 
 url = my.get('url', my.re_yaml_url())
@@ -38,7 +48,7 @@ if (rsp.status != 200):
 notices.append("OK, I've read your fixes file: " + url)
 
 try:
-    fixes = yaml.load(yaml_file)
+    fixes = yaml.safe_load(yaml_file)
 except:
     #print ex
     my.error("Sorry, the YAML is not well-formed: " + url, 500)
@@ -84,9 +94,7 @@ notices.append("Congratulations, all the CSS selectors are valid.")
 
 # TODO: Insert/ update in database.
 
-m = hashlib.md5()
-m.update( url )
-key = m.hexdigest()
+key = hashlib.md5( url ).hexdigest()
 
 
 res = scraperwiki.sqlite.save(
@@ -100,8 +108,11 @@ res = scraperwiki.sqlite.save(
 
 
 for inc in include:
-    res = scraperwiki.sqlite.save(unique_keys=["key"], data={"key":key, "include":include}, table_name="include_map")
-
+    res = scraperwiki.sqlite.save(
+        unique_keys=["pattern"],
+        data = { "key":key, "pattern":inc },
+        table_name="include_map"
+        )
 
 notices.append("OK, your fixes were added to the database, key: "+ key)
 print my.render(" <p class=notice >".join(notices))
