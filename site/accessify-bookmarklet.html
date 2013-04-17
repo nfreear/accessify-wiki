@@ -1,14 +1,14 @@
 <!doctype html><html lang="en"><meta charset=utf-8 /><title>*Bookmarklet built on AccessifyHTML5.js</title>
 
-<style>body{background:#fcfcfc; color:#333; margin:2em; font:1.1em sans-serif} h1{font-size:1.6em} #bookmark{border:1px solid #ccc; padding:2px 6px; background:#eee; border-radius:4px}</style>
+<style>body{background:#fcfcfc; color:#333; margin:2em; font:1.1em sans-serif} h1{font-size:1.6em} #bookmark{border:1px solid orange; padding:2px 20px; background:#eee; border-radius:4px}</style>
 
-<h1>Bookmarklet b   uilton AccessifyHTML5.js</h1><p>&nbsp;
+<h1>Bookmarklet built on AccessifyHTML5.js</h1>
 
 <p>This is a prototype for a bookmarklet and service that will apply accessibility fixes to third-party sites.
 
 
 <p><a id=bookmark rel=bookmark title="Accessify" href=
-"javascript:(function(){var D=document,s=D.createElement('script');s.type='text/javascript';s.src='https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet.js?x='+(Math.random());D.body.appendChild(s)})();"
+"javascript:(function(){var D=document,s=D.createElement('script');s.src='https://raw.github.com/nfreear/accessify-wiki/master/browser/js/accessifyhtml5-marklet.js?x='+(Math.random());s.type='text/javascript';D.body.appendChild(s)})();"
  >Accessify</a>
  (*) bookmarklet &ndash; right-click and add or save me to your browser's bookmarks or favourites bar (Chrome and Safari users will wish to start by copying the link).
 
@@ -25,21 +25,22 @@
 "https://gist.github.com/nfreear/5304960#file-baidu-search-wai-aria-en-yaml"
 >//gist.github.com/..#file-baidu-search-wai-aria-en-yaml</a><!--<a href=
 "https://gist.github.com/nfreear/5253410#file-ouice-wai-aria-yaml"
->https://gist.github.com/..#file-ouice-wai-aria-yaml</a>--> - perhaps via a Wiki,
+>//gist.github.com/..#file-ouice-wai-aria-yaml</a>--> - perhaps via a Wiki,
 
- 2. The fixes are submitted to a system which binds a URL pattern, for example,
+ 2. The fixes are <a href="https://views.scraperwiki.com/run/accessify-form"
+>submitted to a system</a> which binds a URL pattern, for example,
     `baidu.com/*`<!--`open.ac.uk/*`--> to the fixes,
 
  3. A user visits a page for which the system has fixes, for example,
     <a href="http://baidu.com/s?wd=%E6%B8%85%E6%98%8E%E8%8A%82"
->//baidu.com/s?word=...</a><!--<a href="http://www.open.ac.uk/study/">http://www.open.ac.uk/study</a>-->,
+>//baidu.com/s?word=...</a><!--<a href="http://www.open.ac.uk/study/">//www.open.ac.uk/study</a>-->,
 
  4. The browser plugin or bookmarklet queries the system for fixes,
     which are delivered - currently represented by,
-    <a href=
-"https://views.scraperwiki.com/run/yaml_2_jsonp/?callback=FN&url=https://gist.github.com/nfreear/5253410/raw/ouice-wai-aria.yaml"
->//views.scraperwiki.com/run/yaml_2..?..url=..ouice-wai-aria.yaml</a> (<a href=
-"https://scraperwiki.com/views/yaml_2_jsonp" title="YAML to JSON-P, on ScraperWiki">*</a>),
+    <a title="JSON-P" href=
+"https://views.scraperwiki.com/run/accessify_utils_v1/?url=http%3A//baidu.com/&amp;callback=FN"
+>//views.scraperwiki.com/run/accessify_..?url=http%3A//baidu.com/&amp;..</a> (<a href=
+"https://scraperwiki.com/views/accessify_utils_v1" title="Accessify API v1, on ScraperWiki">*</a>),
 
  5. The plugin or bookmarklet runs <a title="By Eric Eggert @yatil" href=
 "https://github.com/yatil/accessifyhtml5.js">AccessifyHTML5.js</a> to insert the fixes in the page,
@@ -84,8 +85,6 @@ Links:
 </pre>
 </html>
 <!--
-<link rel="shortcut icon" type="image/x-icon" href="http://www.whatwg.org/images/icon" />
-
-<link rel=stylesheet href="http://iet-embed-acct.open.ac.uk/dev/accessifyhtml5.js/test/test.css"
- data-href="https://raw.github.com/yatil/accessifyhtml5.js/master/test/test.css" />
+https://raw.github.com/nfreear/accessify-wiki/master/browser/js/accessifyhtml5-marklet.js
+https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet.js
 -->
