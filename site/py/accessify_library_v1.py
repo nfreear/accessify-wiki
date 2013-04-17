@@ -47,14 +47,16 @@ def accessifyForm():
     return page
 
 
-def render(page):
+def render(page, title="Accessify Wiki prototype"):
     template = """
-<!doctype html><html lang="en"><meta charset="utf-8" /><title>Accessify Wiki prototype</title>
-<!--<link rel="stylesheet" href="/run/accessify-css" />-->
+<!doctype html><html lang="en"><meta charset="utf-8" /><title>%s</title>
 <style>
-body{ background:#fcfcfc; color:#333; font:1em sans-serif; margin:3em; }
+body{ background:#fcfcfc; color:#333; font:1.1em sans-serif; margin:3em; }
 input, button, label{ font-size:1em; display:inline-block; min-width:16em; }
+h1{ font-size:1.6em; }
+#bookmark{ border:1px solid orange; padding:2px 20px; background:#eee; border-radius:4px; }
 </style>
+
 
 <h1 role="banner"><span>Accessify Wiki</span></h1>
 <ul role="navigation">
@@ -65,9 +67,17 @@ input, button, label{ font-size:1em; display:inline-block; min-width:16em; }
 %s
 
 </div>
-<!--<script src="/run/accessify-js"></script>-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '%s', 'scraperwiki.com');
+  ga('send', 'pageview');
+</script>
 </html>
-""" % (page)
+""" % (title, page, "UA-40194374-1")
     return template
 
 
