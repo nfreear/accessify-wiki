@@ -1,3 +1,6 @@
+*.diff
+*.patch
+
 *.py[cod]
 
 # C extensions

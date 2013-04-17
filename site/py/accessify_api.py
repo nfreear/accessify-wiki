@@ -4,7 +4,7 @@ import scraperwiki
 
   Copyright Nick Freear, 15 April 2013.
 
-  https://views.scraperwiki.com/run/accessify_api/?url=http://baidu.com/&callback=_FN&format=json
+  https://views.scraperwiki.com/run/accessify_api/?url=http%3A//baidu.com/&callback=_FN
 '''
 import re, yaml, json
 
@@ -30,7 +30,7 @@ for include in result:
         break
 
 if not key:
-    my.apiError("fixes not found", 404)
+    my.apiError("Sorry, no fixes found for this page.", 404, callback)
 
 
 result = scraperwiki.sqlite.select("* FROM acfy.fixes WHERE key = ? LIMIT 1", key)

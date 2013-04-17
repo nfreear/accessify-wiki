@@ -75,10 +75,14 @@ def error(message = "unknown error", status = 400):
     print render("<p class=error >Error, "+ message +" "+ str(status))
     exit(-1)
 
-def apiError(message = "unknown error", status = 400):
+def apiError(message = "unknown error", status = 400, callback = None):
     # Based on Flickr's JSON REST error handling.
-    er = { "stat":"fail", "code":status, "message":"Error, "+ message }
-    print json.dumps( er )
+    er = { "stat":"fail", "code":status, "message":message }
+    httpHeaders("application/json")
+    if callback:
+        print callback, "(", json.dumps( er ), ");"
+    else:
+        print json.dumps( er )
     exit(-1)
 
 

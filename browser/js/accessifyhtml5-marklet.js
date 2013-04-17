@@ -3,86 +3,50 @@
 
  Copyright Nick Freear, 28 March 2013.
 
- Self: https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet.js
- Gist: https://gist.github.com/nfreear/5263216#file-accessifyhtml5-marklet-js
-
-
- Bookmarklet:
-
-javascript:(function(){var D=document,s=D.createElement('script');s.type='text/javascript';s.src='https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet.js?x='+(Math.random());D.body.appendChild(s)})();
-
-..;document.ac5_srvurl='http://example.org'
+ https://github.com/nfreear/accessify-wiki
 */
 
 (function () {
 
   "use strict";
 
-  // Domains to be fixed and fixes would be provided by a web-service.
-  var url = {
-      ouice:  "https://gist.github.com/nfreear/5253410/raw/ouice-wai-aria.yaml",
-      google: "http://dl.dropbox.com/u/3203144/wai-aria/google-search-wai-aria.yaml",
-      baidu:  "http://dl.dropbox.com/u/3203144/wai-aria/baidu-search-wai-aria.yaml",
-
-      example: "http://example.org/my/fixes.yaml"
-    },
-    map = { // Converted to glob syntax.
-      "http://*.open.ac.uk/*": url.ouice,
-      "https://*.open.ac.uk/*": url.ouice,
-      "http://*.open.edu/*":   url.ouice,
-      "http://*.google.de/*":  url.google,
-      "https://*.google.de/*":  url.google,
-      "http://*.google.co.uk/*": url.google,
-      "https://*.google.co.uk/*":  url.google,
-      "http://*.google.com/*": url.google,
-      "https://*.google.com/*": url.google,
-      ".google.com": url.google,
-      "http://*.baidu.com/*": url.baidu,
-      "http://baidu.com/*": url.baidu,
-
-      // Facebook, YouTube, Yahoo, Baidu...!
-      // (See, http://www.alexa.com/topsites)
-      ".example.": url.example
-    },
+  var
     D = document,
     href = D.location.href,
     host = D.location.host,
     script = "https://raw.github.com/nfreear/accessifyhtml5.js/master/accessifyhtml5.js",
     callback = "__accessifyhtml5_bookmarklet_CB",
-    fixes_url = "https://views.scraperwiki.com/run/yaml_2_jsonp/?callback=" + callback + "&url=",
-    pat, re, logp,
-    go = false;
-
+    fixes_url = "https://views.scraperwiki.com/run/accessify_utils_v1/?callback=",
+    logp;
 
   logInit();
 
-  for (pat in map) {
-    //Was: re = new RegExp(pat.replace(/\./g, '\\.'));
-    re = globToRegex(pat);
-    if (re.exec(href)) { //Was: re.exec(host)
-      go = true;
-      fixes_url += encodeURIComponent(map[pat]);
+  fixes_url += callback + "&url=" + encodeURIComponent(href);
 
-      log("Domain matched: " + pat, host, re, fixes_url);
+  log("Querying for fixes..", host, fixes_url);
 
-      attachCallback();
-      addScript(script);
-      addScript(fixes_url);
-    }
-  }
-
-
-  if (!go) {
-    log("Sorry, no domain matched.\n", host);
-    log("› To add some fixes please visit our site. *");
-  }
+  attachCallback();
+  addScript(script);
+  addScript(fixes_url);
 
 
   // ======================================================
 
   function attachCallback() {
     // Callback is global. (window["callback"])
-    window.__accessifyhtml5_bookmarklet_CB = function (fixes) {
+    window.__accessifyhtml5_bookmarklet_CB = function (rsp) {
+
+      if (typeof rsp.stat !== "undefined" && rsp.stat == "fail") {
+        log(rsp.message, rsp.code);
+        if (404 == rsp.code) {
+          //log("Sorry, no domain matched.\n", host);
+          log("› To add some fixes please visit our site. *");
+        }
+        return false;
+      }
+
+      var fixes = rsp;
+
       log("Fixes found.", fixes);
  
       var res = AccessifyHTML5(false, fixes);
@@ -132,31 +96,6 @@ javascript:(function(){var D=document,s=D.createElement('script');s.type='text/j
       logp.innerHTML += 
       '<a href="http://www.example.org" style="color:navy;text-decoration:underline;">Accessify HTML5</a> ...Loading... <br>\n';
     }
-  }
-
-
-  // http://stackoverflow.com/questions/5575609/javascript-regexp-to-match-strings-using-wildcards-and
-  function globToRegex (glob) {
-    var specialChars = "\\^$*+?.()|{}[]";
-    var regexChars = ["^"];
-    for (var i = 0; i < glob.length; ++i) {
-        var c = glob.charAt(i);
-        switch (c) {
-            case '?':
-                regexChars.push(".");
-                break;
-            case '*':
-                regexChars.push(".*");
-                break;
-            default:
-                if (specialChars.indexOf(c) >= 0) {
-                    regexChars.push("\\");
-                }
-                regexChars.push(c);
-        }
-    }
-    regexChars.push("$");
-    return new RegExp(regexChars.join(""), 'i');
   }
 
 })();
