@@ -1,14 +1,27 @@
+# Should it be `_CONFIG_`, `_config_`, `_manifest_`...?
 _CONFIG_:
+    # Required. Unique identifier (Was: `title`; Was: Free text, possibly truncated.)
+    name: Baidu search
+    # Optional.
+    description: Fixes including WAI-ARIA roles for Baidu.com Chinese search engine.
+    # Required. Glob.
     include:
-        - .baidu.com
+        - http://*.baidu.com/*
+        - http://baidu.com/*
+    # Optional, desirable.
     test_urls:
         - http://www.baidu.com/s?wd=%E6%B8%85%E6%98%8E%E8%8A%82
-    title:
-        WAI-ARIA landmark roles for Baidu.com search
-    lang: en-GB
+    # Was `lang`
+    default_locale: en-GB
+    version: 0.5
     authors:
         - Nick @nfreear
-    created: 2013-04-03T20:5401:00
+    created: 2013-04-03T20:54+01:00
+
+
+# Syntax example.
+"#My ID selector":
+    HTML attribute: value
 
 
 # www.Baidu.com home page.
@@ -22,11 +35,23 @@ _CONFIG_:
 "#ftCon":
     role: contentinfo
 
+"#lg img":
+    # Hmm, not always a link :(.
+    title: Baidu Doodle..
+    role: link
+    tabindex: 0
 
-# http://www.Baidu.com/s?wd=清明节 - Search results page.
+"[name=wd]":
+    #type: search
+    title: Type a search term
+    placeholder: Type a search term
+    style: cursor:help
+
+# Search results page - http://www.Baidu.com/s?wd=清明节 .
 "#s_tab":
     role: navigation
     aria-label: On other Baidu services
+    _note: Search results page
 
 "#content_right":
     role: complementary
@@ -45,6 +70,14 @@ _CONFIG_:
 
 "#foot":
     role: contentinfo
+
+# Caution, a visible change!
+body:
+    style: "background-color:#f8f8f8;color:#222;"
+    _note: Caution, a visible change! (Reduce glare for those w. Dyslexia)
+
+#html:
+#    style: border:1px solid green
 
 
 # End.

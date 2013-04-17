@@ -1,15 +1,57 @@
 _CONFIG_:
     include:
-        - .google.de
-        - .google.co.uk
-    title:
+        - http://*.google.de/*
+        - https://*.google.de/*
+        - http://*.google.co.uk/*
+        - https://*.google.co.uk/*
+        - http://www.google.com/*
+    test_urls:
+        - http://www.google.de/
+        - https://www.google.co.uk/search?q=accessify
+    name: Google search
+    description:
         WAI-ARIA landmark roles for country-specific
-        Google search sites, including Google.de.
+        Google search sites, including Google.de
+        (Not for Google Docs, Drive etc.)
+    lang: en-GB
+    authors:
+        - Nick @nfreear
+    created: 2013-04-03T19:34+01:00
 
-"#gbz":
-	role: navigation
-	aria-label: Main navigation
+"#gbzw":
+    role: navigation
+    aria-label: Other Google services
 
 "#gbqf":
-	role: search
-	aria-label: Google search
+    role: search
+    aria-label: Google search
+
+"#body":
+    role: main
+
+"#footer":
+    role: contentinfo
+
+"#gbu":
+    role: navigation
+    aria-label: Account options
+
+"[name = q]":
+    #type: search
+    title: Type a search term
+    placeholder: Type a search term
+    #style: cursor:help
+
+"#main":
+    style: "background-color:#f8f8f8;color:#222;"
+    _note: Caution, a visible change! (Reduce glare for those w. Dyslexia)
+
+"#top_nav":
+    style: "background-color:#f8f8f8;color:#222;"
+"#mngb":
+    style: "background:#f8f8f8;color:#222;"
+
+button:
+    style: cursor:pointer
+
+# End.
