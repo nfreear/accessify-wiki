@@ -1,0 +1,50 @@
+_CONFIG_:
+    include:
+        - .baidu.com
+    test_urls:
+        - http://www.baidu.com/s?wd=%E6%B8%85%E6%98%8E%E8%8A%82
+    title:
+        WAI-ARIA landmark roles for Baidu.com search
+    lang: en-GB
+    authors:
+        - Nick @nfreear
+    created: 2013-04-03T20:5401:00
+
+
+# www.Baidu.com home page.
+"#nv":
+    role: navigation
+    aria-label: Other Baidu services
+
+"form#f":
+    role: search
+
+"#ftCon":
+    role: contentinfo
+
+
+# http://www.Baidu.com/s?wd=清明节 - Search results page.
+"#s_tab":
+    role: navigation
+    aria-label: On other Baidu services
+
+"#content_right":
+    role: complementary
+    # Eg. Baidu Encyclopedia entry.
+
+"#content_left":
+    role: main
+
+"#page":
+    role: navigation
+    aria-label: Pages of search results
+
+"#rs":
+    role: navigation
+    aria-label: Related searches
+
+"#foot":
+    role: contentinfo
+
+
+# End.

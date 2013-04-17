@@ -1,0 +1,15 @@
+_CONFIG_:
+    include:
+        - .google.de
+        - .google.co.uk
+    title:
+        WAI-ARIA landmark roles for country-specific
+        Google search sites, including Google.de.
+
+"#gbz":
+	role: navigation
+	aria-label: Main navigation
+
+"#gbqf":
+	role: search
+	aria-label: Google search
