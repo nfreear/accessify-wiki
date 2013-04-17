@@ -48,8 +48,9 @@ def accessifyForm():
 
 
 def render(page, title="Accessify Wiki prototype"):
+    google_analytics = googleAnalyticsJs()
     template = """
-<!doctype html><html lang="en"><meta charset="utf-8" /><title>%s</title>
+<!doctype html><html lang="en"><meta charset="utf-8" /><title>%(title)s</title>
 <style>
 body{ background:#fcfcfc; color:#333; font:1.1em sans-serif; margin:3em; }
 input, button, label{ font-size:1em; display:inline-block; min-width:16em; }
@@ -57,27 +58,18 @@ h1{ font-size:1.6em; }
 #bookmark{ border:1px solid orange; padding:2px 20px; background:#eee; border-radius:4px; }
 </style>
 
-
 <h1 role="banner"><span>Accessify Wiki</span></h1>
 <ul role="navigation">
   <li><a href="/run/accessify-wiki">Home</a>
 </ul>
 <div role="main">
 
-%s
+%(page)s
 
 </div>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', '%s', 'scraperwiki.com');
-  ga('send', 'pageview');
-</script>
+%(google_analytics)s
 </html>
-""" % (title, page, "UA-40194374-1")
+""" % locals()
     return template
 
 
@@ -152,6 +144,55 @@ def re_api_format():
 
 def re_any():
     return re.compile(".*")
+
+
+# ==========================================
+# Page fragments.
+
+def accessifyForm():
+    page = """
+
+<h2>Submit your fixes in YAML format</h2>
+
+<form method="get" data-method="post" action="">
+
+<!--{% csrf_token %}-->
+<!--<input type="hidden" name="form_name" value="accessify-submit" />-->
+
+<p><label for="u">URL of YAML file <small>publicly visible</small></label>
+  <input id="u" name="url" type="url" pattern="^https?://.+\.ya?ml$" required
+  placeholder="http://example.org/site-fixes.yaml" />
+
+<p><label for="e">Email <small>we'll keep it private</small></label>
+  <input id="e" name="email" type="email" />
+
+<p><input id="i" name="intouch" type="checkbox" />
+  <label for="i">I'd like to stay in touch
+  <small>occasional newsletters and announcements</small>.</label>
+
+<!--
+ Text CAPTCHA?
+-->
+<p><input type="submit" />
+</form>
+
+"""
+    return page
+
+
+def googleAnalyticsJs(analytics_id = "UA-40194374-1"):
+    script = """
+<script id="gajs">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '%(analytics_id)s', 'scraperwiki.com');
+  ga('send', 'pageview');
+</script>
+""" % locals()
+    return script
 
 
 # End.
