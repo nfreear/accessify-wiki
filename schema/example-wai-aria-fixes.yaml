@@ -1,0 +1,36 @@
+#
+# http://json-schema.org/latest/json-schema-validation.html
+# http://json-schema.org/example2.html
+# http://jsonschema.net/
+# http://yaml-online-parser.appspot.com/
+# http://www.opensearch.org/Specifications/OpenSearch/1.1#The_.22ShortName.22_element
+# http://en.wikipedia.org/wiki/IETF_language_tag
+#
+
+_CONFIG_:
+    name: <SHORT NAME - REQUIRED>
+    description: <FREE-FORM TEXT - OPTIONAL>
+    # Required, 1+. Glob.
+    include:
+        - http://*.example.org/*
+    # Required, 1+.
+    test_urls:
+        - http://www.example.org/
+    # Was `lang`
+    default_locale: en-GB
+    version: 0.5
+    authors:
+        - Nick @nfreear
+    created: 2013-04-03T20:54+01:00
+
+# Syntax example.
+"#My ID selector":
+    HTML attribute: value
+    _note: A comment
+    role: <ROLE>
+    tabindex: 0
+    aria-label: <ARIA-PROP>
+    title: <TITLE>
+    style: <STYLE>
+
+# End.

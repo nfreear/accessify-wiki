@@ -1,0 +1,100 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title":"Accessibility fixes for HTML pages, including WAI-ARIA attributes.",
+    "description":"Nick Freear <nfreear-@-yahoo.co.uk> | 2013-04-18 | See https://github.com/nfreear/accessify-wiki",
+	"type":"object",
+	"id": "http://jsonschema.net",
+	"properties": {
+		"_CONFIG_": {
+			"type":"object",
+			"id": "http://jsonschema.net/_CONFIG_",
+			"required":true,
+			"properties": {
+				"name": {
+					"type":"string",
+                    "maxLength":16,
+					"id": "http://jsonschema.net/_CONFIG_/name",
+					"required":true
+				},
+                "description": {
+					"type":"string",
+                    "maxLength":1024,
+					"id": "http://jsonschema.net/_CONFIG_/description",
+					"required":false
+				},
+                "include": {
+					"type":"array",
+					"id": "http://jsonschema.net/_CONFIG_/include",
+					"required":true,
+					"items":
+						{
+							"type":"string",
+                            "maxLength":32,
+                            "format":"uri",
+                            "pattern":"^https?://[\w\.\*\/]{4,}",
+							"id": "http://jsonschema.net/_CONFIG_/include/0",
+						},
+                    "minItems":1,
+                    "maxItems":16,
+                    "uniqueItems":true
+				},
+				"test_urls": {
+					"type":"array",
+					"id": "http://jsonschema.net/_CONFIG_/test_urls",
+					"required":true,
+					"items":
+						{
+							"type":"string",
+                            "maxLength":255,
+                            "format":"uri",
+                            "pattern":"^https?://[\w\.\*\/]{4,}",
+							"id": "http://jsonschema.net/_CONFIG_/test_urls/0",
+						}
+					"minItems": 1,
+                    "maxItems": 16,
+                    "uniqueItems": true
+				},
+                "authors": {
+					"type":"array",
+					"id": "http://jsonschema.net/_CONFIG_/authors",
+					"required":false,
+					"items":
+						{
+							"type":"string",
+                            "maxLength":32,
+							"id": "http://jsonschema.net/_CONFIG_/authors/0",
+							"required":false
+						}
+				},
+				"created": {
+					"type":"string",
+                    "format":"date-time",
+					"id": "http://jsonschema.net/_CONFIG_/created",
+					"required":false
+				},
+				"default_locale": {
+					"type":"string",
+                    "maxLength":5,
+                    "pattern":"^[a-z]{2}(\-[A-Z]{2})?$",
+					"id": "http://jsonschema.net/_CONFIG_/default_locale",
+					"required":false
+				},
+				"version": {
+					"type":"number",
+					"id": "http://jsonschema.net/_CONFIG_/version",
+					"required":false
+				}
+			},
+            "required": [ "name", "include", "test_urls" ]
+		}
+	},
+    "patternProperties": {
+        "^[#\.\w \:_\-\(\)]+$": {
+            "type":"object"
+        }
+    },
+    "maxProperties": 32,
+    "additionalProperties": false,
+    "required": [ "_CONFIG_" ]
+}
+
