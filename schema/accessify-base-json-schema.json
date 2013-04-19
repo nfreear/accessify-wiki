@@ -30,9 +30,9 @@
 						{
 							"type":"string",
                             "maxLength":32,
-                            "format":"uri",
-                            "pattern":"^https?://[\w\.\*\/]{4,}",
-							"id": "http://jsonschema.net/_CONFIG_/include/0",
+                            "__format":"uri",
+                            "pattern":"^https?://[\\w\\.\\/\\-\\*]{4,}",
+							"id": "http://jsonschema.net/_CONFIG_/include/0"
 						},
                     "minItems":1,
                     "maxItems":16,
@@ -47,9 +47,9 @@
 							"type":"string",
                             "maxLength":255,
                             "format":"uri",
-                            "pattern":"^https?://[\w\.\*\/]{4,}",
-							"id": "http://jsonschema.net/_CONFIG_/test_urls/0",
-						}
+                            "pattern":"^https?://[\\w\\.\\/\\-]{4,}",
+							"id": "http://jsonschema.net/_CONFIG_/test_urls/0"
+						},
 					"minItems": 1,
                     "maxItems": 16,
                     "uniqueItems": true
@@ -75,7 +75,7 @@
 				"default_locale": {
 					"type":"string",
                     "maxLength":5,
-                    "pattern":"^[a-z]{2}(\-[A-Z]{2})?$",
+                    "pattern":"^[a-z]{2}(\\-[A-Z]{2})?$",
 					"id": "http://jsonschema.net/_CONFIG_/default_locale",
 					"required":false
 				},
@@ -89,12 +89,14 @@
 		}
 	},
     "patternProperties": {
-        "^[#\.\w \:_\-\(\)]+$": {
+        "^[#\\.\\w \\:_\\-\\(\\)]+$": {
             "type":"object"
         }
     },
+    "minProperties": 2,
     "maxProperties": 32,
-    "additionalProperties": false,
+    "__additionalProperties": false,
+    "additionalProperties": true,
     "required": [ "_CONFIG_" ]
 }
 

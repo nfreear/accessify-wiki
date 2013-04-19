@@ -8,8 +8,8 @@
 #
 
 _CONFIG_:
-    name: <SHORT NAME - REQUIRED>
-    description: <FREE-FORM TEXT - OPTIONAL>
+    name: <SHORT NAME req>
+    description: <FREE-FORM TEXT - optional>
     # Required, 1+. Glob.
     include:
         - http://*.example.org/*
