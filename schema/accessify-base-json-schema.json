@@ -1,36 +1,33 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema",
     "title":"Accessibility fixes for HTML pages, including WAI-ARIA attributes.",
-    "description":"Nick Freear <nfreear-@-yahoo.co.uk> | 2013-04-18 | See https://github.com/nfreear/accessify-wiki",
+    "description":"JSON Schema | Nick Freear <nfreear-@-yahoo.co.uk> | 2013-04-18 | See https://github.com/nfreear/accessify-wiki",
     "type":"object",
     "id": "http://jsonschema.net",
     "properties": {
         "_CONFIG_": {
             "type":"object",
             "id": "http://jsonschema.net/_CONFIG_",
-            "required":true,
+            "required": [ "name", "include", "test_urls" ],
+            "additionalProperties": true,
             "properties": {
                 "name": {
                     "type":"string",
                     "maxLength":16,
-                    "id": "http://jsonschema.net/_CONFIG_/name",
-                    "required":true
+                    "id": "http://jsonschema.net/_CONFIG_/name"
                 },
                 "description": {
                     "type":"string",
                     "maxLength":1024,
-                    "id": "http://jsonschema.net/_CONFIG_/description",
-                    "required":false
+                    "id": "http://jsonschema.net/_CONFIG_/description"
                 },
                 "include": {
                     "type":"array",
                     "id": "http://jsonschema.net/_CONFIG_/include",
-                    "required":true,
                     "items":
                         {
                             "type":"string",
                             "maxLength":32,
-                            "__format":"uri",
                             "pattern":"^https?://[\\w\\.\\/\\-\\*]{4,}",
                             "id": "http://jsonschema.net/_CONFIG_/include/0"
                         },
@@ -41,7 +38,6 @@
                 "test_urls": {
                     "type":"array",
                     "id": "http://jsonschema.net/_CONFIG_/test_urls",
-                    "required":true,
                     "items":
                         {
                             "type":"string",
@@ -57,45 +53,81 @@
                 "authors": {
                     "type":"array",
                     "id": "http://jsonschema.net/_CONFIG_/authors",
-                    "required":false,
                     "items":
                         {
                             "type":"string",
                             "maxLength":32,
-                            "id": "http://jsonschema.net/_CONFIG_/authors/0",
-                            "required":false
+                            "id": "http://jsonschema.net/_CONFIG_/authors/0"
                         }
                 },
                 "created": {
                     "type":"string",
                     "format":"date-time",
-                    "id": "http://jsonschema.net/_CONFIG_/created",
-                    "required":false
+                    "id": "http://jsonschema.net/_CONFIG_/created"
                 },
                 "default_locale": {
                     "type":"string",
                     "maxLength":5,
-                    "pattern":"^[a-z]{2}(\\-[A-Z]{2})?$",
-                    "id": "http://jsonschema.net/_CONFIG_/default_locale",
-                    "required":false
+                    "pattern":"^[a-z]{2}(\\-[a-zA-Z]{2})?$",
+                    "default": "en",
+                    "id": "http://jsonschema.net/_CONFIG_/default_locale"
                 },
                 "version": {
                     "type":"number",
-                    "id": "http://jsonschema.net/_CONFIG_/version",
-                    "required":false
+                    "id": "http://jsonschema.net/_CONFIG_/version"
                 }
-            },
-            "required": [ "name", "include", "test_urls" ]
+            }
         }
     },
     "patternProperties": {
-        "^[#\\.\\w \\:_\\-\\(\\)]+$": {
-            "type":"object"
+        "^((?!_CONFIG_)[#\\.\\w \\:_\\-\\(\\)>]+)$": {
+            "title": "NB, keys are CSS query selector(s); values are hashed  HTML attributes.",
+            "id": "http://jsonschema.net/_SELECTOR_",
+            "type":"object",
+            "patternProperties": {
+                "^aria-[a-z]+$": {
+                    "type": "string",
+                    "title": "NB, WAI-ARIA states and properties.",
+                    "id": "http://jsonschema.net/_SELECTOR_/aria-attr"
+                },
+                "^role$": {
+                    "type": "string",
+                    "pattern": "^[a-z]+$",
+                    "minLength": 3,
+                    "maxLength": 15,
+                    "title": "NB, should be enum | http://w3.org/TR/wai-aria/roles",
+                    "id": "http://jsonschema.net/_SELECTOR_/role"
+                },
+                "^alt|placeholder|pattern|style|target|title|type$": {
+                    "type": "string"
+                },
+                "^_note|data-[\\w\\-]+$": {
+                    "type": "string",
+                    "title": "NB, `_note` is for comments."
+                },
+                "^maxlength|tabindex$": {
+                    "type": "integer"
+                },
+                "^lang$": {
+                    "type":"string",
+                    "maxLength":5,
+                    "pattern":"^[a-z]{2}(\\-[a-zA-Z]{2})?$"
+                },
+                "^longdesc$": {
+                    "type": "string",
+                    "format": "uri",
+                    "title": "NB, Draft March 2013 | http://w3.org/TR/html-longdesc"
+                },
+                "^accesskey$": {
+                    "type": "string",
+                    "title": "NB, 'space-separated tokens' http://whatwg.org/specs/web-apps/current-work/multipage/editing.html#the-accesskey-attribute"
+                }
+            },
+            "additionalProperties":false
         }
     },
-    "minProperties": 2,
+    "minProperties": 1,
     "maxProperties": 32,
-    "__additionalProperties": false,
-    "additionalProperties": true,
+    "additionalProperties": false,
     "required": [ "_CONFIG_" ]
 }

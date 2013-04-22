@@ -21,11 +21,10 @@ _CONFIG_:
     version: 0.5
     authors:
         - Nick @nfreear
-    created: 2013-04-03T20:54+01:00
+    created: 2013-04-03T20:54:00+01:00
 
 # Syntax example.
 "#My ID selector":
-    HTML attribute: value
     _note: A comment
     role: <ROLE>
     tabindex: 0
