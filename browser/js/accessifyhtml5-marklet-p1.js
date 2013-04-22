@@ -1,17 +1,10 @@
 /*!
- Bookmarklet to apply AccessifyHTML5.js (WAI-ARIA fixes) to various web sites.
+ DEVELOPER Bookmarklet to apply AccessifyHTML5.js (WAI-ARIA fixes) to various web sites.
 
- Copyright Nick Freear, 28 March 2013.
+ Copyright Nick Freear, 28 March-22 April 2013.
 
- Self: https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet.js
- Gist: https://gist.github.com/nfreear/5263216#file-accessifyhtml5-marklet-js
-
-
- Bookmarklet:
-
-javascript:(function(){var D=document,s=D.createElement('script');s.type='text/javascript';s.src='https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet.js?x='+(Math.random());D.body.appendChild(s)})();
-
-..;document.ac5_srvurl='http://example.org'
+ Self: https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet-p1.js
+ Code: https://github.com/nfreear/accessify-wiki
 */
 
 (function () {
@@ -21,24 +14,16 @@ javascript:(function(){var D=document,s=D.createElement('script');s.type='text/j
   // Domains to be fixed and fixes would be provided by a web-service.
   var url = {
       ouice:  "https://gist.github.com/nfreear/5253410/raw/ouice-wai-aria.yaml",
-      google: "http://dl.dropbox.com/u/3203144/wai-aria/google-search-wai-aria.yaml",
-      baidu:  "http://dl.dropbox.com/u/3203144/wai-aria/baidu-search-wai-aria.yaml",
+      google:"http://dl.dropbox.com/u/3203144/wai-aria/fix/google-search-wai-aria.yaml",
+      baidu:  "http://dl.dropbox.com/u/3203144/wai-aria/fix/baidu-search-wai-aria.yaml",
 
       example: "http://example.org/my/fixes.yaml"
     },
     map = { // Converted to glob syntax.
       "http://*.open.ac.uk/*": url.ouice,
-      "https://*.open.ac.uk/*": url.ouice,
-      "http://*.open.edu/*":   url.ouice,
-      "http://*.google.de/*":  url.google,
-      "https://*.google.de/*":  url.google,
       "http://*.google.co.uk/*": url.google,
       "https://*.google.co.uk/*":  url.google,
       "http://*.google.com/*": url.google,
-      "https://*.google.com/*": url.google,
-      ".google.com": url.google,
-      "http://*.baidu.com/*": url.baidu,
-      "http://baidu.com/*": url.baidu,
 
       // Facebook, YouTube, Yahoo, Baidu...!
       // (See, http://www.alexa.com/topsites)
@@ -55,6 +40,14 @@ javascript:(function(){var D=document,s=D.createElement('script');s.type='text/j
 
 
   logInit();
+
+
+  log(D.AC5_dev_url, D.AC5_dev_glob);
+
+  url.dev = D.AC5_dev_url;
+  map[ D.AC5_dev_glob ] = url.dev;
+
+  log(map);
 
   for (pat in map) {
     //Was: re = new RegExp(pat.replace(/\./g, '\\.'));
@@ -130,7 +123,7 @@ javascript:(function(){var D=document,s=D.createElement('script');s.type='text/j
       //http://commons.wikimedia.org/wiki/File:Throbber_allbackgrounds_monochrome.gif
       D.body.appendChild(logp);
       logp.innerHTML += 
-      '<a href="http://www.example.org" style="color:navy;text-decoration:underline;">Accessify HTML5</a> ...Loading... <br>\n';
+      '<a href="http://www.example.org" style="color:navy;text-decoration:underline;">Dev Accessify HTML5</a> ...Loading... <br>\n';
     }
   }
 

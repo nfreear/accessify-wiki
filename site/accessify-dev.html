@@ -1,0 +1,87 @@
+<!doctype html><html lang="en"><meta charset=utf-8 /><title>*DEV Bookmarklet built on AccessifyHTML5.js</title>
+
+<style>
+body{background:#fcfcfc; color:#333; margin:2em; font:1.1em sans-serif}
+input,button{font-size:1em; color:#333}
+h1{font-size:1.6em}
+#bookmark, form, .warn{border:1px solid #ccc; padding:2px 6px; background:#eee; border-radius:4px}
+input, label{display:inline-block; min-width:28em}
+label{min-width:17em}
+._input:invalid{border:1px solid red}
+</style>
+
+<p class=warn >This bookmarklet is for developers. You may want the <a href="https://views.scraperwiki.com/run/accessify-bookmarklet">end-user bookmarklet</a>.
+
+<h1>DEV Bookmarklet built on AccessifyHTML5.js</h1><p>&nbsp;
+
+<p>Fill in the form to create your custom developer bookmarklet that will apply accessibility fixes to a third-party site.
+
+<form id=ac5-dev >
+
+<p><label for=url >URL for YAML fixes in development</label>
+<input type=url id=url placeholder="http://example.org/dev/fixes.yaml" pattern=".+\.ya?ml" title="URL ending `.yml` or `.yaml`" required />
+
+<p><label for=pat >Pattern/ glob for 3rd-party site</label>
+<input type=url id=glob placeholder="http://*example.com/*" pattern="https?://[\w*\.\/-]+" title="Pattern starts `http..` with wildcard `*`" required />
+
+<p><button type=submit >Generate</button>
+</form>
+
+
+<p><a id=bookmark rel=bookmark title="*AC5 Dev" href=
+"javascript:(function(){var D=document,s=D.createElement('script');/*v*//*v*/s.src='https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet-dev.js?x='+(Math.random());D.body.appendChild(s)})();"
+ >*AC 5 Dev</a>
+ (*) bookmarklet &ndash; right-click and add or save me to your browser's bookmarks or favourites bar (Chrome and Safari users will wish to start by copying the link).
+
+
+
+
+<script src="http://cdn.enderjs.com/jeesh.min.js"></script>
+<script>
+(function () {
+  /*
+  var form_sel = '#ac5-dev',
+    mark_sel = '#bookmark',
+    Q = function (s) { return document.querySelector(s) },
+    form = Q(form_sel),
+    __bookmark = Q(mark_sel);
+
+  console.log(form);
+  */
+
+  $('form#ac5-dev').submit(function (ev) {
+    var url = $('#url').val(),
+      glob = $('#glob').val(),
+      bookmark = $('#bookmark')[0];
+
+      console.log(url, ev.target.validity);
+      if (! ev.target.validity) {
+        
+      }
+
+      bookmark.href = bookmark.href.replace(/(\/\*v\*\/)(.*)(\/\*v\*\/)/, function (m, p1, p2, p3) {
+        console.log(arguments);
+        return p1
+          + "D.AC5_dev_url='" + url + "';"
+          + "D.AC5_dev_glob='" + glob + "';"
+          + p3;
+      });
+
+      console.log(bookmark.href);
+
+      ev.preventDefault();
+      return false;
+  });
+
+  //$('#bookmark').on('drag, ..)
+})();
+</script>
+
+
+<pre />
+
+NDF, 22 April 2013.
+
+ * http://dl.dropbox.com/u/3203144/wai-aria/fix/radio-usa-ca-fixes.yaml
+
+</html>
