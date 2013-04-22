@@ -1,5 +1,16 @@
+
+.DS_Store
+
 *.diff
 *.patch
+
+/*.py
+/schema/*fixes*.json
+/schema/*data*.json
+/schema/*schema*.ya?ml
+/schema/JsonSchema*
+/_scratch/
+
 
 *.py[cod]
 
