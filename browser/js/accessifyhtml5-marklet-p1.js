@@ -1,5 +1,5 @@
 /*!
- DEVELOPER Bookmarklet to apply AccessifyHTML5.js (WAI-ARIA fixes) to various web sites.
+ AUTHOR/DEVELOPER Bookmarklet to apply AccessifyHTML5.js (WAI-ARIA fixes) to various web sites.
 
  Copyright Nick Freear, 28 March-22 April 2013.
 
@@ -33,6 +33,7 @@
     href = D.location.href,
     host = D.location.host,
     script = "https://raw.github.com/nfreear/accessifyhtml5.js/master/accessifyhtml5.js",
+    script_0 = "https://dl.dropboxusercontent.com/u/3203144/wai-aria/accessifyhtml5.js",
     callback = "__accessifyhtml5_bookmarklet_CB",
     fixes_url = "https://views.scraperwiki.com/run/yaml_2_jsonp/?callback=" + callback + "&url=",
     pat, re, logp,
@@ -42,12 +43,12 @@
   logInit();
 
 
-  log(D.AC5_dev_url, D.AC5_dev_glob);
+  log("OK, found development URL & glob", D.AC5_dev_url, D.AC5_dev_glob);
 
   url.dev = D.AC5_dev_url;
   map[ D.AC5_dev_glob ] = url.dev;
 
-  log(map);
+  //log("URL map", map);
 
   for (pat in map) {
     //Was: re = new RegExp(pat.replace(/\./g, '\\.'));
@@ -68,6 +69,8 @@
   if (!go) {
     log("Sorry, no domain matched.\n", host);
     log("› To add some fixes please visit our site. *");
+
+    setIcon("not_found");
   }
 
 
@@ -77,8 +80,14 @@
     // Callback is global. (window["callback"])
     window.__accessifyhtml5_bookmarklet_CB = function (fixes) {
       log("Fixes found.", fixes);
- 
+
       var res = AccessifyHTML5(false, fixes);
+
+      if (res.fail.length > 0) {
+        setIcon("fail");
+      } else {
+        setIcon("ok");
+      }
 
       log("OK. "+ res.ok.length +" fixes applied, "+ res.fail.length +" errors. \n", res);
       log("› To help improve the fixes please visit   \n  ››› www.Example.org ");
@@ -116,15 +125,15 @@
       logp.setAttribute("aria-live", "polite");
       logp.setAttribute("role", "log");
       logp.setAttribute("style",
-"display:block;position:fixed;bottom:0;right:0;width:15em;height:1.5em;"
-+"font:medium sans-serif;text-align:left;background:#fcfcfc "
-+"url(https://upload.wikimedia.org/wikipedia/commons/7/7f/Throbber_allbackgrounds_monochrome.gif) no-repeat right;"
-+"color:#111;opacity:.8;border:3px solid #181;padding:6px;overflow-y:auto;cursor:help;");
-      //http://commons.wikimedia.org/wiki/File:Throbber_allbackgrounds_monochrome.gif
+"display:block;position:fixed;bottom:0;right:0;width:15.5em;height:1.8em;"
++"font:medium sans-serif;text-align:left;background:#fcfcfc;color:#111;"
++"opacity:.9;border:3px solid gray;padding:6px;overflow-y:auto;cursor:help;");
+      //15em x 1.5em
       D.body.appendChild(logp);
       logp.innerHTML += 
-      '<a href="http://www.example.org" style="color:navy;text-decoration:underline;">Dev Accessify HTML5</a> ...Loading... <br>\n';
+      '<a href="http://www.example.org" style="color:navy;text-decoration:underline;">Dev Accessify</a> ... <span class="ico">*</span> <br>\n';
     }
+    setIcon('loading');
   }
 
 
@@ -150,6 +159,52 @@
     }
     regexChars.push("$");
     return new RegExp(regexChars.join(""), 'i');
+  }
+
+
+  function setIcon(key) {
+    //http://commons.wikimedia.org/wiki/Category:Silk_icons
+    //http://commons.wikimedia.org/wiki/Smiley
+    //http://commons.wikimedia.org/wiki/File:Throbber_allbackgrounds_monochrome.gif
+    var res_url = "https://upload.wikimedia.org/wikipedia/commons/",
+      icons = {
+        loading: "7/7f/Throbber_allbackgrounds_monochrome.gif",
+        not_found: "e/e9/Silk_cross.png",
+        fail: "e/e9/Silk_cross.png",
+        ok: "3/3f/Silk_tick.png"
+      },
+      /*tb = "thumb/",
+      smileys = {
+        loading: "7/7f/Throbber_allbackgrounds_monochrome.gif",
+        not_found: tb + "9/91/Smiley_green_alien_sad.svg/28px-Smiley_green_alien_sad.svg.png",
+        fail: tb + "8/84/Smiley_green_alien_hot_fever.svg/28px-Smiley_green_alien_hot_fever.svg.png",
+        ok: tb + "3/39/Smiley_green_alien.svg/28px-Smiley_green_alien.svg.png"
+      },*/
+      bgs = {
+        loading: "orange",
+        not_found: "#d22",
+        fail: "#d22",
+        ok: "#181"
+      },
+      texts = {
+        loading: "Loading",
+        not_found: "Not found",
+        fail: "Error woops",
+        ok: "Success"
+      },
+      icon_url = res_url + icons[key],
+      //icon_url = res_url + smileys[key],
+      el = document.querySelector("#AC5-log .ico"),
+      elcs = el.style;
+
+    elcs.background = "transparent url("+ icon_url +") no-repeat right";
+    elcs.display = "inline-block";
+    elcs.paddingRight = "24px";
+    elcs.minWidth = "4em";
+    //elcs.height = "35px";
+
+    el.innerHTML = texts[key];
+    logp.style.borderColor = bgs[key];
   }
 
 })();
