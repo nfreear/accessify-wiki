@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema",
     "title":"Accessibility fixes for HTML pages, including WAI-ARIA attributes.",
-    "description":"JSON Schema | Nick Freear <nfreear-@-yahoo.co.uk> | 2013-04-18 | See https://github.com/nfreear/accessify-wiki",
+    "description":"JSON Schema | 2013-04-24 | Nick Freear <nfreear-@-yahoo.co.uk> | https://github.com/nfreear/accessify-wiki",
     "type":"object",
     "id": "http://jsonschema.net",
     "properties": {
@@ -23,12 +23,14 @@
                 },
                 "include": {
                     "type":"array",
+                    "title": "NB, use glob pattern-matching syntax, `*` asterisk is currently the only allowed wildcard | http://en.wikipedia.org/wiki/Glob_(programming)",
                     "id": "http://jsonschema.net/_CONFIG_/include",
                     "items":
                         {
                             "type":"string",
+                            "minLength":10,
                             "maxLength":32,
-                            "pattern":"^https?://[\\w\\.\\/\\-\\*]{4,}",
+                            "pattern":"^https?://[\\w\\.\\/\\-\\*]+",
                             "id": "http://jsonschema.net/_CONFIG_/include/0"
                         },
                     "minItems":1,
@@ -41,14 +43,20 @@
                     "items":
                         {
                             "type":"string",
+                            "minLength":10,
                             "maxLength":255,
                             "format":"uri",
-                            "pattern":"^https?://[\\w\\.\\/\\-]{4,}",
+                            "pattern":"^https?://[\\w\\.\\/\\-]+",
                             "id": "http://jsonschema.net/_CONFIG_/test_urls/0"
                         },
                     "minItems": 1,
                     "maxItems": 16,
                     "uniqueItems": true
+                },
+                "ignore_defaults": {
+                    "type": "boolean",
+                    "default": false,
+                    "id": "http://jsonschema.net/_CONFIG_/ignore_defaults"
                 },
                 "authors": {
                     "type":"array",
@@ -67,9 +75,11 @@
                 },
                 "default_locale": {
                     "type":"string",
-                    "maxLength":5,
-                    "pattern":"^[a-z]{2}(\\-[a-zA-Z]{2})?$",
-                    "default": "en",
+                    "minLength":2,
+                    "maxLength":8,
+                    "pattern":"^[a-z]{2}(\\-[a-zA-Z]{2,4})?$",
+                    "default": "x-AcfyGlobal",
+                    "title": "NB, BCP47. Only specify a locale if the following HTML attributes are used: `alt`, aria-label, placeholder, title (?)",
                     "id": "http://jsonschema.net/_CONFIG_/default_locale"
                 },
                 "version": {
@@ -81,7 +91,7 @@
     },
     "patternProperties": {
         "^((?!_CONFIG_)[#\\.\\w \\:_\\-\\(\\)>]+)$": {
-            "title": "NB, keys are CSS query selector(s); values are hashed  HTML attributes.",
+            "title": "NB, Keys are CSS query selector(s); values are hashed HTML attributes - a secure, useful subset | http://w3.org/TR/selectors-api | http://w3.org/TR/html5",
             "id": "http://jsonschema.net/_SELECTOR_",
             "type":"object",
             "patternProperties": {
@@ -110,8 +120,10 @@
                 },
                 "^lang$": {
                     "type":"string",
-                    "maxLength":5,
-                    "pattern":"^[a-z]{2}(\\-[a-zA-Z]{2})?$"
+                    "minLength":2,
+                    "maxLength":8,
+                    "pattern":"^[a-z]{2}(\\-[a-zA-Z]{2,4})?$",
+                    "title":"NB, BCP47 `language-region` | http://tools.ietf.org/html/bcp47"
                 },
                 "^longdesc$": {
                     "type": "string",
@@ -120,7 +132,7 @@
                 },
                 "^accesskey$": {
                     "type": "string",
-                    "title": "NB, 'space-separated tokens' http://whatwg.org/specs/web-apps/current-work/multipage/editing.html#the-accesskey-attribute"
+                    "title": "NB, space-separated tokens | http://w3.org/TR/html5/editing.html#the-accesskey-attribute"
                 }
             },
             "additionalProperties":false
