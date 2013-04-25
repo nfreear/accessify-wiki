@@ -16,57 +16,23 @@ def httpHeaders(ctype, filename = None):
         scraperwiki.utils.httpresponseheader("Content-Disposition", "inline; filename=" + filename)
 
 
-def accessifyForm():
-    page = """
-
-<h2>Submit your fixes in YAML format</h2>
-
-<form method="get" data-method="post" action="">
-
-<!--{% csrf_token %}-->
-<!--<input type="hidden" name="form_name" value="accessify-submit" />-->
-
-<p><label for="u">URL of YAML file <small>publicly visible</small></label>
-  <input id="u" name="url" type="url" pattern="^https?://.+\.ya?ml$" required
-  placeholder="http://example.org/site-fixes.yaml" />
-
-<p><label for="e">Email <small>we'll keep it private</small></label>
-  <input id="e" name="email" type="email" />
-
-<p><input id="i" name="intouch" type="checkbox" />
-  <label for="i">I'd like to stay in touch
-  <small>occasional newsletters and announcements</small>.</label>
-
-<!--
- Text CAPTCHA?
--->
-<p><input type="submit" />
-</form>
-
-"""
-    return page
-
-
-def render(page, title="Accessify Wiki prototype"):
+def render(page, title = "Accessify Wiki prototype"):
     google_analytics = googleAnalyticsJs()
+    styles = getStylesheet()
+    navigation = getNavigation()
+    footer = getFooter()
     template = """
 <!doctype html><html lang="en"><meta charset="utf-8" /><title>%(title)s</title>
-<style>
-body{ background:#fcfcfc; color:#333; font:1.1em sans-serif; margin:3em; }
-input, button, label{ font-size:1em; display:inline-block; min-width:16em; }
-h1{ font-size:1.6em; }
-#bookmark{ border:1px solid orange; padding:2px 20px; background:#eee; border-radius:4px; }
-</style>
+%(styles)s
 
 <h1 role="banner"><span>Accessify Wiki</span></h1>
-<ul role="navigation">
-  <li><a href="/run/accessify-wiki">Home</a>
-</ul>
-<div role="main">
+%(navigation)s
+<div id=main role="main">
 
 %(page)s
 
 </div>
+%(footer)s
 %(google_analytics)s
 </html>
 """ % locals()
@@ -149,10 +115,12 @@ def re_any():
 # ==========================================
 # Page fragments.
 
+
 def accessifyForm():
     page = """
 
-<h2>Submit your fixes in YAML format</h2>
+<h2>Submit fixes</h2>
+<p>Submit your fixes in YAML format.
 
 <form method="get" data-method="post" action="">
 
@@ -178,6 +146,50 @@ def accessifyForm():
 
 """
     return page
+
+
+def getStylesheet():
+    return """
+<style>
+body{ background:#fcfcfc; color:#333; font:1.1em sans-serif; margin:3em; }
+input, button, label{ font-size:1em; display:inline-block; min-width:16em; }
+h1{ font-size:1.6em; }
+#nav{margin:0; padding:0;}
+#nav li{display:inline-block; padding:0;}
+#nav a {display:inline-block; min-width:6em; padding:8px 16px; margin:8px; text-align:center; border:1px solid #ccc; background:#eee;}
+#nav a:hover, #nav a:focus{background:#f9f9f9;}
+#foot{padding-top:1em; margin-top:2em; border-top:1px solid #bbb;}
+#feed{padding-left:30px; display:inline-block; min-height:26px; background:url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/24px-Feed-icon.svg.png) no-repeat left;}
+#bookmark{ border:1px solid orange; padding:2px 20px; background:#eee; border-radius:4px; }
+</style>
+"""
+
+
+def getNavigation():
+    return """
+<ul id=nav role="navigation">
+  <li><a href="/run/accessify-wiki">Home</a>
+  <li><a href="/run/accessify-bookmarklet" title="Browser extensions &amp; bookmarklets for end-users">For users</a>
+  <li><a href="/run/accessify-author-1" title="Bookmarklets &amp; tools for people contributing fixes">For authors</a>
+  <li><a href="/run/accessify-form">Submit fixes</a>
+  <li><a href="/run/accessify-site">For site owners</a>
+</ul>
+"""
+
+
+def getFooter(feed_limit = 4):
+    api_url = "https://api.scraperwiki.com/api/1.0/datastore/sqlite"
+    query = "SELECT+name+AS+title%2Cname+AS+description%2C+url+AS+link%2C+updated+AS+date+FROM+fixes"
+    footer = """
+<p id=foot role=contentinfo >
+  <a id=feed rel=alternate title="RSS feed" href=
+  "%(api_url)s?format=rss2&amp;name=accessify-form&amp;query=%(query)s+LIMIT+%(feed_limit)s"
+  >Feed</a>
+  | <a id=code href="https://github.com/nfreear/accessify-wiki" title="Fork me on Github">Get the code</a>
+  | <a id=poweredby href="https://scraperwiki.com/views/accessify-form/" title="Powered by ScraperWiki">Powered by ScraperWiki</a>
+</p>
+""" % locals()
+    return footer
 
 
 def googleAnalyticsJs(analytics_id = "UA-40194374-1"):

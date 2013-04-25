@@ -3,9 +3,11 @@ accessify-wiki
 
 Working together to fix accessibility on the Web, one site at a time.
 
+Using Accessify Wiki, person A who has no affiliation to or control over site B, can independently (co-)author **[accessibility][def-a11y] fixes** for site B, so that they are delivered to person C during their normal browsing experience -- via a [browser extension][def-addon], [user Javascript][def-userjs] or similar.
+
 
  * `/browser/` contains browser plugins, bookmarklet Javascript and user Javascript (Greasemonkey).
- * `/data/` contains sample site-fixes in [YAML][yaml] format.
+ * `/data/` contains sample site-fixes in [YAML][def-yaml] format.
  * `/schema/` contains a [JSON Schema][json-schema] for site-fix files.
  * `/site/` contains the prototype site and web-service, currently mostly written in Python to be hosted on [ScraperWiki][scraper-py].
 
@@ -36,6 +38,9 @@ Accessify-wiki: Copyright 2013 Nick Freear & contributors. License: [MIT][mit] &
 [pr-form]: https://views.scraperwiki.com/run/accessify-form
 [pr-author]: https://views.scraperwiki.com/run/accessify-author-1
 [json-schema]: http://json-schema.org/
-[yaml]: http://en.wikipedia.org/wiki/YAML
+[def-yaml]: http://en.wikipedia.org/wiki/YAML
+[def-a11y]: http://en.wikipedia.org/wiki/Web_accessibility
+[def-addon]: http://en.wikipedia.org/wiki/Browser_extension
+[def-userjs]: http://en.wikipedia.org/wiki/Greasemonkey
 [gpl]: http://gnu.org/licenses/gpl-2.0.html
 [mit]: http://nfreear.mit-license.org/
