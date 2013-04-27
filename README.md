@@ -14,9 +14,9 @@ Using Accessify Wiki, person A who has no affiliation to or control over site B,
 
 ## Links
 
+ * Prototype home page - [Scraperwiki: run/accessify-wiki][pr-home]
  * Prototype Accessify bookmarklet - [Scraperwiki: run/accessify-bookmarklet][pr-marklet]
- * Prototype Accessify submission form - [Scraperwiki: run/accessify-form][pr-form]
- * Prototype Accessify author tools - [Scraperwiki: run/accessify-author][pr-author]
+ * Prototype Accessify submit form - [Scraperwiki: run/accessify-form][pr-form]
  * Discussion document - [Google Docs..][accessify-rfc]
  * Schema draft/ discussion - [Google Docs..][schema-rfc]
 
@@ -34,6 +34,7 @@ Accessify-wiki: Copyright 2013 Nick Freear & contributors. License: [MIT][mit] &
 [accessifyhtml5]: https://github.com/yatil/accessifyhtml5.js
 [accessify-rfc]: https://docs.google.com/document/d/1V0oTZ0m5A1iQfmftiM8VUg2N-Sm_-syXCQxzQQcD-qU/edit
 [schema-rfc]: https://docs.google.com/document/d/1ZDyCdy1jclqeqDoV6_-1_GTjakbzCzUaPOr_Pk-GHKU/edit
+[pr-home]: https://views.scraperwiki.com/run/accessify-wiki
 [pr-marklet]: https://views.scraperwiki.com/run/accessify-bookmarklet
 [pr-form]: https://views.scraperwiki.com/run/accessify-form
 [pr-author]: https://views.scraperwiki.com/run/accessify-author-1

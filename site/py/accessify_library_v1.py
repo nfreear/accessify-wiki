@@ -207,4 +207,23 @@ def googleAnalyticsJs(analytics_id = "UA-40194374-1"):
     return script
 
 
+def markdownReferences():
+    return """
+[def-a11y]: http://en.wikipedia.org/wiki/Web_accessibility
+[def-usable]: http://en.wikipedia.org/wiki/Usability
+[def-addon]: http://en.wikipedia.org/wiki/Browser_extension
+[def-userjs]: http://en.wikipedia.org/wiki/Greasemonkey
+[def-aug]: http://en.wikipedia.org/wiki/Augmented_browsing
+[def-yaml]: http://en.wikipedia.org/wiki/YAML
+[def-api]: http://en.wikipedia.org/wiki/Application_programming_interface#Web_APIs
+[def-opencontent]: http://en.wikipedia.org/wiki/Open_content
+[def-critical]: https://en.wikipedia.org/wiki/Critical_friend
+[def-jsonschema]: http://en.wikipedia.org/wiki/JSON#Schema
+
+[code-accessify]: https://github.com/nfreear/accessify-wiki
+[pr-accessify]: https://views.scraperwiki.com/run/accessify-form/
+
+"""
+
+
 # End.
