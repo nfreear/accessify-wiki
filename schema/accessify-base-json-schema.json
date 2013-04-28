@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema",
     "title":"Accessibility fixes for HTML pages, including WAI-ARIA attributes.",
-    "description":"JSON Schema | 2013-04-24 | Nick Freear <nfreear-@-yahoo.co.uk> | https://github.com/nfreear/accessify-wiki",
+    "description":"JSON Schema | 2013-04-28 | Nick Freear <nfreear-@-yahoo.co.uk> | https://github.com/nfreear/accessify-wiki",
     "type":"object",
     "id": "http://jsonschema.net",
     "properties": {
@@ -53,6 +53,17 @@
                     "maxItems": 16,
                     "uniqueItems": true
                 },
+                "status": {
+                    "enum": ["open", "in progress", "stable", "embedded", "resolved"],
+                    "default": "in progress",
+                    "title": "NB, This expresses the life-cycle of accessibility fixes.",
+                    "id": "http://jsonschema.net/_CONFIG_/status"
+                },
+                "active": {
+                    "type": "boolean",
+                    "default": true,
+                    "id": "http://jsonschema.net/_CONFIG_/active"
+                },
                 "ignore_defaults": {
                     "type": "boolean",
                     "default": false,
@@ -79,11 +90,12 @@
                     "maxLength":8,
                     "pattern":"^[a-z]{2}(\\-[a-zA-Z]{2,4})?$",
                     "default": "x-AcfyGlobal",
-                    "title": "NB, BCP47. Only specify a locale if the following HTML attributes are used: `alt`, aria-label, placeholder, title (?)",
+                    "title": "NB, BCP47. Only specify a locale if the following HTML attributes are used: `alt`, aria-label, placeholder (?)",
                     "id": "http://jsonschema.net/_CONFIG_/default_locale"
                 },
                 "version": {
                     "type":"number",
+                    "title": "NB, not needed? Deprecate?",
                     "id": "http://jsonschema.net/_CONFIG_/version"
                 }
             }
@@ -94,6 +106,7 @@
             "title": "NB, Keys are CSS query selector(s); values are hashed HTML attributes - a secure, useful subset | http://w3.org/TR/selectors-api | http://w3.org/TR/html5",
             "id": "http://jsonschema.net/_SELECTOR_",
             "type":"object",
+            "additionalProperties": false,
             "patternProperties": {
                 "^aria-[a-z]+$": {
                     "type": "string",
@@ -134,8 +147,7 @@
                     "type": "string",
                     "title": "NB, space-separated tokens | http://w3.org/TR/html5/editing.html#the-accesskey-attribute"
                 }
-            },
-            "additionalProperties":false
+            }
         }
     },
     "minProperties": 1,
