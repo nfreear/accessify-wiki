@@ -18,12 +18,12 @@ def httpHeaders(ctype, filename = None):
 
 def render(page, title = "Accessify Wiki prototype"):
     google_analytics = googleAnalyticsJs()
-    styles = getStylesheet()
+    head = getPageHead()
     navigation = getNavigation()
     footer = getFooter()
     template = """
 <!doctype html><html lang="en"><meta charset="utf-8" /><title>%(title)s</title>
-%(styles)s
+%(head)s
 
 <h1 role="banner"><span>Accessify Wiki</span></h1>
 %(navigation)s
@@ -148,32 +148,46 @@ def accessifyForm():
     return page
 
 
-def getStylesheet():
-    return """
+def getPageHead():
+    font = "PT Sans"
+    font_enc = "PT+Sans"
+    head = """
+<!--[if lt IE 9]>
+<script> document.createElement('main') </script>
+<script src="//html5shim.googlecode.com/svn/trunk/html5-els.js"></script>
+<![endif]-->
+
+<link rel=stylesheet href='//fonts.googleapis.com/css?family=%(font_enc)s:400,700' />
 <style>
-body{ background:#fcfcfc; color:#333; font:1.1em sans-serif; margin:3em; }
-input, button, label{ font-size:1em; display:inline-block; min-width:16em; }
-h1{ font-size:1.6em; }
-#nav{margin:0; padding:0;}
+body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:3em; }
+input, button, label{ font-size:1em; display:inline-block; min-width:14em; }
+input:not([type = checkbox]){min-width:24em; padding:2px;}
+h1{ font-size:1.7em; }
+h1 em{font-size:.8em; font-weight:normal; color:gray;}
+h2{ font-size:1.4em; }
+#nav ul{margin:0; padding:0;}
 #nav li{display:inline-block; padding:0;}
-#nav a {display:inline-block; min-width:6em; padding:8px 16px; margin:8px; text-align:center; border:1px solid #ccc; background:#eee;}
+#nav a {display:inline-block; min-width:6em; padding:6px 18px; margin:6px; text-align:center; border:1px solid #ccc; background:#eee;}
 #nav a:hover, #nav a:focus{background:#f9f9f9;}
-#foot{padding-top:1em; margin-top:2em; border-top:1px solid #bbb;}
+#foot{padding:1em 6px; margin-top:3em; border-top:1px solid #bbb; background:#eee; font-size:.95em;}
 #feed{padding-left:30px; display:inline-block; min-height:26px; background:url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/24px-Feed-icon.svg.png) no-repeat left;}
 #bookmark{ border:1px solid orange; padding:2px 20px; background:#eee; border-radius:4px; }
 </style>
-"""
+""" % locals()
+    return head
 
 
 def getNavigation():
     return """
-<ul id=nav role="navigation">
+<nav id=nav role="navigation">
+  <ul>
   <li><a href="/run/accessify-wiki">Home</a>
   <li><a href="/run/accessify-bookmarklet" title="Browser extensions &amp; bookmarklets for end-users">For users</a>
   <li><a href="/run/accessify-author-1" title="Bookmarklets &amp; tools for people contributing fixes">For authors</a>
   <li><a href="/run/accessify-form">Submit fixes</a>
   <li><a href="/run/accessify-site">For site owners</a>
-</ul>
+  </ul>
+</nav>
 """
 
 
@@ -207,8 +221,9 @@ def googleAnalyticsJs(analytics_id = "UA-40194374-1"):
     return script
 
 
-def markdownReferences():
-    return """
+def markdown(page = ""):
+    import markdown
+    references = """
 [def-a11y]: http://en.wikipedia.org/wiki/Web_accessibility
 [def-usable]: http://en.wikipedia.org/wiki/Usability
 [def-addon]: http://en.wikipedia.org/wiki/Browser_extension
@@ -224,6 +239,8 @@ def markdownReferences():
 [pr-accessify]: https://views.scraperwiki.com/run/accessify-form/
 
 """
+    return markdown.markdown(page + references, extensions=
+        ["headerid(level=2)", "toc(title=Contents)", "wikilinks"])
 
 
 # End.
