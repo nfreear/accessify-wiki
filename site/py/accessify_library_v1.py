@@ -4,16 +4,18 @@ import scraperwiki
 
   Copyright Nick Freear, 11 April 2013.
 '''
-import os, cgi, re, json, urllib, urllib2, yaml
+import sys, os, cgi, re, json, urllib, urllib2, yaml
 
 #class accessify_library_v1:
-
 
 
 def httpHeaders(ctype, filename = None):
     scraperwiki.utils.httpresponseheader("Content-Type", ctype + "; charset=utf-8")
     if filename:
         scraperwiki.utils.httpresponseheader("Content-Disposition", "inline; filename=" + filename)
+
+def scrape(url, params = None, user_agent = None):
+    return scraperwiki.scrape(url, params, user_agent)
 
 
 def render(page, title = "Accessify Wiki prototype"):
@@ -25,7 +27,7 @@ def render(page, title = "Accessify Wiki prototype"):
 <!doctype html><html lang="en"><meta charset="utf-8" /><title>%(title)s</title>
 %(head)s
 
-<h1 role="banner"><span>Accessify Wiki</span></h1>
+<h1 role="banner"><span>Accessify Wiki</span> <em>prototype</em></h1>
 %(navigation)s
 <div id=main role="main">
 
@@ -40,8 +42,13 @@ def render(page, title = "Accessify Wiki prototype"):
 
 
 def error(message = "unknown error", status = 400):
-    print render("<p class=error >Error, "+ message +" "+ str(status))
-    exit(-1)
+    if "calls" not in error.__dict__: error.calls = 0
+    if error.calls < 1:
+        print render("<p class=error >Error, "+ message +" "+ str(status), "Error | Accessify Wiki")
+    error.calls += 1
+    sys.exit(1)
+
+#error.calls = 0
 
 def apiError(message = "unknown error", status = 400, callback = None):
     # Based on Flickr's JSON REST error handling.
@@ -51,14 +58,15 @@ def apiError(message = "unknown error", status = 400, callback = None):
         print callback, "(", json.dumps( er ), ");"
     else:
         print json.dumps( er )
-    exit(-1)
+    sys.exit(1)
 
 
 def form_submit():
     return os.getenv("QUERY_STRING")
 
 def get(key, regex):
-    #regex.match("anything")
+    if type(regex) == str:
+        regex = re.compile(regex)
     try:
         qsenv = dict(cgi.parse_qsl(os.getenv("QUERY_STRING")))
         if key in qsenv:
@@ -76,6 +84,8 @@ def get(key, regex):
     return value
 
 def get_option(key, regex, default=None):
+    if type(regex) == str:
+        regex = re.compile(regex)
     try:
         qsenv = dict(cgi.parse_qsl(os.getenv("QUERY_STRING")))
         if key in qsenv:
@@ -158,6 +168,7 @@ def getPageHead():
 <![endif]-->
 
 <link rel=stylesheet href='//fonts.googleapis.com/css?family=%(font_enc)s:400,700' />
+<link rel=stylesheet href="/run/style/?url=github:trevorturk/pygments/master/default.css" />
 <style>
 body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:3em; }
 input, button, label{ font-size:1em; display:inline-block; min-width:14em; }
@@ -178,17 +189,19 @@ h2{ font-size:1.4em; }
 
 
 def getNavigation():
-    return """
+    url = 'http://baidu.com/'
+    nav = """
 <nav id=nav role="navigation">
   <ul>
   <li><a href="/run/accessify-wiki">Home</a>
   <li><a href="/run/accessify-bookmarklet" title="Browser extensions &amp; bookmarklets for end-users">For users</a>
   <li><a href="/run/accessify-author-1" title="Bookmarklets &amp; tools for people contributing fixes">For authors</a>
   <li><a href="/run/accessify-form">Submit fixes</a>
-  <li><a href="/run/accessify-site">For site owners</a>
+  <li><a href="/run/accessify-site/?url=%(url)s">For site owners</a>
   </ul>
 </nav>
-"""
+""" % locals()
+    return nav
 
 
 def getFooter(feed_limit = 4):
@@ -200,7 +213,7 @@ def getFooter(feed_limit = 4):
   "%(api_url)s?format=rss2&amp;name=accessify-form&amp;query=%(query)s+LIMIT+%(feed_limit)s"
   >Feed</a>
   | <a id=code href="https://github.com/nfreear/accessify-wiki" title="Fork me on Github">Get the code</a>
-  | <a id=poweredby href="https://scraperwiki.com/views/accessify-form/" title="Powered by ScraperWiki">Powered by ScraperWiki</a>
+  | <a id=poweredby href="https://scraperwiki.com/views/accessify-wiki/" title="Powered by ScraperWiki">Powered by ScraperWiki</a>
 </p>
 """ % locals()
     return footer
@@ -237,10 +250,11 @@ def markdown(page = ""):
 
 [code-accessify]: https://github.com/nfreear/accessify-wiki
 [pr-accessify]: https://views.scraperwiki.com/run/accessify-form/
+[closure-compiler]: http://closure-compiler.appspot.com/home
 
 """
     return markdown.markdown(page + references, extensions=
-        ["headerid(level=2)", "toc(title=Contents)", "wikilinks"])
+        ["headerid(level=2)", "toc(title=Contents)", "wikilinks", 'fenced_code', 'codehilite', 'attr_list'])
 
 
 # End.

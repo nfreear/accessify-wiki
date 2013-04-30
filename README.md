@@ -14,7 +14,7 @@ Using Accessify Wiki, person A who has no affiliation to or control over site B,
 
 ## Links
 
- * Prototype home page - [Scraperwiki: run/accessify-wiki][pr-home]
+ * Home page/ proposal - [Scraperwiki: run/accessify-wiki][pr-home]
  * Prototype Accessify bookmarklet - [Scraperwiki: run/accessify-bookmarklet][pr-marklet]
  * Prototype Accessify submit form - [Scraperwiki: run/accessify-form][pr-form]
  * Discussion document - [Google Docs..][accessify-rfc]
@@ -26,11 +26,12 @@ Using Accessify Wiki, person A who has no affiliation to or control over site B,
  * Eric Eggert @yatil for [accessifyhtml5.js][accessifyhtml5]
 
 
-Accessify-wiki: Copyright 2013 Nick Freear & contributors. License: [MIT][mit] & [GPLv2][gpl].
+[Accessify-wiki][scraper-acfy]: Copyright 2013 Nick Freear & contributors. License: [MIT][mit] & [GPLv2][gpl].
 
 
 [scraperwiki]: https://scraperwiki.com/
 [scraper-py]: https://scraperwiki.com/docs/python/
+[scraper-acfy]: https://scraperwiki.com/tags/accessify-wiki
 [accessifyhtml5]: https://github.com/yatil/accessifyhtml5.js
 [accessify-rfc]: https://docs.google.com/document/d/1V0oTZ0m5A1iQfmftiM8VUg2N-Sm_-syXCQxzQQcD-qU/edit
 [schema-rfc]: https://docs.google.com/document/d/1ZDyCdy1jclqeqDoV6_-1_GTjakbzCzUaPOr_Pk-GHKU/edit
