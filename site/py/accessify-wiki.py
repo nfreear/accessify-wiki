@@ -19,12 +19,12 @@ Tag line:
 
  * Working together to fix accessibility on the Web, one site at a time.
 
-In a nutshell:
+In a nutshell - various versions:
 
  * What is Accessify Wiki? Accessify Wiki is a way of authoring accessibility fixes for a site, without having control of that site, then delivering the fixes to a user during their normal browsing experience. It is not intended as a long-term accessibility solution for a site.
  * Using Accessify Wiki, person A who has no affiliation to or control over site B, can independently (co-)author **[accessibility][def-a11y] and usability fixes** for site B, so that they are delivered to person C during their normal browsing experience -- via a [browser extension][def-addon], [user Javascript][def-userjs] or similar.
  * Using Accessify Wiki, person A can during their normal browsing experience experience site B with **[accessibility][def-a11y] and usability fixes** -- via a [browser extension][def-addon], [user Javascript][def-userjs] or similar. The fixes can be (co-)authored by person C, even though that person has no affiliation to or control over site B.
- * So, for example it allows anyone to author accessibility fixes for Facebook or a Google site.
+ * So, for example it allows anyone to author accessibility fixes for popular and busy sites like Facebook, Google and Baidu.
 
 
 ### Components
@@ -35,17 +35,29 @@ In a nutshell:
  4. Site-owner tools to allow owner-developers to understand and package up/ integrate the accessibility fixes;
  5. A standardized way to author and store the fixes for editing, validation and re-use ([YAML][def-yaml]).
 
-#### Notes
 
- * Note, 2 and 3 may be combined - different views of the same repository/ Wiki.
+### Notes
+
+ * Components 2 and 3 may be combined - different views of the same repository/ Wiki.
  * It is hoped that through careful choice/ development of tools and documentation, the author of fixes need not be a skilled Web developer, but can instead be someone with a passion for accessibility, a willingness to explore and learn, and the desire to help.
  * [All code to be open-source][code-accessify]; **fixes** to be open-source/open-data/[open content][def-opencontent], eg. GPL, MIT, Creative Commons [CC-by/CC-by-sa] (are fixes data or code?)
  * To date (April 2013), we have [prototyped][pr-accessify] components 1, 2, 3 and 5.
 
 
+### How are fixes created?
+
+The idea is:
+
+ * To design usable authoring tools,
+ * To create a low barrier of entry to authoring fixes,
+ * And, to use [crowd-sourcing][def-crowd].
+
+So, this project follows in the footsteps of Wikipedia, [Project Gutenberg][pg], [Fix the Web][fixtheweb], [Scripting Enabled][scriptingenabled] and others.
+
+
 ### How are fixes used?
 
-It is envisioned that accessibility fixes will be used in three ways -- a typical **life-cycle** for fixes might be:
+It is envisioned that accessibility fixes will be used in at least three ways -- a typical **life-cycle** for fixes might be:
 
  1. Immediately after the fixes are authored they are applied by the user Javascripts or browser extensions. This is considered a short term, stop-gap solution;
  2. Later the fixes are packaged up as Javascript to be included in the site by the site-owner-developer. This can be considered a medium term solution;
@@ -58,24 +70,37 @@ Note, in between the steps the fixes are likely to need editing as they are brok
 
 There are naturally limitations to the accessibility fixes that a system like *Accessify Wiki* can apply. For example:
 
- * It cannot be used to simplify or clarify the language of textual content,
- * It cannot re-order content to make pages more usable,
- * Currently it can't make widespread fixes to CSS stylesheets -- this may change (see proposal),
+ * It cannot be used for the whole-sale simplification or clarification of the language of textual content,
+ * It cannot re-order content to make pages more usable -- it may be possible to pre-pend or append text/HTML to parts of a page (proposal),
+ * Currently it can't make widespread fixes to CSS stylesheets -- this may change (proposal),
  * Fixes will tend to break over time as third-party sites are edited and re-designed,
- ...?
+ * ...?
 
-Notwithstanding these and other limitations, I think that Accessify Wiki will be a useful tool to improve the Web for all.
+Notwithstanding these and other limitations, I suggest that **Accessify Wiki** will be a useful tool to improve the Web for all.
+
+
+### Next steps
+
+ * Get feedback from the community,
+ * Choose a domain-name,
+ * Develop a Greasemonkey/user Javascript,
+ * Author more fixes
+ * ...?
 
 
 ### How can you help?
 
  * Provide moral support, be a critical friend, leave comments, show some love &hearts; ...
+ * Install and use the end-user bookmarklet. Give feedback,
  * Try authoring some fixes -- and pester Nick to provide examples and write a tutorial when you get stuck,
  * Help write tutorials(!)
  * Help with specifications including the JSON Schema,
  * Help write code -- server-side and/or Greasemonkey/ user-Javascript,
  * Provide web-hosting
- ...?
+ * ...?
+
+
+<!--<iframe src="https://docs.google.com/spreadsheet/pub?key=0AgJMkdi3MO4HdG9wdVVDMGpJUW8zZ1VVWVFiTWt3aEE&single=true&gid=0&output=html&widget=true" width="90%" height="300"></iframe>-->
 
 """
 

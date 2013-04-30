@@ -4,9 +4,7 @@ import scraperwiki
 
   Copyright Nick Freear, 11 April 2013.
 '''
-import sys, os, cgi, re, json, urllib, urllib2, yaml
-
-#class accessify_library_v1:
+import sys, os, cgi, re, json, urllib, urllib2, yaml, markdown
 
 
 def httpHeaders(ctype, filename = None):
@@ -23,9 +21,11 @@ def render(page, title = "Accessify Wiki prototype"):
     head = getPageHead()
     navigation = getNavigation()
     footer = getFooter()
-    template = """
-<!doctype html><html lang="en"><meta charset="utf-8" /><title>%(title)s</title>
+    template = """<!doctype html>
+<html lang="en"><meta charset="utf-8" /><title>%(title)s</title>
 %(head)s
+
+<div id="container">
 
 <h1 role="banner"><span>Accessify Wiki</span> <em>prototype</em></h1>
 %(navigation)s
@@ -35,6 +35,7 @@ def render(page, title = "Accessify Wiki prototype"):
 
 </div>
 %(footer)s
+</div>
 %(google_analytics)s
 </html>
 """ % locals()
@@ -48,7 +49,6 @@ def error(message = "unknown error", status = 400):
     error.calls += 1
     sys.exit(1)
 
-#error.calls = 0
 
 def apiError(message = "unknown error", status = 400, callback = None):
     # Based on Flickr's JSON REST error handling.
@@ -151,7 +151,7 @@ def accessifyForm():
 <!--
  Text CAPTCHA?
 -->
-<p><input type="submit" />
+<p><button type="submit">Submit</button>
 </form>
 
 """
@@ -167,10 +167,10 @@ def getPageHead():
 <script src="//html5shim.googlecode.com/svn/trunk/html5-els.js"></script>
 <![endif]-->
 
-<link rel=stylesheet href='//fonts.googleapis.com/css?family=%(font_enc)s:400,700' />
+<link rel=stylesheet href="//fonts.googleapis.com/css?family=%(font_enc)s:400,700" />
 <link rel=stylesheet href="/run/style/?url=github:trevorturk/pygments/master/default.css" />
 <style>
-body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:3em; }
+body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:1em 3em; }
 input, button, label{ font-size:1em; display:inline-block; min-width:14em; }
 input:not([type = checkbox]){min-width:24em; padding:2px;}
 h1{ font-size:1.7em; }
@@ -178,7 +178,7 @@ h1 em{font-size:.8em; font-weight:normal; color:gray;}
 h2{ font-size:1.4em; }
 #nav ul{margin:0; padding:0;}
 #nav li{display:inline-block; padding:0;}
-#nav a {display:inline-block; min-width:6em; padding:6px 18px; margin:6px; text-align:center; border:1px solid #ccc; background:#eee;}
+#nav a {display:inline-block; min-width:6em; padding:6px 18px; margin-right:8px; text-align:center; border:1px solid #ccc; background:#eee;}
 #nav a:hover, #nav a:focus{background:#f9f9f9;}
 #foot{padding:1em 6px; margin-top:3em; border-top:1px solid #bbb; background:#eee; font-size:.95em;}
 #feed{padding-left:30px; display:inline-block; min-height:26px; background:url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/24px-Feed-icon.svg.png) no-repeat left;}
@@ -193,10 +193,10 @@ def getNavigation():
     nav = """
 <nav id=nav role="navigation">
   <ul>
-  <li><a href="/run/accessify-wiki">Home</a>
-  <li><a href="/run/accessify-bookmarklet" title="Browser extensions &amp; bookmarklets for end-users">For users</a>
-  <li><a href="/run/accessify-author-1" title="Bookmarklets &amp; tools for people contributing fixes">For authors</a>
-  <li><a href="/run/accessify-form">Submit fixes</a>
+  <li><a href="/run/accessify-wiki/">Home</a>
+  <li><a href="/run/accessify-bookmarklet/" title="Browser extensions &amp; bookmarklets for end-users">For users</a>
+  <li><a href="/run/accessify-author-1/" title="Bookmarklets &amp; tools for people contributing fixes">For authors</a>
+  <li><a href="/run/accessify-form/">Submit fixes</a>
   <li><a href="/run/accessify-site/?url=%(url)s">For site owners</a>
   </ul>
 </nav>
@@ -209,11 +209,12 @@ def getFooter(feed_limit = 4):
     query = "SELECT+name+AS+title%2Cname+AS+description%2C+url+AS+link%2C+updated+AS+date+FROM+fixes"
     footer = """
 <p id=foot role=contentinfo >
-  <a id=feed rel=alternate title="RSS feed" href=
-  "%(api_url)s?format=rss2&amp;name=accessify-form&amp;query=%(query)s+LIMIT+%(feed_limit)s"
-  >Feed</a>
-  | <a id=code href="https://github.com/nfreear/accessify-wiki" title="Fork me on Github">Get the code</a>
-  | <a id=poweredby href="https://scraperwiki.com/views/accessify-wiki/" title="Powered by ScraperWiki">Powered by ScraperWiki</a>
+ <a id=feed rel=alternate title="RSS feed of recent Accessibility fixes" href=
+ "%(api_url)s?format=rss2&amp;name=accessify-form&amp;query=%(query)s+LIMIT+%(feed_limit)s">Feed</a>
+ | <a id=api href="https://scraperwiki.com/docs/api?name=accessify-form&table_names=fixes,include_map#sqlite" title="Via the ScraperWiki API">API</a>
+ | <a id=code href="https://github.com/nfreear/accessify-wiki" title="Fork me on Github">Get the code</a>
+ | <a id=poweredby href="https://scraperwiki.com/views/accessify-wiki/" title="Powered by ScraperWiki - thank you ;)">Powered by ScraperWiki</a>
+ | <a id=twitter href="http://twitter.com/nfreear" title="Contact: Nick Freear">@nfreear</a>
 </p>
 """ % locals()
     return footer
@@ -236,23 +237,28 @@ def googleAnalyticsJs(analytics_id = "UA-40194374-1"):
 
 def markdown(page = ""):
     import markdown
+    wiki = 'http://en.wikipedia.org/wiki'
     references = """
-[def-a11y]: http://en.wikipedia.org/wiki/Web_accessibility
-[def-usable]: http://en.wikipedia.org/wiki/Usability
-[def-addon]: http://en.wikipedia.org/wiki/Browser_extension
-[def-userjs]: http://en.wikipedia.org/wiki/Greasemonkey
-[def-aug]: http://en.wikipedia.org/wiki/Augmented_browsing
-[def-yaml]: http://en.wikipedia.org/wiki/YAML
-[def-api]: http://en.wikipedia.org/wiki/Application_programming_interface#Web_APIs
-[def-opencontent]: http://en.wikipedia.org/wiki/Open_content
-[def-critical]: https://en.wikipedia.org/wiki/Critical_friend
-[def-jsonschema]: http://en.wikipedia.org/wiki/JSON#Schema
+[def-a11y]:   %(wiki)s/Web_accessibility
+[def-usable]: %(wiki)s/Usability
+[def-addon]:  %(wiki)s/Browser_extension
+[def-userjs]: %(wiki)s/Greasemonkey
+[def-aug]:   %(wiki)s/Augmented_browsing
+[def-crowd]: %(wiki)s/Crowdsourcing
+[def-yaml]:  %(wiki)s/YAML
+[def-api]:   %(wiki)s/Application_programming_interface#Web_APIs
+[def-opencontent]: %(wiki)s/Open_content
+[def-critical]: %(wiki)s/Critical_friend
+[def-jsonschema]: %(wiki)s/JSON#Schema
 
 [code-accessify]: https://github.com/nfreear/accessify-wiki
 [pr-accessify]: https://views.scraperwiki.com/run/accessify-form/
 [closure-compiler]: http://closure-compiler.appspot.com/home
+[pg]: http://www.gutenberg.org/
+[fixtheweb]: http://www.fixtheweb.net/
+[scriptingenabled]: http://scriptingenabled.org/
 
-"""
+""" % locals()
     return markdown.markdown(page + references, extensions=
         ["headerid(level=2)", "toc(title=Contents)", "wikilinks", 'fenced_code', 'codehilite', 'attr_list'])
 
