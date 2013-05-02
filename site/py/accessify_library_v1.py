@@ -194,7 +194,8 @@ def getNavigation():
 <nav id=nav role="navigation">
   <ul>
   <li><a href="/run/accessify-wiki/">Home</a>
-  <li><a href="/run/accessify-bookmarklet/" title="Browser extensions &amp; bookmarklets for end-users">For users</a>
+  <li><a href="/run/accessify-user/" title="Browser extensions &amp; bookmarklets for end-users">For users</a>
+  <!--<li><a href="/run/accessify-bookmarklet/">For users</a>-->
   <li><a href="/run/accessify-author-1/" title="Bookmarklets &amp; tools for people contributing fixes">For authors</a>
   <li><a href="/run/accessify-form/">Submit fixes</a>
   <li><a href="/run/accessify-site/?url=%(url)s">For site owners</a>
@@ -214,6 +215,7 @@ def getFooter(feed_limit = 4):
  | <a id=api href="https://scraperwiki.com/docs/api?name=accessify-form&table_names=fixes,include_map#sqlite" title="Via the ScraperWiki API">API</a>
  | <a id=code href="https://github.com/nfreear/accessify-wiki" title="Fork me on Github">Get the code</a>
  | <a id=poweredby href="https://scraperwiki.com/views/accessify-wiki/" title="Powered by ScraperWiki - thank you ;)">Powered by ScraperWiki</a>
+ | <a id=ftw href="http://fixtheweb.net/" title="Fixing web accessibility">Fix the Web</a>
  | <a id=twitter href="http://twitter.com/nfreear" title="Contact: Nick Freear">@nfreear</a>
 </p>
 """ % locals()
