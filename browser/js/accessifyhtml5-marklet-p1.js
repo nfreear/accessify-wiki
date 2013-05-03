@@ -169,8 +169,8 @@
     var res_url = "https://upload.wikimedia.org/wikipedia/commons/",
       icons = {
         loading: "7/7f/Throbber_allbackgrounds_monochrome.gif",
-        not_found: "e/e9/Silk_cross.png",
-        fail: "e/e9/Silk_cross.png",
+        not_found: "8/89/Error_add.png", //"7/72/Pencil_add.png"
+        fail: "c/c0/Exclamation.png", //"e/e9/Silk_cross.png"
         ok: "3/3f/Silk_tick.png"
       },
       /*tb = "thumb/",
@@ -180,9 +180,10 @@
         fail: tb + "8/84/Smiley_green_alien_hot_fever.svg/28px-Smiley_green_alien_hot_fever.svg.png",
         ok: tb + "3/39/Smiley_green_alien.svg/28px-Smiley_green_alien.svg.png"
       },*/
-      bgs = {
-        loading: "orange",
-        not_found: "#d22",
+      //http://quackit.com/css/css_color_codes.cfm
+      bdr = {
+        loading: "#eed700", //"gold"
+        not_found: "#ee8c00", //"darkorange"
         fail: "#d22",
         ok: "#181"
       },
@@ -204,7 +205,7 @@
     //elcs.height = "35px";
 
     el.innerHTML = texts[key];
-    logp.style.borderColor = bgs[key];
+    logp.style.borderColor = bdr[key];
   }
 
 })();

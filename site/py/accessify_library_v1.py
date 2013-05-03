@@ -3,6 +3,7 @@ import scraperwiki
   Shared Python library functions for the Accessify Wiki prototype.
 
   Copyright Nick Freear, 11 April 2013.
+
 '''
 import sys, os, cgi, re, json, urllib, urllib2, yaml, markdown
 
@@ -16,16 +17,21 @@ def scrape(url, params = None, user_agent = None):
     return scraperwiki.scrape(url, params, user_agent)
 
 
+def scraperName():
+    #['/home/startup/exec.py', '--script=/home/scriptrunner/script.py', '--scraper=accessify-user']
+    return re.sub('.+=', '', sys.argv[2])
+
 def render(page, title = "Accessify Wiki prototype"):
     google_analytics = googleAnalyticsJs()
     head = getPageHead()
+    sname = scraperName()
     navigation = getNavigation()
     footer = getFooter()
     template = """<!doctype html>
 <html lang="en"><meta charset="utf-8" /><title>%(title)s</title>
 %(head)s
 
-<div id="container">
+<div id="container" class="%(sname)s">
 
 <h1 role="banner"><span>Accessify Wiki</span> <em>prototype</em></h1>
 %(navigation)s
@@ -176,13 +182,14 @@ input:not([type = checkbox]){min-width:24em; padding:2px;}
 h1{ font-size:1.7em; }
 h1 em{font-size:.8em; font-weight:normal; color:gray;}
 h2{ font-size:1.4em; }
+li{margin:2px 0;}
 #nav ul{margin:0; padding:0;}
 #nav li{display:inline-block; padding:0;}
 #nav a {display:inline-block; min-width:6em; padding:6px 18px; margin-right:8px; text-align:center; border:1px solid #ccc; background:#eee;}
 #nav a:hover, #nav a:focus{background:#f9f9f9;}
 #foot{padding:1em 6px; margin-top:3em; border-top:1px solid #bbb; background:#eee; font-size:.95em;}
 #feed{padding-left:30px; display:inline-block; min-height:26px; background:url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/24px-Feed-icon.svg.png) no-repeat left;}
-#bookmark{ border:1px solid orange; padding:2px 20px; background:#eee; border-radius:4px; }
+#bookmark, #userjs{ border:1px solid orange; padding:2px 18px; background:#eee; border-radius:4px; }
 </style>
 """ % locals()
     return head
@@ -255,6 +262,7 @@ def markdown(page = ""):
 
 [code-accessify]: https://github.com/nfreear/accessify-wiki
 [pr-accessify]: https://views.scraperwiki.com/run/accessify-form/
+[accessifyhtml5]: https://github.com/yatil/accessifyhtml5.js "by Eric Egert @yatil"
 [closure-compiler]: http://closure-compiler.appspot.com/home
 [pg]: http://www.gutenberg.org/
 [fixtheweb]: http://www.fixtheweb.net/

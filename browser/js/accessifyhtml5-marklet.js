@@ -17,7 +17,12 @@
     script = "https://raw.github.com/nfreear/accessifyhtml5.js/master/accessifyhtml5.js",
     callback = "__accessifyhtml5_bookmarklet_CB",
     fixes_url = "https://views.scraperwiki.com/run/accessify_utils_v1/?callback=",
+    home_url = "http://freear.org.uk/accessify",
+    home = home_url.replace(/https?:\/\//, ''),
     logp;
+
+  // We do not support frames for the moment.
+  if (window.parent != window) return;
 
   logInit();
 
@@ -42,8 +47,7 @@
         if (404 == rsp.code) {
           setIcon("not_found");
           //log("Sorry, no domain matched.\n", host);
-          log("› To add some fixes please visit our site. *");
-
+          log("To add some fixes please visit our site   \n\n  ›› "+ home +"\n");
         }
         return false;
       }
@@ -61,7 +65,7 @@
       }
 
       log("OK. "+ res.ok.length +" fixes applied, "+ res.fail.length +" errors. \n", res);
-      log("› To help improve the fixes please visit   \n  ››› www.Example.org ");
+      log("To help improve the fixes please visit   \n\n  ›› "+ home +"\n");
     }
   }
 
@@ -96,12 +100,12 @@
       logp.setAttribute("aria-live", "polite");
       logp.setAttribute("role", "log");
       logp.setAttribute("style",
-"display:block;position:fixed;bottom:0;right:0;width:15.5em;height:1.5em;"
-+"font:medium sans-serif;text-align:left;background:#fcfcfc;"
+"display:block;position:fixed;bottom:0;right:0;width:15.5em;height:1.5em;z-index:999;"
++"font:medium Arial,sans-serif;text-align:left;border-radius:2px;background:#fafafa;"
 +"color:#111;opacity:.9;border:3px solid gray;padding:6px;overflow-y:auto;cursor:help;");
       D.body.appendChild(logp);
       logp.innerHTML += 
-    '<a href="http://www.example.org" style="color:navy;text-decoration:underline;">Accessify HTML5</a> .. <span class="ico">*</span> <br>\n';
+    '<a href="'+ home_url +'" style="color:navy;text-decoration:underline;">Accessify Wiki</a> .. <span class="ico">*</span> <br>\n';
     }
     setIcon("loading");
   }
@@ -113,13 +117,14 @@
     var res_url = "https://upload.wikimedia.org/wikipedia/commons/",
       icons = {
         loading: "7/7f/Throbber_allbackgrounds_monochrome.gif",
-        not_found: "e/e9/Silk_cross.png",
-        fail: "e/e9/Silk_cross.png",
+        not_found: "8/89/Error_add.png", //"7/72/Pencil_add.png"
+        fail: "c/c0/Exclamation.png", //"e/e9/Silk_cross.png"
         ok: "3/3f/Silk_tick.png"
       },
-      bgs = {
-        loading: "orange",
-        not_found: "#d22",
+      //http://quackit.com/css/css_color_codes.cfm
+      bdr = {
+        loading: "#eed700", //"gold"
+        not_found: "#ee8c00", //"darkorange"
         fail: "#d22",
         ok: "#181"
       },
@@ -139,7 +144,7 @@
     cs.minWidth = "4em";
 
     el.innerHTML = texts[key];
-    logp.style.borderColor = bgs[key];
+    logp.style.borderColor = bdr[key];
   }
 
 })();
