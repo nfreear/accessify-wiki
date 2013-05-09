@@ -21,6 +21,7 @@ def scraperName():
     #['/home/startup/exec.py', '--script=/home/scriptrunner/script.py', '--scraper=accessify-user']
     return re.sub('.+=', '', sys.argv[2])
 
+
 def render(page, title = "Accessify Wiki prototype"):
     google_analytics = googleAnalyticsJs()
     head = getPageHead()
@@ -147,8 +148,11 @@ def accessifyForm():
   <input id="u" name="url" type="url" pattern="^https?://.+\.ya?ml$" required
   placeholder="http://example.org/site-fixes.yaml" />
 
+<p><label for="c">Comment <small>optional</small></label>
+  <input id="c" name="comment" placeholder="Describe updated fixes.." />
+
 <p><label for="e">Email <small>we'll keep it private</small></label>
-  <input id="e" name="email" type="email" />
+  <input id="e" name="email" type="email" placeholder="j.blogs@example.com" />
 
 <p><input id="i" name="intouch" type="checkbox" />
   <label for="i">I'd like to stay in touch
@@ -177,8 +181,8 @@ def getPageHead():
 <link rel=stylesheet href="/run/style/?url=github:trevorturk/pygments/master/default.css" />
 <style>
 body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:1em 3em; }
-input, button, label{ font-size:1em; display:inline-block; min-width:14em; }
-input:not([type = checkbox]){min-width:24em; padding:2px;}
+input, button, label{ font-size:1em; display:inline-block; min-width:13em; }
+input:not([type = checkbox]){min-width:30em; padding:2px;}
 h1{ font-size:1.7em; }
 h1 em{font-size:.8em; font-weight:normal; color:gray;}
 h2{ font-size:1.4em; }

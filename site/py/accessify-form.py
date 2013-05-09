@@ -15,8 +15,8 @@ my = scraperwiki.utils.swimport("accessify_library_v1")
 
 drop = None
 if drop:
-    res = scraperwiki.sqlite.execute("DROP TABLE IF EXISTS fixes")
-    res = scraperwiki.sqlite.execute("DROP TABLE IF EXISTS include_map")
+    res = scraperwiki.sqlite.execute("DROP TABLE IF EXISTS `fixes`")
+    res = scraperwiki.sqlite.execute("DROP TABLE IF EXISTS `include_map`")
     print res
     exit()
 
@@ -32,6 +32,8 @@ notices.append("Thank you for submitting accessibility fixes.")
 
 url = my.get('url', my.re_yaml_url())
 email = my.get('email', my.re_email())
+comment = my.get_option('comment', my.re_any())
+intouch = my.get_option('intouch', my.re_any())
 #form_name = my.get('form_name', my.re_any())
 
 
@@ -55,12 +57,16 @@ except:
 notices.append("The YAML appears to be well-formed.")
 
 # A rough 'validation' of the _CONFIG_ or manifest hash.
+# See, https://github.com/nfreear/accessify-wiki/tree/master/schema
 try:
     manifest = fixes["_CONFIG_"]
-    name = manifest["name"]
+    fix_name = manifest["name"]
     include = manifest["include"]
     include_1 = include[0]
     test_url = manifest["test_urls"][0]
+    fix_locale = manifest.get("locale", "x-AcfyGlobal")
+    fix_status = manifest.get("status", "in progress")
+    fix_active = manifest.get("active", True)
 except:
     #print sys.exc_info()[0]
     my.error("Sorry, I can't validate the `_CONFIG_` block in the YAML: " + url, 500)
@@ -92,16 +98,18 @@ notices.append("Congratulations, all the CSS selectors are valid.")
 
 
 # TODO: Insert/ update in database.
+#key = hashlib.md5( url ).hexdigest()
 
-key = hashlib.md5( url ).hexdigest()
+key_u = fix_name + "::" + fix_locale
+key = hashlib.md5( key_u ).hexdigest()
 
 
 res = scraperwiki.sqlite.save(
-    unique_keys=["key"],
-    data={"key":key, "url":url, "name":name, "yaml":yaml_file, "email":email, "updated":datetime.utcnow()},
+    unique_keys=["updated"], #["key"],
+    data={"key":key, "url":url, "name":fix_name, "yaml":yaml_file, "email":email, "updated":datetime.utcnow(),
+        "status":fix_status, "active":fix_active, "comment":comment, "intouch":intouch},
     table_name="fixes"
     )
-#"intouch":intouch,
 
 #notices.append(expr(res))
 
@@ -109,13 +117,12 @@ res = scraperwiki.sqlite.save(
 for inc in include:
     res = scraperwiki.sqlite.save(
         unique_keys=["pattern"],
-        data = { "key":key, "pattern":inc },
+        data = { "key":key, "pattern":inc, "locale":fix_locale },
         table_name="include_map"
         )
 
-notices.append("OK, your fixes were added to the database, key: "+ key)
-print my.render(" <p class=notice >".join(notices))
+notices.append("OK, your fixes were added to the database, key: " + key_u + " / " + key)
+print my.render('<p class="first notice">' + " <p class=notice >".join(notices))
 
 
 # End.
-
