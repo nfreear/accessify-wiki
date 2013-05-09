@@ -269,8 +269,9 @@ def markdown(page = ""):
 [scriptingenabled]: http://scriptingenabled.org/
 
 """ % locals()
-    return markdown.markdown(page + references, extensions=
-        ["headerid(level=2)", "toc(title=Contents)", "wikilinks", 'fenced_code', 'codehilite', 'attr_list'])
+    return markdown.markdown(page + references, extensions = [
+        "headerid", "toc(title=Contents)", "wikilinks", 'fenced_code', 'codehilite', 'attr_list'
+        ])
 
 
 # End.
