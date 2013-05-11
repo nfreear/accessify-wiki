@@ -17,14 +17,15 @@ markdown_page = """
 
 Tag line:
 
- * Working together to fix accessibility on the Web, one site at a time.
+ * Working together to fix accessibility on the Web, one site at a time. Working with those of all abilities.
 
 In a nutshell - various versions:
 
- * What is Accessify Wiki? Accessify Wiki is a way of authoring accessibility fixes for a site, without having control of that site, then delivering the fixes to a user during their normal browsing experience. It is not intended as a long-term accessibility solution for a site.
+ * What is Accessify Wiki? Accessify Wiki is a way of authoring **[accessibility][def-a11y] fixes** for a site, without having control of that site, then delivering the fixes to a user during their normal browsing experience. It is not intended as a long-term accessibility solution for a site.
  * Using Accessify Wiki, person A who has no affiliation to or control over site B, can independently (co-)author **[accessibility][def-a11y] and usability fixes** for site B, so that they are delivered to person C during their normal browsing experience -- via a [browser extension][def-addon], [user Javascript][def-userjs] or similar.
  * Using Accessify Wiki, person A can during their normal browsing experience experience site B with **[accessibility][def-a11y] and usability fixes** -- via a [browser extension][def-addon], [user Javascript][def-userjs] or similar. The fixes can be (co-)authored by person C, even though that person has no affiliation to or control over site B.
  * So, for example it allows anyone to author accessibility fixes for popular and busy sites like Facebook, Google and Baidu.
+ * Accessify Wiki is also a way of describing accessibility fixes to a non-specialist human (eg. a Wed developer or designer) in a clear, un-ambiguous format.
 
 
 ### Components
@@ -40,7 +41,7 @@ In a nutshell - various versions:
 
  * Components 2 and 3 may be combined - different views of the same repository/ Wiki.
  * It is hoped that through careful choice/ development of tools and documentation, the author of fixes need not be a skilled Web developer, but can instead be someone with a passion for accessibility, a willingness to explore and learn, and the desire to help.
- * [All code to be open-source][code-accessify]; **fixes** to be open-source/open-data/[open content][def-opencontent], eg. GPL, MIT, Creative Commons [CC-by/CC-by-sa] (are fixes data or code?)
+ * [All code to be open-source][code-accessify]; **accessibility fixes** to be open-source/open-data/[open content][def-opencontent], eg. GPL, MIT, Creative Commons [CC-by/CC-by-sa] (are fixes data or code?)
  * To date (April 2013), we have [prototyped][pr-accessify] components 1, 2, 3 and 5.
 
 
@@ -49,8 +50,9 @@ In a nutshell - various versions:
 The idea is:
 
  * To design usable authoring tools,
- * To create a low barrier of entry to authoring fixes,
- * And, to use [crowd-sourcing][def-crowd].
+ * To create a low barrier of entry to authoring accessibility fixes,
+ * And, to use [crowd-sourcing][def-crowd],
+ * You/ we/ the community as a whole authors and maintains the fixes.
 
 So, this project follows in the footsteps of Wikipedia, [Project Gutenberg][pg], [Fix the Web][fixtheweb], [Scripting Enabled][scriptingenabled] and others.
 
@@ -79,6 +81,19 @@ There are naturally limitations to the accessibility fixes that a system like *A
 Notwithstanding these and other limitations, I suggest that **Accessify Wiki** will be a useful tool to improve the Web for all.
 
 
+### Legal and author guidelines
+
+We don't have any terms of service or formal guidelines yet. So for now:
+
+ * Remember that the fixes that you write can directly affect an end-users' online experience,
+ * Respect the end-users' privacy and security,
+ * Specifically, don't write fixes for the secure areas of online banking services, online shops or other areas where private and credit card details are entered or displayed (guidance for the moment, may be relaxed),
+ * No bad/ inappropriate/ offensive language or harassment please. We do not approve user submissions, but reserve the right to take down unsuitable content,
+ * Accessify Wiki and AccessifyHTML5.js are designed to limit what accessibility fixes can do. Technically, they use a white-list of allowed HTML5 attributes, so that arbitrary Javascript etc. cannot be injected. However...
+ * ...DISCLAIMER: "<small>There is no warranty for the program, to the extent permitted by applicable law. Except when otherwise stated in writing the copyright holders and/or other parties provide the program &ldquo;as is&rdquo; without warranty of any kind, either expressed or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose.</small>" (Source: GPL)
+ * You keep your copyright and right of attribution for any accessibility fixes or software code you contribute -- specific free/open source/open-content licenses to be decided.
+
+
 ### Next steps
 
  * Get feedback from the community,
@@ -90,7 +105,7 @@ Notwithstanding these and other limitations, I suggest that **Accessify Wiki** w
 
 ### How can you help?
 
- * Provide moral support, be a critical friend, leave comments, show some love &hearts; ...
+ * Provide moral support, be a critical friend, leave comments, show some love <em style="color:#b11;font-size:x-large">&hearts;</em> ...
  * Install and use the end-user bookmarklet. Give feedback,
  * Try authoring some fixes -- and pester Nick to provide examples and write a tutorial when you get stuck,
  * Help write tutorials(!)

@@ -11,13 +11,17 @@
 // @updateURL https://raw.github.com/nfreear/accessify-wiki/master/browser/userjs/accessify.meta.js
 // ==/UserScript==
 
+/*global GM_info, log */
+/*jslint browser:true, devel:true, todo:true, indent:2 */
+
 (function () {
 
   "use strict";
 
   // Do not support frames for the moment.
-  if (window.parent != window) return;
-
+  if (window.parent !== window) {
+    return;
+  }
 
   if (typeof GM_info !== "undefined") {
     log(GM_info.script.name);
@@ -37,7 +41,7 @@
   //}
 
 
-  function log(){if(typeof console !== "undefined")console.log(arguments)}
+  function log() {if (typeof console === "object") {console.log(arguments); } }
 
 })();
 

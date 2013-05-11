@@ -6,6 +6,9 @@
  https://github.com/nfreear/accessify-wiki
 */
 
+/*global clearTimeout, AccessifyHTML5, log */
+/*jslint browser:true, devel:true, indent:2 */
+
 (function () {
 
   "use strict";
@@ -23,7 +26,7 @@
     th,
     logp;
 
-  if (window.parent != window) {
+  if (window.parent !== window) {
     log("We do not support frames at present.");
     return;
   }
@@ -54,25 +57,25 @@
   function attachCallback() {
     // Callback is global. (window["callback"])
     window.__accessifyhtml5_bookmarklet_CB = function (rsp) {
+      var res,
+        fixes = rsp;
 
       clearTimeout(th);
 
-      if (typeof rsp.stat !== "undefined" && rsp.stat == "fail") {
+      if (typeof rsp.stat !== "undefined" && rsp.stat === "fail") {
         log(rsp.message, rsp.code);
         setIcon("fail");
-        if (404 == rsp.code) {
+        if (404 === rsp.code) {
           setIcon("not_found");
           //log("Sorry, no domain matched.\n", host);
-          log("To add some fixes please visit our site   \n\n  ›› "+ home +"\n");
+          log("To add some fixes please visit our site   \n\n  ›› " + home + "\n");
         }
         return false;
       }
 
-      var fixes = rsp;
-
       log("Fixes found.", fixes);
- 
-      var res = AccessifyHTML5(false, fixes);
+
+      res = AccessifyHTML5(false, fixes);
 
       if (res.fail.length > 0) {
         setIcon("fail");
@@ -80,9 +83,9 @@
         setIcon("ok");
       }
 
-      log("OK. "+ res.ok.length +" fixes applied, "+ res.fail.length +" errors. \n", res);
-      log("To help improve the fixes please visit   \n\n  ›› "+ home +"\n");
-    }
+      log("OK. " + res.ok.length + " fixes applied, " + res.fail.length + " errors. \n", res);
+      log("To help improve the fixes please visit   \n\n  ›› " + home + "\n");
+    };
   }
 
   function addScript(src) {
@@ -100,7 +103,7 @@
     if (logp) {
       // Maybe we use a multi-line title attribute ?!
       // Was: logp.innerHTML += "&bull; " + s + "<br>\n"; //&rsaquo; //\203A
-      logp.title += "  › "+ s +" \n";
+      logp.title += "  › " + s + " \n";
     }
 
     if (typeof console === "object") {
@@ -122,8 +125,8 @@
 +"font:medium Arial,sans-serif;text-align:left;border-radius:2px;background:#fafafa;"
 +"color:#111;opacity:.9;border:3px solid gray;padding:6px;overflow-y:auto;cursor:help;");
       D.body.appendChild(logp);
-      logp.innerHTML += 
-    '<a href="'+ home_url +'" style="color:navy;text-decoration:underline;">Accessify Wiki</a> .. <span class="ico">*</span> <br>\n';
+      logp.innerHTML +=
+    '<a href="' + home_url + '" style="color:navy;text-decoration:underline;">Accessify Wiki</a> .. <span class="ico">*</span> <br>\n';
     }
     setIcon("loading");
   }
@@ -159,7 +162,7 @@
       el = document.querySelector("#AC5-log .ico"),
       cs = el.style;
 
-    cs.background = "transparent url("+ icon_url +") no-repeat right";
+    cs.background = "transparent url(" + icon_url + ") no-repeat right";
     cs.display = "inline-block";
     cs.paddingRight = "24px";
     cs.minWidth = "4em";
