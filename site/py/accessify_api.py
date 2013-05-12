@@ -19,7 +19,7 @@ format = my.get_option("format", my.re_api_format(), "json")
 
 scraperwiki.sqlite.attach("accessify-form", "acfy")
 
-result = scraperwiki.sqlite.select("* FROM `acfy`.`include_map`")
+result = scraperwiki.sqlite.select('* FROM "acfy"."include_map"')
 key = None
 
 for include in result:
@@ -35,7 +35,8 @@ if not key:
     my.apiError("Sorry, no fixes found for this page.", 404, callback)
 
 
-result = scraperwiki.sqlite.select("* FROM `acfy`.`fixes` WHERE `key` = ? ORDER BY `updated` DESC LIMIT 1", key)
+result = scraperwiki.sqlite.select(
+    '* FROM "acfy"."fixes" WHERE "key" = ? ORDER BY "updated" DESC LIMIT 1', key)
 result = result[0]
 
 

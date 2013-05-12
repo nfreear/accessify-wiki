@@ -20,6 +20,25 @@ Using Accessify Wiki, person A who has no affiliation to or control over site B,
  * Discussion document - [Google Docs..][accessify-rfc]
  * Schema draft/ discussion - [Google Docs..][schema-rfc]
 
+
+## Dependencies
+
+Python Standard Library:
+
+ * sys, os, cgi, url, urllib2, hashlib, datetime, re, mimetypes, json.
+
+Python third-party:
+
+ * scraperwiki
+ * lxml.html `cssselect`
+ * yaml `safe_load/ dump*`
+ * httplib2
+ * markdown (* ScraperWiki classic/ Beta)
+ * BeautifulSoup `from bs4 import BeautifulSoup`
+ * jsonschema (* ScraperWiki beta!!)
+ * requests (* ScraperWiki beta)
+
+
 ## Credits
 
  * ScraperWiki for prototype hosting - [www.scraperwiki.com][scraperwiki]

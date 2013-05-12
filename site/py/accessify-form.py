@@ -15,8 +15,8 @@ my = scraperwiki.utils.swimport("accessify_library_v1")
 
 drop = None
 if drop:
-    res = scraperwiki.sqlite.execute("DROP TABLE IF EXISTS `fixes`")
-    res = scraperwiki.sqlite.execute("DROP TABLE IF EXISTS `include_map`")
+    res = scraperwiki.sqlite.execute('DROP TABLE IF EXISTS "fixes"')
+    res = scraperwiki.sqlite.execute('DROP TABLE IF EXISTS "include_map"')
     print res
     exit()
 
