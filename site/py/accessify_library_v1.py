@@ -180,7 +180,7 @@ def getPageHead():
 <link rel=stylesheet href="//fonts.googleapis.com/css?family=%(font_enc)s:400,700" />
 <link rel=stylesheet href="/run/style/?url=github:trevorturk/pygments/master/default.css" />
 <style>
-body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:1em 3em; }
+body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:1.5em 5em; }
 input, button, label{ font-size:1em; display:inline-block; min-width:13em; }
 input:not([type = checkbox]){min-width:30em; padding:2px;}
 h1{ font-size:1.7em; }
@@ -194,6 +194,7 @@ li{margin:2px 0;}
 #foot{padding:1em 6px; margin-top:3em; border-top:1px solid #bbb; background:#eee; font-size:.95em;}
 #feed{padding-left:30px; display:inline-block; min-height:26px; background:url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/24px-Feed-icon.svg.png) no-repeat left;}
 #bookmark, #userjs{ border:1px solid orange; padding:2px 18px; background:#eee; border-radius:4px; }
+#fork{ position:absolute; top:-12px; left:-12px; border:0; }
 </style>
 """ % locals()
     return head
@@ -204,7 +205,7 @@ def getNavigation():
     nav = """
 <nav id=nav role="navigation">
   <ul>
-  <li><a href="/run/accessify-wiki/">Home</a>
+  <li><a href="/run/accessify-wiki/" title="Home">Home</a>
   <li><a href="/run/accessify-user/" title="Browser extensions &amp; bookmarklets for end-users">For users</a>
   <!--<li><a href="/run/accessify-bookmarklet/">For users</a>-->
   <li><a href="/run/accessify-author-1/" title="Bookmarklets &amp; tools for people contributing fixes">For authors</a>
@@ -229,6 +230,8 @@ def getFooter(feed_limit = 4):
  | <a id=ftw href="http://fixtheweb.net/" title="Fixing web accessibility">Fix the Web</a>
  | <a id=twitter href="http://twitter.com/nfreear" title="Contact: Nick Freear">@nfreear</a>
 </p>
+
+<a id=fork href="https://github.com/nfreear/accessify-wiki"><img alt="Fork me on GitHub" title="Fork me on Github" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" ></a>
 """ % locals()
     return footer
 
@@ -271,7 +274,17 @@ def markdown(page = ""):
 [pg]: http://www.gutenberg.org/
 [fixtheweb]: http://www.fixtheweb.net/
 [scriptingenabled]: http://scriptingenabled.org/
+[scraperwiki]: http://scraperwiki.com/
+[scraperwiki-beta]: http://beta.scraperwiki.com/
 
+[firefox]: http://www.mozilla.com/firefox/
+[greasemonkey]: https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/
+[chrome]: https://www.google.com/chrome
+[tampermonkey]: http://tampermonkey.net/
+[userjs-xbrowser]: http://wiki.greasespot.net/Cross-browser_userscripting
+
+[twitter-nfreear]: http://twitter.com/nfreear
+[mail-nfreear]: mailto:nfreear-@-yahoo.co.uk "Please remove the '-' dashes"
 """ % locals()
     return markdown.markdown(page + references, extensions = [
         "headerid", "toc(title=Contents)", "wikilinks", 'fenced_code', 'codehilite', 'attr_list'

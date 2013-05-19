@@ -1,10 +1,11 @@
-import scraperwiki
+#!/usr/bin/env python
 '''
   Accessify-wiki home page - "Proposal".
 
   Copyright Nick Freear, 27 April 2013.
 
 '''
+import scraperwiki
 my = scraperwiki.utils.swimport("accessify_library_v1")
 
 
@@ -102,11 +103,17 @@ We don't have any terms of service or formal guidelines yet. So for now:
  * Author more fixes
  * ...?
 
+### ScraperWiki
+
+What is ScraperWiki?
+
+[ScraperWiki][scraperwiki] is a set of online tools for data manipulation and analysis. We're using it to prototype the _Accessify Wiki_ idea. It may not be the long-term home for the project. Thank you to the team at ScraperWiki for creating a great set of tools. Check out the [ScraperWiki Beta][scraperwiki-beta].
+
 
 ### How can you help?
 
  * Provide moral support, be a critical friend, leave comments, show some love <em style="color:#b11;font-size:x-large">&hearts;</em> ...
- * Install and use the end-user bookmarklet. Give feedback,
+ * Install and use the end-user [user-Javascript and bookmarklet](/run/accessify-user/). Give feedback,
  * Try authoring some fixes -- and pester Nick to provide examples and write a tutorial when you get stuck,
  * Help write tutorials(!)
  * Help with specifications including the JSON Schema,
@@ -114,6 +121,10 @@ We don't have any terms of service or formal guidelines yet. So for now:
  * Provide web-hosting
  * ...?
 
+
+### Contact
+
+Contact Nick Freear via [email][mail-nfreear] or [Twitter][twitter-nfreear].
 
 <!--<iframe src="https://docs.google.com/spreadsheet/pub?key=0AgJMkdi3MO4HdG9wdVVDMGpJUW8zZ1VVWVFiTWt3aEE&single=true&gid=0&output=html&widget=true" width="90%" height="300"></iframe>-->
 

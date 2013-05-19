@@ -1,10 +1,11 @@
-import scraperwiki
+#!/usr/bin/env python
 '''
   Accessify-wiki user page - user-JS/ Greasemonkey/ bookmarklet.
 
   Copyright Nick Freear, 2 May 2013.
 
 '''
+import scraperwiki
 my = scraperwiki.utils.swimport("accessify_library_v1")
 
 project_url = 'https://raw.github.com/nfreear/accessify-wiki/'
@@ -24,10 +25,12 @@ Below are two prototype tools to apply accessibility fixes to the sites that you
 
 Both tools are built on [AccessifyHTML5.js][accessifyhtml5].
 
+To give feedback on the tools [email Nick][mail-nfreear] or find [me on Twitter][twitter-nfreear].
+
 
 ### User Javascript
 
-Currently only works in Firefox (other browsers to follow).
+Currently works in [Firefox]/ Greasemonkey and [Chrome]/ [Tampermonkey] (other browsers to follow - [Cross-browser user scripting][userjs-xbrowser]).
 
 Instructions for use with Firefox and Greasemonkey:
 
@@ -46,8 +49,6 @@ The bookmarklet works in all browsers.
  (*) bookmarklet &ndash; right-click and add or save me to your browser's bookmarks or favourites bar (Chrome and Safari users will wish to start by copying the link).
 
 
-[firefox]: http://www.mozilla.com/firefox/
-[greasemonkey]: https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/
 [gm-install-2]: http://userscripts.org/about/installing
 
 [userjs]: %(userjs_url)s
