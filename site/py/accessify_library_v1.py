@@ -23,9 +23,9 @@ def scraperName():
 
 
 def render(page, title = "Accessify Wiki prototype"):
-    google_analytics = googleAnalyticsJs()
-    head = getPageHead()
     sname = scraperName()
+    google_analytics = googleAnalyticsJs()
+    head = getPageHead(sname)
     navigation = getNavigation()
     footer = getFooter()
     template = """<!doctype html>
@@ -168,9 +168,13 @@ def accessifyForm():
     return page
 
 
-def getPageHead():
+def getPageHead(sname = None):
     font = "PT Sans"
     font_enc = "PT+Sans"
+    if sname == "accessify-site":
+        pygments_style = '<link rel=stylesheet href="/run/style/?url=github:trevorturk/pygments/master/default.css" />'
+    else:
+        pygments_style = ''
     head = """
 <!--[if lt IE 9]>
 <script> document.createElement('main') </script>
@@ -178,7 +182,7 @@ def getPageHead():
 <![endif]-->
 
 <link rel=stylesheet href="//fonts.googleapis.com/css?family=%(font_enc)s:400,700" />
-<link rel=stylesheet href="/run/style/?url=github:trevorturk/pygments/master/default.css" />
+%(pygments_style)s
 <style>
 body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:1.5em 5em; }
 input, button, label{ font-size:1em; display:inline-block; min-width:13em; }
@@ -187,14 +191,19 @@ h1{ font-size:1.7em; }
 h1 em{font-size:.8em; font-weight:normal; color:gray;}
 h2{ font-size:1.4em; }
 li{margin:2px 0;}
-#nav ul{margin:0; padding:0;}
+#nav ul{margin:0; padding:0; z-index:999; position:relative;}
 #nav li{display:inline-block; padding:0;}
 #nav a {display:inline-block; min-width:6em; padding:6px 18px; margin-right:8px; text-align:center; border:1px solid #ccc; background:#eee;}
 #nav a:hover, #nav a:focus{background:#f9f9f9;}
 #foot{padding:1em 6px; margin-top:3em; border-top:1px solid #bbb; background:#eee; font-size:.95em;}
 #feed{padding-left:30px; display:inline-block; min-height:26px; background:url(https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/24px-Feed-icon.svg.png) no-repeat left;}
 #bookmark, #userjs{ border:1px solid orange; padding:2px 18px; background:#eee; border-radius:4px; }
-#fork{ position:absolute; top:-12px; left:-12px; border:0; }
+#fork{
+  display:block; position:absolute; top:-12px; left:-12px; width:128px; height:132px; /*149 x 154px */
+  background:url(https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png) no-repeat;
+  border:1px solid transparent; border-bottom-right-radius:115px;
+}
+#fork:hover{border-color:#ccc; opacity:.7;}
 </style>
 """ % locals()
     return head
@@ -217,21 +226,23 @@ def getNavigation():
     return nav
 
 
-def getFooter(feed_limit = 4):
+def getFooter(feed_limit = 10):
     api_url = "https://api.scraperwiki.com/api/1.0/datastore/sqlite"
-    query = "SELECT+name+AS+title%2Cname+AS+description%2C+url+AS+link%2C+updated+AS+date+FROM+fixes"
+    query = "SELECT+name+AS+title%2Cname+AS+description%2C+url+AS+link%2C+updated+AS+date+FROM+fixes+ORDER+BY+date+DESC"
     footer = """
 <p id=foot role=contentinfo >
  <a id=feed rel=alternate title="RSS feed of recent Accessibility fixes" href=
  "%(api_url)s?format=rss2&amp;name=accessify-form&amp;query=%(query)s+LIMIT+%(feed_limit)s">Feed</a>
  | <a id=api href="https://scraperwiki.com/docs/api?name=accessify-form&table_names=fixes,include_map#sqlite" title="Via the ScraperWiki API">API</a>
- | <a id=code href="https://github.com/nfreear/accessify-wiki" title="Fork me on Github">Get the code</a>
+ | <a id=code href="https://github.com/nfreear/accessify-wiki" title="Fork the code on Github">Get the code</a>
  | <a id=poweredby href="https://scraperwiki.com/views/accessify-wiki/" title="Powered by ScraperWiki - thank you ;)">Powered by ScraperWiki</a>
  | <a id=ftw href="http://fixtheweb.net/" title="Fixing web accessibility">Fix the Web</a>
- | <a id=twitter href="http://twitter.com/nfreear" title="Contact: Nick Freear">@nfreear</a>
+ | <a id=ac href="http://accessify.com/">Accessify.com</a>
+ | <a id=af href="http://www.accessifyforum.com/">Accessify Forum</a>
+ | <a id=twit href="http://twitter.com/nfreear" title="Contact: Nick Freear">@nfreear</a>
 </p>
 
-<a id=fork href="https://github.com/nfreear/accessify-wiki"><img alt="Fork me on GitHub" title="Fork me on Github" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" ></a>
+<a id=fork href="https://github.com/nfreear/accessify-wiki" title="Fork the code on Github"></a>
 """ % locals()
     return footer
 
@@ -271,6 +282,7 @@ def markdown(page = ""):
 [pr-accessify]: https://views.scraperwiki.com/run/accessify-form/
 [accessifyhtml5]: https://github.com/yatil/accessifyhtml5.js "by Eric Egert @yatil"
 [closure-compiler]: http://closure-compiler.appspot.com/home
+
 [pg]: http://www.gutenberg.org/
 [fixtheweb]: http://www.fixtheweb.net/
 [scriptingenabled]: http://scriptingenabled.org/
@@ -282,6 +294,9 @@ def markdown(page = ""):
 [chrome]: https://www.google.com/chrome
 [tampermonkey]: http://tampermonkey.net/
 [userjs-xbrowser]: http://wiki.greasespot.net/Cross-browser_userscripting
+[moinmoin]: http://moinmo.in/ "Moin Moin wiki engine, written in Python"
+[mediawiki]: http://www.mediawiki.org/
+[dokuwiki]: https://www.dokuwiki.org/
 
 [twitter-nfreear]: http://twitter.com/nfreear
 [mail-nfreear]: mailto:nfreear-@-yahoo.co.uk "Please remove the '-' dashes"

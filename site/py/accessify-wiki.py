@@ -22,11 +22,11 @@ Tag line:
 
 In a nutshell - various versions:
 
- * What is Accessify Wiki? Accessify Wiki is a way of authoring **[accessibility][def-a11y] fixes** for a site, without having control of that site, then delivering the fixes to a user during their normal browsing experience. It is not intended as a long-term accessibility solution for a site.
+ * What is Accessify Wiki? Accessify Wiki is a way of authoring **[accessibility][def-a11y] fixes** for a site, without having control of that site, then delivering the fixes to a user during their normal browsing experience. This is not intended as a long-term accessibility solution for a site.
  * Using Accessify Wiki, person A who has no affiliation to or control over site B, can independently (co-)author **[accessibility][def-a11y] and usability fixes** for site B, so that they are delivered to person C during their normal browsing experience -- via a [browser extension][def-addon], [user Javascript][def-userjs] or similar.
  * Using Accessify Wiki, person A can during their normal browsing experience experience site B with **[accessibility][def-a11y] and usability fixes** -- via a [browser extension][def-addon], [user Javascript][def-userjs] or similar. The fixes can be (co-)authored by person C, even though that person has no affiliation to or control over site B.
  * So, for example it allows anyone to author accessibility fixes for popular and busy sites like Facebook, Google and Baidu.
- * Accessify Wiki is also a way of describing accessibility fixes to a non-specialist human (eg. a Wed developer or designer) in a clear, un-ambiguous format.
+ * Accessify Wiki is also a way of describing accessibility fixes to a non-specialist human (eg. a Web developer or designer) in a clear, un-ambiguous format, so that they can fix their web site themselves.
 
 
 ### Components
@@ -35,7 +35,7 @@ In a nutshell - various versions:
  2. A repository/database and [query API][def-api] to allow the end-user extension to request fixes;
  3. Authoring/ development tools -- which may include a Wiki for collaborative authoring, a fix-checker/validation service, bookmarklet Javascripts, fix-submission form and so on;
  4. Site-owner tools to allow owner-developers to understand and package up/ integrate the accessibility fixes;
- 5. A standardized way to author and store the fixes for editing, validation and re-use ([YAML][def-yaml]).
+ 5. A standardized way to author and store the fixes for editing, validation and re-use (proposal: [YAML][def-yaml] + [JSON-Schema][def-jsonschema]).
 
 
 ### Notes
@@ -95,19 +95,25 @@ We don't have any terms of service or formal guidelines yet. So for now:
  * You keep your copyright and right of attribution for any accessibility fixes or software code you contribute -- specific free/open source/open-content licenses to be decided.
 
 
+### Is it a Wiki?
+Ah, you noticed! At present you can only submit fixes via a form, that you author elsewhere. This functionality will be added - soon hopefully. Likely candidates are [MoinMoin], [MediaWiki] or [DokuWiki].
+
+
+### ScraperWiki
+What is ScraperWiki?
+
+[ScraperWiki][scraperwiki] is a set of online tools for data manipulation and analysis. We're using it to prototype the _Accessify Wiki_ idea. It may not be the long-term home for the project.
+
+Thank you to the team at ScraperWiki for creating a great set of tools. Check out the [ScraperWiki Beta][scraperwiki-beta].
+
+
 ### Next steps
 
  * Get feedback from the community,
  * Choose a domain-name,
- * Develop a Greasemonkey/user Javascript,
+ * DONE. Develop a Greasemonkey/user Javascript,
  * Author more fixes
  * ...?
-
-### ScraperWiki
-
-What is ScraperWiki?
-
-[ScraperWiki][scraperwiki] is a set of online tools for data manipulation and analysis. We're using it to prototype the _Accessify Wiki_ idea. It may not be the long-term home for the project. Thank you to the team at ScraperWiki for creating a great set of tools. Check out the [ScraperWiki Beta][scraperwiki-beta].
 
 
 ### How can you help?
@@ -123,8 +129,8 @@ What is ScraperWiki?
 
 
 ### Contact
-
 Contact Nick Freear via [email][mail-nfreear] or [Twitter][twitter-nfreear].
+
 
 <!--<iframe src="https://docs.google.com/spreadsheet/pub?key=0AgJMkdi3MO4HdG9wdVVDMGpJUW8zZ1VVWVFiTWt3aEE&single=true&gid=0&output=html&widget=true" width="90%" height="300"></iframe>-->
 
