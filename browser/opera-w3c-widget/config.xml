@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget
+  xmlns="http://www.w3.org/ns/widgets"
+  id="http://freear.org.uk/accessify"
+  version="0.5 alpha1"
+  xml:lang="en"
+  >
+    <!--
+    http://dev.opera.com/addons/extensions
+    http://www.opera.com/docs/userjs/using
+    http://www.opera.com/docs/specs/presto25/widgets/w3cwidgets/
+    -->
+    <name>Accessify</name>
+    <description>
+    A prototype for an Accessify-wiki Opera widget extension; 2013-05-02.
+    </description>
+    <author
+      href="http://twitter.com/nfreear"
+      email="nfreear-@-yahoo.co.uk"
+      >Nick Freear</author>
+    <icon src="icons/hello.png"/>
+    <license href="http://nfreear.mit-license.org/">
+    Copyright &#169; 2013 Nick Freear. Licensed under the MIT License.
+    </license>
+
+    <access origin="https://raw.github.com" subdomains="false"/>
+    <!-- Access: https://raw.github.com/nfreear/accessify-wiki/master/browser/js/accessifyhtml5-marklet.js -->
+
+    <feature name="opera:share-cookies" required="false"/>
+
+    <content src="index.html" encoding="utf-8" type="text/html"/> <!--type="application/xhtml+xml"/-->
+</widget>
