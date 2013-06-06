@@ -1,0 +1,86 @@
+/* SOURCE: http://accessify.wikia.com/wiki/MediaWiki:Wikia.css */
+
+
+.i18ndoc {
+    background-color: #FFF77D;
+    border-bottom: 1px solid lightgrey;
+    font-family: monospace;
+    font-size: 8pt;
+    height: 140px;
+    overflow: auto;
+    padding: 3px;
+}
+
+
+
+/*
+  NDF edits, 3 June 2013.
+*/
+ 
+body.oasis-dark-theme {
+    color:#e6e5e5; /*#d5d4d4*/
+}
+.WikiaPage .WikiaPageBackground {
+    background:#363535;  /*#474646*/
+}
+.WikiaArticle {
+    font-size:1.3em;  /*13px*/
+    line-height:1.7em;  /*21px*/
+}
+
+
+/*
+  Override GeSHi Dynamically Generated Stylesheet(s)
+*/
+.oasis-dark-theme .yaml.source-yaml .co1 {  /*Comments */
+    color:#70b8ff;
+}
+.oasis-dark-theme .yaml.source-yaml .co3,
+.oasis-dark-theme .yaml.source-yaml .co4 {
+    color:lime;
+}
+.oasis-dark-theme .yaml.source-yaml .sy2 {
+    color:#f44;  /*red*/
+}
+.oasis-dark-theme .yaml.source-yaml .st0 {
+    color:#f99;
+}
+.oasis-dark-theme .css.source-css .kw1 {
+    color:#eee; /*Was:black */
+}
+.oasis-dark-theme .css.source-css .coMULTI {
+    color:#aaa;
+}
+.oasis-dark-theme .javascript.source-javascript .coMULTI,
+.oasis-dark-theme .javascript.source-javascript .co1 {
+    color:#2a2; /*#060*/
+}
+.oasis-dark-theme .javascript.source-javascript .kw1 {
+    color:#47d; /*#006*/
+}
+.oasis-dark-theme .javascript.source-javascript .me1 {
+    color:#a2a; /*#606*/
+}
+
+
+/*
+  Create-fix widget.
+*/
+#mw-content-text .createbox input {
+  font-size:1.25em; padding:4px 9px; x-height:1.6em;
+  border:2px solid orange; border-radius:4px;
+}
+#mw-content-text .createboxInput {
+  background:#f8f8f8;
+  color:#333;
+  max-width:13em;
+}
+#mw-content-text .createboxInput:focus {
+  background:#fcfcfc;
+}
+#mw-content-text .createboxButton {
+  height:auto; lineheight:1.3em;
+}
+
+
+/*End. */
