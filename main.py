@@ -34,11 +34,14 @@ class ValidateHandler(webapp2.RequestHandler):
     def get(self):
         #result = {}
         req = self.request
+        rsp = self.response
+
         format  = req.get('format', default_value='html') #Or 'json'
         callback= req.get('callback', default_value=None)
         schema_url = req.get('schema_url', default_value=None)
         url  = req.get('url', default_value=None)
         yaml = req.get('yaml', default_value=None) # POST or GET?
+        result = None
 
         if format == 'json':
             if not url and not yaml:
@@ -50,11 +53,13 @@ class ValidateHandler(webapp2.RequestHandler):
             else:
                 result = validator.validate(url, yaml, schema_url)
 
-            self.response.headers.add('Content-Type', 'application/json; charset=UTF-8')
+            rsp.headers.add('Content-Type', 'application/json; charset=UTF-8')
+            rsp.write( result )
+            #rsp.write(json.dumps(result))
 
-        self.response.write('Validate!')
-        self.response.write(format)
-        self.response.write(json.dumps(result))
+        else:
+            rsp.write('Validate!')
+            rsp.write(format)
 
 
 app = webapp2.WSGIApplication([

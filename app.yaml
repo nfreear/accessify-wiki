@@ -14,6 +14,16 @@ handlers:
   static_files: schema/accessify-base-json-schema.json
   upload: schema/accessify-base-json-schema\.json
 
+- url: /browser
+  static_dir: browser
+
+- url: /data
+  static_dir: data
+
+
+#- url: /wiki/.*
+#  script: wiki/moin.application
+
 - url: .*
   script: main.app
 

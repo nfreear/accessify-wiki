@@ -14,7 +14,7 @@ PROJECT_DIR = os.path.dirname(__file__)
 # The static file.
 schema_path = '/schema/accessify-base-json-schema.json'
 # Local copy to be read.
-schema_file = '../lib/accessify-fixes-json-schema-x.json'
+schema_file = PROJECT_DIR + '/accessify-fixes-json-schema.json'
 
 
 schema_2 = {
@@ -33,7 +33,7 @@ result = {
     "code": 200,
     "message": "Success?",
     #"schema": {},
-    "data": {},
+    #"data": {},
 }
 
 
@@ -51,8 +51,14 @@ def validate(url, yaml_data, schema_url):
 
     try:
         yaml_data = yaml.safe_load(yaml_data)
-    except:
-        print "Error, YAML load url. Woops!"
+    except Exception, ex:
+        result['message'] = "Error, YAML is not well-formed"
+        result['detail'] = "ERROR:\n\n" + str(ex)
+        result['stat'] = "fail"
+        result['code'] = 400.1
+
+    if result['stat'] == 'fail':
+        return result
 
     if schema_url:
         rs = requests.get(schema_url)
@@ -62,20 +68,23 @@ def validate(url, yaml_data, schema_url):
             print "Error, schema_url"
     else:
         #IOError: [Errno 13] file not accessible: '../lib/accessify-fixes-json-schema-x.json'
-        #with open(schema_file, 'r') as fs:
-        #    schema = fs.read()
-    	schema = "{}" # Read from file.
+        with open(schema_file, 'r') as fs:
+            schema = fs.read()
+        #schema = "{}" # Read from file.
 
     schema = json.loads(schema)
 
     try:
         #jss.validate({"name" : "Eggs", "price" : 34.99}, schema)
         jss.validate(yaml_data, schema)
-    except jss.ValidationError:
-        result['message'] = "Error, data validation."
+    except jss.ValidationError, ex:
+        result['detail'] = str(ex)[0:130]
+        #result['ex'] = str(ex)
+        result['message'] = "Error, YAML data validation."
         result['stat'] = "fail"
+        result['code'] = 400.2
     except jss.SchemaError:
-        result['message'] = "Error, schema validation."
+        result['message'] = "Error, JSON Schema validation."
         result['stat'] = "fail"
 
     #result['schema'] = schema
