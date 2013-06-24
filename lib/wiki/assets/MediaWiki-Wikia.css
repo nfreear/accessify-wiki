@@ -13,8 +13,12 @@
 
 
 
-/*
-  NDF edits, 3 June 2013.
+
+/*!
+  Accessify-Wiki : MediaWiki stylesheet.
+
+  @link https://github.com/nfreear/accessify-wiki
+  @copyright Nick Freear, 3 June 2013.
 */
  
 body.oasis-dark-theme {
@@ -26,6 +30,19 @@ body.oasis-dark-theme {
 .WikiaArticle {
     font-size:1.3em;  /*13px*/
     line-height:1.7em;  /*21px*/
+}
+.WikiaArticle h2 {
+    font-size:1.6em;
+}
+
+
+/* Adverts.
+*/
+.oasis-dark-theme .SelfServeUrl {
+    color:#aaa; /*#666*/
+    font-size:small; /*10px*/
+    line-height:15px;
+    x-margin: -10px 0 10px 0;
 }
 
 
@@ -63,9 +80,12 @@ body.oasis-dark-theme {
 }
 
 
-/*
-  Create-fix widget.
+/* Create-fix inputbox.
 */
+#create-fix {
+  font-size:1.2em; text-align:center; padding:.7em; margin:1em;
+  background:#4c4b4b; border:1px solid #777;
+}
 #mw-content-text .createbox input {
   font-size:1.25em; padding:4px 9px; x-height:1.6em;
   border:2px solid orange; border-radius:4px;
@@ -80,6 +100,19 @@ body.oasis-dark-theme {
 }
 #mw-content-text .createboxButton {
   height:auto; lineheight:1.3em;
+}
+
+
+/* Accessibility fix editor/ page.
+*/
+.acfy-fix-editor #EditPageToolbar,
+.acfy-fix-editor .module_insert,
+.acfy-fix-editor .cke_button_ModeWysiwyg {
+  display:none;
+}
+.acfy-fix-editor-msg {
+  margin:1em;
+  font-size:1.3em;
 }
 
 
