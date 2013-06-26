@@ -111,8 +111,20 @@ body.oasis-dark-theme {
   display:none;
 }
 .acfy-fix-editor-msg {
-  margin:1em;
+  padding:1em 20px;
   font-size:1.3em;
+}
+.acfy-fix-viewer .acfy-fix-editor-msg {
+  padding:1.1em 5px;
+  margin-bottom:1.2em;
+  border-bottom:solid 1px #6b6a6a;
+  background:#1a1a1a;
+}
+.acfy-fix-viewer.wikinav2 .WikiaPageHeader {
+  margin-bottom:0;
+}
+.X_acfy-fix-editor-msg > * {
+  display:inline-block;
 }
 
 
