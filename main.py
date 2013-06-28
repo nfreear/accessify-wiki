@@ -21,13 +21,31 @@ import sys, os
 PROJECT_DIR = os.path.dirname(__file__)
 sys.path.append(PROJECT_DIR + '/lib')
 
-import validator
+import validator, accessifyquery
 import json
 
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
+
+
+class AccessifyQueryHandler(webapp2.RequestHandler):
+    def get(self):
+        req = self.request
+        rsp = self.response
+
+        format  = req.get('format', default_value='json')
+        callback= req.get('callback', default_value=None)
+        url  = req.get('url', default_value=None)
+        result = None
+
+        result = accessifyquery.query(url)
+
+        #if format == 'json':
+
+        rsp.headers.add('Content-Type', 'application/json; charset=UTF-8')
+        rsp.write(json.dumps(result))
 
 
 class ValidateHandler(webapp2.RequestHandler):
@@ -54,8 +72,7 @@ class ValidateHandler(webapp2.RequestHandler):
                 result = validator.validate(url, yaml, schema_url)
 
             rsp.headers.add('Content-Type', 'application/json; charset=UTF-8')
-            rsp.write( result )
-            #rsp.write(json.dumps(result))
+            rsp.write(json.dumps(result))
 
         else:
             rsp.write('Validate!')
@@ -64,5 +81,6 @@ class ValidateHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/query', AccessifyQueryHandler),
     ('/validate', ValidateHandler)
 ], debug=True)
