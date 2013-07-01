@@ -1,4 +1,8 @@
-application: accessifywiki
+#
+# MCIE088:accessifywiki Nick$ appcfg.py --email=n.d.fr~r@gmail.com update ./
+# https://gist.github.com/cagatay/1296386#file-app-yaml
+#
+application: accessifywiki--1
 version: 1
 runtime: python27
 api_version: 1
@@ -17,9 +21,12 @@ handlers:
 - url: /browser
   static_dir: browser
 
+#- url: /(.*\.js)
+#- url: /(data/.*\.ya?ml)
+#  mime_type: "text/plain; charset=utf-8"
 - url: /data
   static_dir: data
-
+  mime_type: text/plain
 
 #- url: /wiki/.*
 #  script: wiki/moin.application

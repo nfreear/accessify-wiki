@@ -27,30 +27,27 @@ import json
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        self.redirect('http://accessify.wikia.com/wiki/Tools')
 
 
 class AccessifyQueryHandler(webapp2.RequestHandler):
     def get(self):
         req = self.request
         rsp = self.response
-
         format  = req.get('format', default_value='json')
         callback= req.get('callback', default_value=None)
         url  = req.get('url', default_value=None)
-        result = None
 
         result = accessifyquery.query(url)
 
         #if format == 'json':
 
-        rsp.headers.add('Content-Type', 'application/json; charset=UTF-8')
+        rsp.headers["Content-Type"] = 'application/json; charset=utf-8'
         rsp.write(json.dumps(result))
 
 
 class ValidateHandler(webapp2.RequestHandler):
     def get(self):
-        #result = {}
         req = self.request
         rsp = self.response
 
@@ -71,7 +68,7 @@ class ValidateHandler(webapp2.RequestHandler):
             else:
                 result = validator.validate(url, yaml, schema_url)
 
-            rsp.headers.add('Content-Type', 'application/json; charset=UTF-8')
+            rsp.headers["Content-Type"] = 'application/json; charset=utf-8'
             rsp.write(json.dumps(result))
 
         else:
