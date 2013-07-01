@@ -16,8 +16,10 @@
 /schema/JsonSchema*
 /_scratch/
 /lib/*.json
-/lib/jsonschema
 
+/lib/jsonschema
+/lib/requests
+/lib/requests_git
 
 *.py[cod]
 
