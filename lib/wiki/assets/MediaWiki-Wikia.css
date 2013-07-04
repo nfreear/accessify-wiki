@@ -80,9 +80,19 @@ body.oasis-dark-theme {
 }
 
 
+/* Bookmarklet / User-JS.
+*/
+a[href $= '.user.js'], a[href ^= 'javascript:'], .big.inline {
+  display:inline-block; font-size:1.18em; padding:2px 20px 2px 9px; margin:0 3px;
+  background:#4c4b4b
+    url(http://upload.wikimedia.org/wikipedia/commons/5/59/Script_add.png)
+  no-repeat right; border:1px solid #777;
+}
+
+
 /* Create-fix inputbox.
 */
-#create-fix {
+#create-fix, .big.notice {
   font-size:1.2em; text-align:center; padding:.7em; margin:1em;
   background:#4c4b4b; border:1px solid #777;
 }
@@ -122,9 +132,6 @@ body.oasis-dark-theme {
 }
 .acfy-fix-viewer.wikinav2 .WikiaPageHeader {
   margin-bottom:0;
-}
-.X_acfy-fix-editor-msg > * {
-  display:inline-block;
 }
 
 
