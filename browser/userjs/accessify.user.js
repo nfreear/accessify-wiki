@@ -7,8 +7,8 @@
 // @grant none
 // @version 0.5.0.20130503
 // @copyright Nick Freear.
-// @downloadURL https://raw.github.com/nfreear/accessify-wiki/master/browser/userjs/accessify.user.js
-// @updateURL https://raw.github.com/nfreear/accessify-wiki/master/browser/userjs/accessify.meta.js
+// @downloadURL https://accessifywiki--1.appspot.com/browser/userjs/accessify.user.js
+// @updateURL https://accessifywiki--1.appspot.com/browser/userjs/accessify.meta.js
 // ==/UserScript==
 
 /*global GM_info, log */

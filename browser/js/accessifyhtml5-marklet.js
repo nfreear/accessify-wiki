@@ -15,12 +15,12 @@
 
   var
     D = document,
-    href = D.location.href,
-    host = D.location.host,
+    DL = D.location,
     script = "https://raw.github.com/nfreear/accessifyhtml5.js/master/accessifyhtml5.js",
+    //script = "//accessifywiki--1.appspot.com/browser/js/accessifyhtml5.js",
     callback = "__accessifyhtml5_bookmarklet_CB",
-    fixes_url = "https://views.scraperwiki.com/run/accessify_utils_v1/?callback=",
-    home_url = "http://freear.org.uk/accessify",
+    fixes_url = "//accessifywiki--1.appspot.com/query?callback=",
+    home_url = "http://accessify.wikia.com",
     home = home_url.replace(/https?:\/\//, ''),
     timeout = 15000,
     th,
@@ -31,16 +31,16 @@
     return;
   }
 
-  if (href.match(/run\/accessify-/)) {
+  if (DL.href.match(/run\/accessify-/)) {
     log("Not fixing Accessify Wiki page.");
     return;
   }
 
   logInit();
 
-  fixes_url += callback + "&url=" + encodeURIComponent(href);
+  fixes_url += callback + "&url=" + encodeURIComponent(DL.href);
 
-  log("Querying for fixes..", host, fixes_url);
+  log("Querying for fixes..", DL.host, fixes_url);
 
   th = setTimeout(function () {
     log("Unknown problem/ too slow/ fixes not allowed (security)");
