@@ -22,7 +22,18 @@ PROJECT_DIR = os.path.dirname(__file__)
 sys.path.append(PROJECT_DIR + '/lib')
 
 import validator, accessifyquery
-import json
+import json, re
+
+
+def test_jsonp_callback(callback):
+    result = None
+    if callback and not re.match('^[\$a-zA-Z_][\w\._]+$', callback):
+        result = {
+            'stat': 'fail',
+            'code': 400.1,
+            'message': "Error, invalid 'callback' parameter."
+        }
+    return result
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -38,12 +49,23 @@ class AccessifyQueryHandler(webapp2.RequestHandler):
         callback= req.get('callback', default_value=None)
         url  = req.get('url', default_value=None)
 
+        rsp.headers['Content-Type'] = 'application/json; charset=utf-8'
+        rsp.headers['Access-Control-Allow-Origin'] = '*';
+
+        result = test_jsonp_callback(callback)
+        if result:
+            rsp.write(json.dumps(result))
+            return
+
         result = accessifyquery.query(url)
 
         #if format == 'json':
 
-        rsp.headers["Content-Type"] = 'application/json; charset=utf-8'
-        rsp.write(json.dumps(result))
+        if callback:
+            rsp.headers['Content-Type'] = 'text/javascript; charset=utf-8'
+            rsp.write(''.join([ callback, '(', json.dumps(result), ');' ]))
+        else:
+            rsp.write(json.dumps(result))
 
 
 class ValidateHandler(webapp2.RequestHandler):
