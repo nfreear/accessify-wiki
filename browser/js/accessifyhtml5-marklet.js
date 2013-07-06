@@ -16,8 +16,7 @@
   var
     D = document,
     DL = D.location,
-    script = "https://raw.github.com/nfreear/accessifyhtml5.js/master/accessifyhtml5.js",
-    //script = "//accessifywiki--1.appspot.com/browser/js/accessifyhtml5.js",
+    script = "//accessifywiki--1.appspot.com/browser/js/accessifyhtml5.js",
     callback = "__accessifyhtml5_bookmarklet_CB",
     fixes_url = "//accessifywiki--1.appspot.com/query?callback=",
     home_url = "http://accessify.wikia.com",
@@ -31,7 +30,7 @@
     return;
   }
 
-  if (DL.href.match(/run\/accessify-/)) {
+  if (DL.href.match(/(run\/accessify-|accessify.wikia.com)/)) {
     log("Not fixing Accessify Wiki page.");
     return;
   }

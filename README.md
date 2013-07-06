@@ -8,8 +8,9 @@ Using Accessify Wiki, person A who has no affiliation to or control over site B,
 
  * `/browser/` contains browser plugins, bookmarklet Javascript and user Javascript (Greasemonkey).
  * `/data/` contains sample site-fixes in [YAML][def-yaml] format.
+ * `/lib/` contains Python libraries for the `webapp2` based service.
  * `/schema/` contains a [JSON Schema][json-schema] for site-fix files.
- * `/site/` contains the prototype site and web-service, currently mostly written in Python to be hosted on [ScraperWiki][scraper-py].
+ * `/site/` contains a prototype site and web-service, currently mostly written in Python to be hosted on [ScraperWiki][scraper-py].
 
 
 ## Links
@@ -29,7 +30,8 @@ Python Standard Library:
 
 Python third-party:
 
- * scraperwiki
+ * virtualenv
+ * **scraperwiki
  * lxml.html `cssselect`
  * yaml `safe_load/ dump*`
  * httplib2
