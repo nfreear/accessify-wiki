@@ -1,0 +1,1 @@
+../../../src/accessifyhtml5.js/accessifyhtml5.js

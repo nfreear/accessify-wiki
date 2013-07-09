@@ -15,10 +15,10 @@
 /schema/*schema*.ya?ml
 /schema/JsonSchema*
 /_scratch/
-/lib/*.json
 
-/lib/jsonschema
-/lib/requests
+#/lib/*.json
+#/lib/jsonschema
+#/lib/requests
 /lib/requests_git
 
 *.py[cod]

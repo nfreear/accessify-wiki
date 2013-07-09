@@ -1,0 +1,27 @@
+#
+# Accessify-wiki Python (& non-Python) requirements.
+#
+# MCIE0:appeng-1 N$ python /usr/local/lib/python2.7/site-packages/virtualenv.py accessifywiki_1
+#
+
+
+#: https://pypi.python.org/pypi/jsonschema
+#: cd lib/ && ln -s ../../build/jsonschema/jsonschema/ jsonschema
+#: ln -s ../../build/requests/requests/ requests
+jsonschema==2.0.0
+requests==1.2.3
+
+
+#: Non-Python - it clones OK, then ./setup.py fails ;)!
+#: cd lib/ && ln -s ../../src/accessifyhtml5.js/ accessifyhtml5.js
+#: cd ../browser/js/ && ln -s ../../../src/accessifyhtml5.js/accessifyhtml5.js accessifyhtml5.js
+-e git+http://github.com/nfreear/accessifyhtml5.js.git@961c60d48#egg=accessifyhtml5.js
+
+
+#: pip freeze > stable-req.txt
+#distribute==0.6.40
+#virtualenv==1.9.1
+#wsgiref==0.1.2
+
+
+#End.
