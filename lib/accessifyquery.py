@@ -13,7 +13,7 @@ from urlparse import urlparse
 
 WIKI_SEARCH_URL = (
     "http://accessify.wikia.com/wiki/"
-    "Special:Search?ns0=1&format=json&limit=1&search=")
+    "Special:Search?ns0=1&format=json&limit=5&search=")
 
 
 def query(url):
@@ -30,6 +30,7 @@ def query(url):
         # TODO: error handling - parse, urlopen-read, json-load...
 
         up = urlparse(url, scheme = "http")
+        found = None
         try:
             r = request_wiki_search(url)
         except requests.HTTPError:
@@ -40,16 +41,28 @@ def query(url):
                 'message': 'Error, HTTP error on search request.'
             }
         else:
-            search_result = r.json()
+            search_results = r.json()
             #search_result = json.loads(search_json)
-            if len(search_result) < 1:
+            if len(search_results) < 1:
                 result = {
                     "stat": "fail",
                     "code": 404,
                     "message": "Error, fixes not found."
                 }
             else:
-                search_result = search_result[0]
+                for result in search_results:
+                    if result["title"].find("Fix:") > -1:
+                        found = result
+                        break
+                else:
+                    result = {
+                        "stat": "fail",
+                        "code": 500.404,
+                        "message": "Error, search failed - not found."
+                    }
+
+            if found:
+                search_result = found
                 page_id = search_result["pageid"]
                 page_url = search_result["url"]
                 page_title = search_result["title"].replace("Fix:", "")
@@ -97,7 +110,14 @@ def parse_fixes(page, page_title):
         "&lt;", "<").replace("[[Category:", "#").replace(
         "{{PAGENAME}}", page_title)
 
-    result = yaml.safe_load(fixes_yaml)
+    try:
+        result = yaml.safe_load(fixes_yaml)
+    except:
+        result = {
+            "stat": "fail",
+            "code": 500.1,
+            "message": "Error, YAML load failed."
+        }
     return result
 
 
