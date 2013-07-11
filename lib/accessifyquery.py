@@ -11,8 +11,9 @@ import requests
 import urllib2, yaml, json, re
 from urlparse import urlparse
 
+WIKI_BASE_URL = 'http://accessify.wikia.com/wiki/'
 WIKI_SEARCH_URL = (
-    "http://accessify.wikia.com/wiki/"
+    WIKI_BASE_URL +
     "Special:Search?ns0=1&format=json&limit=5&search=")
 
 
@@ -79,8 +80,6 @@ def query(url):
                     #"search_url": search_url,
                     "page_url": page_url,
                     "page_id": page_id,
-                    #"_title": page_title,
-                    #"_fixes": fixes
                 }
 
     return result
@@ -95,31 +94,61 @@ def request_wiki_search(url):
 
 
 def parse_fixes(page, page_title):
-    # RegExp problem??
-    matchObj = re.match(
-        r'<source[^>]*>(.*)<\/source>' #".*\[\Category:(.*?)"
-        , page, re.I|re.M|re.S)
+    fixes_yaml = preface = None
+    matchObj = re.search(r"""
+        (?P<preface>.+?)?
+        (?P<newlines>[\r\n]*)
+        <source[^>]*>
+            (?P<fixes>.*)
+        </source>
+        """, page, re.I|re.M|re.S|re.X)
 
     if matchObj:
-        fixes_yaml = matchObj.group(1)
-        #cat = matchObj.group(2)
+        preface = matchObj.group('preface')
+        fixes_yaml = matchObj.group('fixes')
 
-    # This works!
-    fixes_yaml = page.replace(
-        "<source", "#").replace("</source>", "#").replace(
-        "&lt;", "<").replace("[[Category:", "#").replace(
-        "{{PAGENAME}}", page_title)
+        fixes_yaml = fixes_yaml.replace(
+            "&lt;", "<").replace("{{PAGENAME}}", page_title)
+
+        fixes_yaml = parse_wiki_links(fixes_yaml)
+        fixes_yaml = parse_date_hack(fixes_yaml)
+
+    category_list = parse_categories(page)
 
     try:
         result = yaml.safe_load(fixes_yaml)
+        #result['__CONFIG__']['wk_keywords'] = category_list
     except:
         result = {
             "stat": "fail",
             "code": 500.1,
             "message": "Error, YAML load failed."
         }
+    config = result['_CONFIG_']
+    config['wk_keywords'] = category_list
+    config['wk_preface'] = preface
+
     return result
 
+
+def parse_wiki_links(text):
+    return re.sub(
+        r'\[\[(?P<wikilink>\w+:\w+)\]\]',
+        WIKI_BASE_URL + r'\g<wikilink>', text)
+
+def parse_categories(text):
+    list = re.findall(
+        r'\[\[Category:([^\]]+)\]\]', text)
+    if 'Fix' in list: list.remove('Fix')
+    return list
+
+def parse_date_hack(text):
+    return re.sub(
+        r'(?P<key>(created|updated)): (?P<date>[\w\-\+\:]+)',
+        r'\g<key>: "\g<date>"', text)
+
+
+# ===========================
 
 from urllib2 import Request, urlopen, URLError
 
