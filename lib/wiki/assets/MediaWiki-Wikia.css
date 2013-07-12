@@ -82,11 +82,27 @@ body.oasis-dark-theme {
 
 /* Bookmarklet / User-JS.
 */
-a[href $= '.user.js'], a[href ^= 'javascript:'], .big.inline {
-  display:inline-block; font-size:1.18em; padding:2px 20px 2px 9px; margin:0 3px;
-  background:#4c4b4b
-    url(http://upload.wikimedia.org/wikipedia/commons/5/59/Script_add.png)
-  no-repeat right; border:1px solid #777;
+a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
+  display: inline-block;
+  font-size: 1.18em;
+  padding: 2px 12px 2px 16px;
+  margin: 0 2px;
+  background-color: #4c4b4b;
+  border: 1px solid orange;  /*#777*/
+  border-radius: 4px;
+}
+.WikiaArticle a[href $= '.user.js'].external:after,
+.WikiaArticle a[href ^= 'javascript:']:after {
+  content: "";
+  display: inline-block;
+  padding: 0;  /*0 3px 0 0*/
+  vertical-align: text-top;
+  width: 17px;  /*10px*/
+  height: 16px;
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-image:
+   url(http://upload.wikimedia.org/wikipedia/commons/5/59/Script_add.png);
 }
 
 
@@ -123,6 +139,9 @@ a[href $= '.user.js'], a[href ^= 'javascript:'], .big.inline {
 .acfy-fix-editor-msg {
   padding:1em 20px;
   font-size:1.3em;
+}
+.acfy-fix-editor .acfy-fix-editor-msg a {
+  cursor: help;
 }
 .acfy-fix-viewer .acfy-fix-editor-msg {
   padding:1.1em 5px;
