@@ -18,6 +18,9 @@ handlers:
   static_files: schema/accessify-base-json-schema.json
   upload: schema/accessify-base-json-schema\.json
 
+- url: /accessifyhtml5.js
+  static_dir: lib/accessifyhtml5
+
 - url: /browser
   static_dir: browser
 

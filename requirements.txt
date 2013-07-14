@@ -15,7 +15,7 @@ requests==1.2.3
 #: Non-Python - it clones OK, then ./setup.py fails ;)!
 #: cd lib/ && ln -s ../../src/accessifyhtml5.js/ accessifyhtml5.js
 #: cd ../browser/js/ && ln -s ../../../src/accessifyhtml5.js/accessifyhtml5.js accessifyhtml5.js
--e git+http://github.com/nfreear/accessifyhtml5.js.git@961c60d48#egg=accessifyhtml5.js
+-e git+http://github.com/nfreear/accessifyhtml5.js.git@b6acc13224a73ddf#egg=accessifyhtml5.js
 
 
 #: pip freeze > stable-req.txt

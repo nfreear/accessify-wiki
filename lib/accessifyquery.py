@@ -11,10 +11,14 @@ import requests
 import urllib2, yaml, json, re
 from urlparse import urlparse
 
-WIKI_BASE_URL = 'http://accessify.wikia.com/wiki/'
+WIKI_BASE_URL = 'http://accessify.wikia.com/'
 WIKI_SEARCH_URL = (
     WIKI_BASE_URL +
-    "Special:Search?ns0=1&format=json&limit=5&search=")
+    "wiki/Special:Search?ns0=1&format=json&limit=5&search=")
+WIKI_RECENT_URL = (
+    WIKI_BASE_URL +
+    "api.php?action=query&list=recentchanges&format=json" +
+    "&rcnamespace=0&rclimit=15&rcprop=title&rctoponly=1")
 
 
 def query(url):
@@ -134,7 +138,7 @@ def parse_fixes(page, page_title):
 def parse_wiki_links(text):
     return re.sub(
         r'\[\[(?P<wikilink>\w+:\w+)\]\]',
-        WIKI_BASE_URL + r'\g<wikilink>', text)
+        WIKI_BASE_URL + r'wiki/\g<wikilink>', text)
 
 def parse_categories(text):
     list = re.findall(
