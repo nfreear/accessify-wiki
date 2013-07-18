@@ -154,4 +154,11 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
 }
 
 
+.page-Build_fix_js .acfy-fix-editor-msg,
+.page-Build_fix_js .LatestPhotosModule,
+.page-Build_fix_js .WikiaActivityModule {
+    display:none;
+}
+
+
 /*End. */
