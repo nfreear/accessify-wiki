@@ -8,21 +8,21 @@
 ##import httplib2
 #
 import requests
-import urllib2, yaml, json, re
+import urllib, urllib2, yaml, json, re
 from urlparse import urlparse
 
 WIKI_BASE_URL = 'http://accessify.wikia.com/'
 WIKI_SEARCH_URL = (
     WIKI_BASE_URL +
-    "wiki/Special:Search?ns0=1&format=json&limit=5&search=")
+    "wiki/Special:Search?ns0=1&format=json&limit=5&fulltext=Search&search=")
 WIKI_RECENT_URL = (
     WIKI_BASE_URL +
     "api.php?action=query&list=recentchanges&format=json" +
     "&rcnamespace=0&rclimit=15&rcprop=title&rctoponly=1")
 
 
-def query(url):
-    result = None
+def query(url, min = None):
+    result = query = host = found = page_url = None
 
     if not url:
         # Error.
@@ -31,15 +31,29 @@ def query(url):
             "code": 400,
             "message": "Error, expecting a 'url' parameter."
         }
+        return result
+
+    up = urlparse(url, scheme = "http")
+
+    if up.netloc and not up.netloc == "":
+    #if up.hostname not "":
+        #query = up.hostname
+        query = host = up.netloc
+    elif url.find("Fix:") > -1:
+        query = url.replace("_", " ")
     else:
+        result = {
+            "stat": "fail",
+            "code": 400.2,
+            "message": "Error, expecting a 'url' parameter (2)"
+        }
+
+    if host:
         # TODO: error handling - parse, urlopen-read, json-load...
 
-        up = urlparse(url, scheme = "http")
-        found = None
         try:
-            r = request_wiki_search(url)
+            r = request_wiki_search(host)
         except requests.HTTPError:
-            #print 'Could not download page'
             result = {
                 'stat': 'fail',
                 'code': r.status_code,
@@ -47,7 +61,6 @@ def query(url):
             }
         else:
             search_results = r.json()
-            #search_result = json.loads(search_json)
             if len(search_results) < 1:
                 result = {
                     "stat": "fail",
@@ -66,38 +79,54 @@ def query(url):
                         "message": "Error, search failed - not found."
                     }
 
-            if found:
-                search_result = found
-                page_id = search_result["pageid"]
-                page_url = search_result["url"]
-                page_title = search_result["title"].replace("Fix:", "")
+    if not host and query:
+        page_id = None
+        page_url = WIKI_BASE_URL + 'wiki/' + query.replace(' ', '_')
+        page_title = query.replace("Fix:", "")
 
-                #page_rsp = urllib2.urlopen(page_url + "?action=raw")
-                #page = page_rsp.read()
-                r = requests.get(page_url + '?action=raw')
-                page = r.text
+    elif found:
+        page_id  = found["pageid"]
+        page_url = found["url"]
+        page_title = found["title"].replace("Fix:", "")
 
-                result = parse_fixes(page, page_title)
+    if page_url:
+        r = requests.get(page_url + '?action=raw')
+        page = r.text
 
-                result["_DEBUG_"] = {
-                    "host": up.hostname,
-                    #"search_url": search_url,
-                    "page_url": page_url,
-                    "page_id": page_id,
-                }
+        result = parse_fixes(page, page_title, min)
+
+        config = result['_CONFIG_']
+        if min and '_CONFIG_' in result:
+            config['test_urls'] = [config['test_urls'][0]]
+            config['description'] = None
+            config['authors'] = []
+            
+        elif not min:
+            config['wk_query'] = query
+            config['wk_page_url'] = page_url
+            config['wk_page_id']  = page_id
+
+        #result["_DEBUG_"] = {
+        #    "query": query,
+        #    #"search_url": search_url,
+        #    "page_url": page_url,
+        #    "page_id": page_id,
+        #}
 
     return result
 
 
-def request_wiki_search(url):
-    up = urlparse(url, scheme = "http")
-    search_url = WIKI_SEARCH_URL + up.hostname
+def request_wiki_search(query):
+    #up = urlparse(url, scheme = "http")
+    search_url = WIKI_SEARCH_URL + urllib.quote_plus(query)
+    print search_url
+
     rsp = requests.get(search_url)  #, timeout=0.001)
     rsp.raise_for_status()
     return rsp
 
 
-def parse_fixes(page, page_title):
+def parse_fixes(page, page_title, min = None):
     fixes_yaml = preface = None
     matchObj = re.search(r"""
         (?P<preface>.+?)?
@@ -121,16 +150,16 @@ def parse_fixes(page, page_title):
 
     try:
         result = yaml.safe_load(fixes_yaml)
-        #result['__CONFIG__']['wk_keywords'] = category_list
     except:
         result = {
             "stat": "fail",
             "code": 500.1,
             "message": "Error, YAML load failed."
         }
-    config = result['_CONFIG_']
-    config['wk_keywords'] = category_list
-    config['wk_preface'] = preface
+    if not min:
+        config = result['_CONFIG_']
+        config['wk_keywords'] = category_list
+        config['wk_preface'] = preface
 
     return result
 

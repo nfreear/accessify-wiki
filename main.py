@@ -47,7 +47,10 @@ class AccessifyQueryHandler(webapp2.RequestHandler):
         rsp = self.response
         format  = req.get('format', default_value='json')
         callback= req.get('callback', default_value=None)
+        min = req.get('min', default_value=None)
         url  = req.get('url', default_value=None)
+        if not url:
+            url = req.get('q', default_value=None)
 
         rsp.headers['Content-Type'] = 'application/json; charset=utf-8'
         rsp.headers['Access-Control-Allow-Origin'] = '*';
@@ -57,7 +60,7 @@ class AccessifyQueryHandler(webapp2.RequestHandler):
             rsp.write(json.dumps(result))
             return
 
-        result = accessifyquery.query(url)
+        result = accessifyquery.query(url, min)
 
         #if format == 'json':
 
@@ -100,6 +103,7 @@ class ValidateHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/query', AccessifyQueryHandler),
+    ('/query', AccessifyQueryHandler), # Deprecated
+    ('/fix', AccessifyQueryHandler),
     ('/validate', ValidateHandler)
 ], debug=True)
