@@ -154,10 +154,28 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
 }
 
 
+/* Build Javascript fixes.
+*/
 .page-Build_fix_js .acfy-fix-editor-msg,
 .page-Build_fix_js .LatestPhotosModule,
 .page-Build_fix_js .WikiaActivityModule {
     display:none;
+}
+.page-Build_fix_js .WikiaGrid .grid-4.WikiaMainContent {
+  width: auto; /*670px*/
+}
+.page-Build_fix_js .mw-geshi /*.source-javascript*/ {
+  background: #444;
+  border: 1px solid #555;
+  margin: .8em 0;
+  padding: 3px 0 .8em 3px;
+}
+.mw-geshi button {
+  font-size: 1.1em;
+  padding: 1px 25px;
+  margin: .3em 0;
+  height: auto;
+  width: auto;
 }
 
 
