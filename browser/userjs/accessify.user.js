@@ -5,7 +5,7 @@
 // @match http://*/*
 // @match https://*/*
 // @grant none
-// @version 0.5.0.20130503
+// @version 0.5.0.20130722
 // @copyright Nick Freear.
 // @downloadURL https://accessifywiki--1.appspot.com/browser/userjs/accessify.user.js
 // @updateURL https://accessifywiki--1.appspot.com/browser/userjs/accessify.meta.js
@@ -17,6 +17,10 @@
 (function () {
 
   "use strict";
+
+  var src = "//accessifywiki--1.appspot.com/browser/js/accessifyhtml5-marklet.js",
+  //raw.github.com/nfreear/accessify-wiki/webapp2/browser/js/accessifyhtml5-marklet.js,
+    nocache = false;
 
   // Do not support frames for the moment.
   if (window.parent !== window) {
@@ -33,8 +37,7 @@
     log("No @require - accessify.user.js");
 
     var s = document.createElement("script");
-    s.src = "https://raw.github.com/nfreear/accessify-wiki/master/browser/js/accessifyhtml5-marklet.js";
-    //s.src = "https://dl.dropbox.com/u/3203144/wai-aria/accessifyhtml5-marklet.js?r=" + (Math.random());
+    s.src = src + (nocache ? "?r=" + Math.random() : "");
     s.type = "text/javascript";
     s.charset = "utf-8";
     document.body.appendChild(s);
