@@ -22,7 +22,7 @@ PROJECT_DIR = os.path.dirname(__file__)
 sys.path.append(PROJECT_DIR + '/lib')
 
 import validator, accessifyquery
-import json, re
+import json, re, time, datetime
 
 
 def test_jsonp_callback(callback):
@@ -35,6 +35,14 @@ def test_jsonp_callback(callback):
         }
     return result
 
+
+def make_http_time_string(dt = None, minutes = 0):
+    '''Input struct_time and output HTTP header-type time string'''
+    if not dt:
+        dt = datetime.datetime.utcnow()
+    dt = dt + datetime.timedelta(minutes = minutes)
+    return time.strftime('%a, %d %b %Y %H:%M:%S GMT',
+            dt.timetuple())
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -53,7 +61,11 @@ class AccessifyQueryHandler(webapp2.RequestHandler):
             url = req.get('q', default_value=None)
 
         rsp.headers['Content-Type'] = 'application/json; charset=utf-8'
-        rsp.headers['Access-Control-Allow-Origin'] = '*';
+        rsp.headers['Access-Control-Allow-Origin'] = '*'
+        rsp.headers['Cache-Control'] = 'public, max-age=300'
+        rsp.headers['Expires'] = make_http_time_string(minutes = 5)
+        #rsp.headers['Last-Modified'] = make_http_time_string()
+        #Vary: Accept-Encoding
 
         result = test_jsonp_callback(callback)
         if result:

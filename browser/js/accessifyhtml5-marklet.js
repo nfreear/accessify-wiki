@@ -18,7 +18,7 @@
     DL = D.location,
     script = "//accessifywiki--1.appspot.com/browser/js/accessifyhtml5.js",
     callback = "__accessifyhtml5_bookmarklet_CB",
-    fixes_url = "//accessifywiki--1.appspot.com/query?callback=",
+    fixes_url = "//accessifywiki--1.appspot.com/fix?min=1&callback=",
     home_url = "http://accessify.wikia.com",
     home = home_url.replace(/https?:\/\//, ''),
     timeout = 15000,
@@ -30,8 +30,9 @@
     return;
   }
 
-  if (DL.href.match(/(run\/accessify-|accessify.wikia.com)/)) {
-    log("Not fixing Accessify Wiki page.");
+  if (DL.href.match(
+  /(run\/accessify-|accessify.wikia.com|accessifyw[^\.]+\.appspot.com|\/localhost)/)) {
+    log("Not fixing Accessify Wiki or localhost.");
     return;
   }
 
