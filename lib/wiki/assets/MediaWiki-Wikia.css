@@ -1,6 +1,7 @@
 /* SOURCE: http://accessify.wikia.com/wiki/MediaWiki:Wikia.css */
 
 
+
 .i18ndoc {
     background-color: #FFF77D;
     border-bottom: 1px solid lightgrey;
@@ -151,6 +152,9 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
 }
 .acfy-fix-viewer.wikinav2 .WikiaPageHeader {
   margin-bottom:0;
+}
+.acfy-fix-viewer .LatestPhotosModule {
+  display: none;
 }
 
 

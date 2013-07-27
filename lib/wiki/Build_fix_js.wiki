@@ -1,0 +1,52 @@
+<!-- http://accessify.wikia.com/wiki/Build_fix_js?q=Fix:Google_search -->
+
+
+==For site owners==
+
+A work in progress!
+
+# Copy the code below and paste it in the [http://closure-compiler.appspot.com/home Closure Compiler]. Run the compiler and save your site-specific Javascript.
+
+<source lang="javascript">
+
+// ==ClosureCompiler==
+// @compilation_level SIMPLE_OPTIMIZATIONS
+// @output_file_name accessifyhtml5-site-x-min.js
+// @code_url http://dl.dropbox.com/u/3203144/wai-aria/inpage-header.js
+// @code_url http://accessifywiki--1.appspot.com/browser/js/accessifyhtml5.js
+// @code_url http://accessifywiki--1.appspot.com/fix?q=Fix:Example&min=1&callback=__accessify_IPG
+// ==/ClosureCompiler==
+
+
+/* Accessify Wiki in-page Javascript.
+*/
+
+/*global document, console, AccessifyHTML5 */
+
+function __accessify_IPG(fixes) {
+    "use strict";
+
+    var res,
+        pat = /debug/,
+        L = document.location;
+
+    function log(s) {
+        if (typeof console !== "undefined" && (L.search.match(pat) || L.hash.match(pat))) {
+            console.log(arguments.length > 1 ? arguments : s);
+        }
+    }
+
+    log("AccessifyHTML5");
+
+    res = AccessifyHTML5(false, fixes);
+
+    log(res);
+}
+</source>
+
+# Upload the compiled Javascript file to your site.
+# Copy the following to the bottom of your site's HTML page template, just before the closing `</body>` tag. Edit `/path/to/your/..`:
+# <source lang="javascript">
+<script src="/path/to/your/accessifyhtml5-site-x-min.js"></script>
+</source>
+# View your site's test page in a browser such as Chrome - with the debug flag.

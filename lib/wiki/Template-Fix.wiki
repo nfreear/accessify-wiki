@@ -1,0 +1,38 @@
+<!-- http://accessify.wikia.com/wiki/Template:Fix -->
+
+
+<source lang="yaml">
+
+_CONFIG_:
+    name: {{PAGENAME}}
+    description: <FREE-FORM TEXT - optional>
+    # Required, 1+. Glob syntax.
+    include:
+        - http://*.example.org/*
+    # Required, 1+.
+    test_urls:
+        - http://www.example.org/
+    default_locale: en-GB
+
+# Syntax and fix example.
+"#My ID selector":
+    _note: A comment
+    role: <ROLE>
+    tabindex: 0
+    aria-label: <ARIA property>
+    title: <TITLE>
+    style: <STYLE>
+
+# Start fixes...
+
+
+
+# ...End fixes.
+</source>
+
+
+__NOWYSIWYG__
+
+[[Category:Fix]]
+
+<noinclude>[[Category:Templates|Newpages]]</noinclude>
