@@ -23,18 +23,16 @@
     home = home_url.replace(/https?:\/\//, ''),
     timeout = 15000,
     th,
+    b_exit = browserFeatures(),
     logp;
 
-  if (window.parent !== window) {
-    log("We do not support frames at present.");
+
+  if (b_exit) {
+    log(b_exit + ". Exiting");
     return;
   }
 
-  if (DL.href.match(
-  /(run\/accessify-|accessify.wikia.com|accessifyw[^\.]+\.appspot.com|\/localhost)/)) {
-    log("Not fixing Accessify Wiki or localhost.");
-    return;
-  }
+  // ======================================================
 
   logInit();
 
@@ -100,6 +98,8 @@
 
 
   function log(s) {
+    var ua = navigator.userAgent;
+
     if (logp) {
       // Maybe we use a multi-line title attribute ?!
       // Was: logp.innerHTML += "&bull; " + s + "<br>\n"; //&rsaquo; //\203A
@@ -108,7 +108,11 @@
 
     if (typeof console === "object") {
       //console.log(arguments.length > 1 ? arguments : s);
-      console.log("AccessifyHTML5", arguments);
+      if (ua.match(/MSIE/)) {
+        console.log(s);
+      } else {
+        console.log("AccessifyHTML5", arguments);
+      }
     }
   }
 
@@ -122,8 +126,8 @@
       logp.setAttribute("role", "log");
       logp.setAttribute("style",
 "display:block;position:fixed;bottom:0;right:0;width:15.5em;height:1.5em;z-index:999;"
-+"font:medium Arial,sans-serif;text-align:left;border-radius:2px;background:#fafafa;"
-+"color:#111;opacity:.9;border:3px solid gray;padding:6px;overflow-y:auto;cursor:help;");
++ "font:medium Arial,sans-serif;text-align:left;border-radius:2px;background:#fafafa;"
++ "color:#111;opacity:.9;border:3px solid gray;padding:6px;overflow-y:auto;cursor:help;");
       D.body.appendChild(logp);
       logp.innerHTML +=
     '<a href="' + home_url + '" style="color:navy;text-decoration:underline;">Accessify Wiki</a> .. <span class="ico">*</span> <br>\n';
@@ -169,6 +173,53 @@
 
     el.innerHTML = texts[key];
     logp.style.borderColor = bdr[key];
+  }
+
+
+  // ======================================================
+
+  function browserFeatures() {
+    var W = window,
+      b_exit = false;
+
+    if (W.parent !== W && W.top !== W.self) {  // MSIE 8 needs the "top" test.
+      b_exit = "We do not support frames at present";
+    }
+    else if (!DL.protocol.match(/^https?:/)) {
+      b_exit = "We only support HTTP/S urls";
+    }
+    else if (DL.href.match(/(run\/accessify-|accessify\.wikia\.com|\/localhost)/)) {
+    //(/(run\/accessify-|accessify.wikia.com|accessifyw[^\.]+.appspot.com|\/localhost)/)
+      b_exit = "Not fixing Accessify Wiki or localhost";
+    }
+
+    // Feature detection.
+    else if (typeof D.querySelector === "undefined") { //http://w3.org/TR/selectors-api2
+      b_exit = "Not supported by browser, w3c:selectors-api2";
+    }
+    else if (!window['sessionStorage']) {
+      b_exit = "Not supported by browser, w3c:webstorage"; //http://w3.org/TR/webstorage
+    }
+    else if (typeof JSON !== "object" || typeof JSON.parse !== "function") {
+      //https://github.com/phiggins42/has.js | http://es5.github.io/#x15.12
+      b_exit = "Not supported by browser: JSON.parse";
+    }
+    else if (isPlainText()) {
+      b_exit = "Ignoring plain-text file";
+    }
+
+    return b_exit;
+  }
+
+  function isPlainText() {
+    // Chrome plain-text test.
+    // ajax.get( self ) - stackoverflow?
+    //https://github.com/rsdoiel/mimetype-js
+    var
+      ch = D.querySelectorAll("body > *"),
+      pre = D.querySelectorAll("body pre[style]");
+
+    return ch.length === 1 && pre.length === 1;
   }
 
 })();
