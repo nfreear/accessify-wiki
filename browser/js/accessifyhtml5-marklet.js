@@ -21,7 +21,11 @@
     fixes_url = "//accessifywiki--1.appspot.com/fix?min=1&callback=",
     home_url = "http://accessify.wikia.com",
     home = home_url.replace(/https?:\/\//, ''),
-    timeout = 15000,
+    query_timeout = 15 * 1000, // Milli-seconds
+    store_max_age = false, //5 * 60, // Seconds
+    store_type = 'sessionStorage', //Or 'local'
+    store_prefix = 'acfy.',
+    s_fixes,
     th,
     b_exit = browserFeatures(),
     logp;
@@ -36,18 +40,30 @@
 
   logInit();
 
-  fixes_url += callback + "&url=" + encodeURIComponent(DL.href);
-
-  log("Querying for fixes..", DL.host, fixes_url);
-
-  th = setTimeout(function () {
-    log("Unknown problem/ too slow/ fixes not allowed (security)");
-    setIcon("unknown");
-  }, timeout);
-
   attachCallback();
-  addScript(script);
-  addScript(fixes_url);
+
+  s_fixes = getStorage();
+  if (s_fixes) {
+
+    log("Getting cached fixes.");
+
+    addScript(script, function () {
+      __accessifyhtml5_bookmarklet_CB(s_fixes);
+    });
+
+  } else {
+    fixes_url += callback + "&url=" + encodeURIComponent(DL.href);
+
+    log("Querying for fixes..", DL.host, fixes_url);
+
+    th = setTimeout(function () {
+      log("Unknown problem/ too slow/ fixes not allowed (security)");
+      setIcon("unknown");
+    }, query_timeout);
+
+    addScript(script);
+    addScript(fixes_url);
+  }
 
 
   // ======================================================
@@ -83,19 +99,43 @@
 
       log("OK. " + res.ok.length + " fixes applied, " + res.fail.length + " errors. \n", res);
       log("To help improve the fixes please visit   \n\n  ›› " + home + "\n");
+
+      if (!s_fixes) {
+        setStorage(fixes);   // <<<<<<<<<<<<<<<<<<<<<<<
+      }
     };
   }
 
-  function addScript(src) {
+  // http://stackoverflow.com/questions/4845762/onload-handler-for-script-tag-in-IE
+  function addScript(src, onload) {
     var s = D.createElement("script");
     s.src = src;
     s.type = "text/javascript";
     s.charset = "utf-8";
     //s.setAttribute("async", "");
-    //D.body.appendChild(s);
-    D.getElementsByTagName('body')[0].appendChild(s);
+    if (onload) {
+      //for nonIE browsers.
+      s.onload = onload;
+
+      //for IE browsers.
+      ieLoadBugFix(s, onload);
+    }
+    D.body.appendChild(s);
+    //D.getElementsByTagName("body")[0].appendChild(s);
   }
 
+  function ieLoadBugFix(scriptEl, callback) {
+    var ua = navigator.userAgent;
+    if (!ua.match(/MSIE [78].0/)) return;
+
+    if (scriptEl.readyState === 'loaded' || scriptEl.readyState === 'completed') {
+      callback();
+    } else {
+      setTimeout(function () {
+        ieLoadBugFix(scriptEl, callback);
+      }, 100);
+    }
+  }
 
   function log(s) {
     var ua = navigator.userAgent;
@@ -197,7 +237,7 @@
     else if (typeof D.querySelector === "undefined") { //http://w3.org/TR/selectors-api2
       b_exit = "Not supported by browser, w3c:selectors-api2";
     }
-    else if (!window['sessionStorage']) {
+    else if (!W['sessionStorage']) {
       b_exit = "Not supported by browser, w3c:webstorage"; //http://w3.org/TR/webstorage
     }
     else if (typeof JSON !== "object" || typeof JSON.parse !== "function") {
@@ -220,6 +260,51 @@
       pre = D.querySelectorAll("body pre[style]");
 
     return ch.length === 1 && pre.length === 1;
+  }
+
+
+  // ======================================================
+
+  // Storage: http://html5demos.com/storage | http://diveintohtml5.info/storage.html
+  function getStorage() {
+    var
+      dt = new Date(),
+      value,
+      storage = window[store_type],
+      delta = 0;
+
+    if (!store_type || !window[store_type]) return;
+
+    value = storage.getItem(store_prefix + 'fixes');
+
+    if (value) {
+      delta = (dt.getTime() - dt.setTime(storage.getItem(store_prefix + 'timestamp'))) / 1000;
+      if (store_max_age && store_max_age > 0 && delta > store_max_age) {
+        log(store_type + ': stale, delta: ' + delta, store_max_age);
+        value = false;
+      } else {
+        log(store_type + ': read fixes, last update: ' + delta + 's ago', value);
+      }
+    } else {
+      log(store_type + ': empty');
+    }
+
+    return value ? JSON.parse(value) : false;
+  }
+
+
+  function setStorage(data) {
+    var
+      dt = new Date(),
+      storage = window[store_type];
+
+    if (!store_type || !window[store_type]) return;
+
+    storage.setItem(store_prefix + 'fixes', JSON.stringify(data));
+    storage.setItem(store_prefix + 'timestamp', dt.getTime());
+    storage.setItem(store_prefix + 'time', dt.toString());
+
+    log(store_type + ': save fixes', data);
   }
 
 })();
