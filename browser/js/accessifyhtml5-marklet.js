@@ -22,7 +22,7 @@
     home_url = "http://accessify.wikia.com",
     home = home_url.replace(/https?:\/\//, ''),
     query_timeout = 15 * 1000, // Milli-seconds
-    store_max_age = false, //5 * 60, // Seconds
+    store_max_age = 15 * 60, // Seconds
     store_type = 'sessionStorage', //Or 'local'
     store_prefix = 'acfy.',
     s_fixes,
@@ -79,29 +79,33 @@
       if (typeof rsp.stat !== "undefined" && rsp.stat === "fail") {
         log(rsp.message, rsp.code);
         setIcon("fail");
-        if (404 === rsp.code) {
-          setIcon("not_found");
-          //log("Sorry, no domain matched.\n", host);
-          log("To add some fixes please visit our site   \n\n  ›› " + home + "\n");
+
+        if (404 !== parseInt(rsp.code)) {
+          return;
         }
-        return false;
-      }
 
-      log("Fixes found.", fixes);
+        setIcon("not_found");
+        //log("Sorry, no domain matched.\n", host);
+        log("To add some fixes please visit our site   \n\n  ›› " + home + "\n");
 
-      res = AccessifyHTML5(false, fixes);
-
-      if (res.fail.length > 0) {
-        setIcon("fail");
       } else {
-        setIcon("ok");
-      }
 
-      log("OK. " + res.ok.length + " fixes applied, " + res.fail.length + " errors. \n", res);
-      log("To help improve the fixes please visit   \n\n  ›› " + home + "\n");
+        log("Fixes found.", fixes);
+
+        res = AccessifyHTML5(false, fixes);
+
+        if (res.fail.length > 0) {
+          setIcon("fail");
+        } else {
+          setIcon("ok");
+        }
+
+        log("OK. " + res.ok.length + " fixes applied, " + res.fail.length + " errors. \n", res);
+        log("To help improve the fixes please visit   \n\n  ›› " + home + "\n");
+      }
 
       if (!s_fixes) {
-        setStorage(fixes);   // <<<<<<<<<<<<<<<<<<<<<<<
+        setStorage(rsp);  // Fixes or 404 Not Found response.
       }
     };
   }
@@ -140,7 +144,7 @@
   function log(s) {
     var ua = navigator.userAgent;
 
-    if (logp) {
+    if (logp && !s.match(/Storage/)) {
       // Maybe we use a multi-line title attribute ?!
       // Was: logp.innerHTML += "&bull; " + s + "<br>\n"; //&rsaquo; //\203A
       logp.title += "  › " + s + " \n";
