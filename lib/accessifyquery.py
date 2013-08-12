@@ -69,6 +69,7 @@ def query(url, min = None):
                 }
             else:
                 for result in search_results:
+                    print result
                     if result["title"].find("Fix:") > -1:
                         found = result
                         break
@@ -95,7 +96,16 @@ def query(url, min = None):
 
         result = parse_fixes(page, page_title, min)
 
-        config = result['_CONFIG_']
+        try:
+            config = result['_CONFIG_']
+        except:
+            print "ERROR ", page_url
+            return result
+
+        test_urls = ''.join(config['test_urls'])
+        if test_urls.find(host) == -1:
+            print "Warning can't find host in test_urls."
+
         if min and '_CONFIG_' in result:
             config['test_urls'] = [config['test_urls'][0]]
             config['description'] = None
@@ -151,10 +161,12 @@ def parse_fixes(page, page_title, min = None):
     try:
         result = yaml.safe_load(fixes_yaml)
     except:
+        # Need exception details!
         result = {
             "stat": "fail",
             "code": 500.1,
-            "message": "Error, YAML load failed."
+            "message": "Error, YAML load failed.",
+            "data": fixes_yaml
         }
     if not min:
         config = result['_CONFIG_']
