@@ -64,8 +64,8 @@ def query(url, min = None):
             if len(search_results) < 1:
                 result = {
                     "stat": "fail",
-                    "code": 404,
-                    "message": "Error, fixes not found."
+                    "code": 404.1,
+                    "message": "Warning, fixes not found."
                 }
             else:
                 for result in search_results:
@@ -76,8 +76,8 @@ def query(url, min = None):
                 else:
                     result = {
                         "stat": "fail",
-                        "code": 500.404,
-                        "message": "Error, search failed - not found."
+                        "code": 404.2,
+                        "message": "Warning, fixes not found (search 2)."
                     }
 
     if not host and query:
@@ -115,6 +115,10 @@ def query(url, min = None):
             config['wk_query'] = query
             config['wk_page_url'] = page_url
             config['wk_page_id']  = page_id
+
+            if config['wk_preface'] and not config['description']:
+                config['description'] = config['wk_preface']
+                config['wk_preface'] = None
 
         #result["_DEBUG_"] = {
         #    "query": query,

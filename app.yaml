@@ -8,7 +8,7 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
-##default_expiration: "15m"
+default_expiration: "15m"  # Default "10m"
 
 handlers:
 - url: /favicon\.ico
@@ -19,18 +19,18 @@ handlers:
   static_files: schema/accessify-base-json-schema.json
   upload: schema/accessify-base-json-schema\.json
 
-- url: /(.+)\.(markdown|md|txt|ya?ml)
-  static_files: \1.\2
-  upload: \1.\2
+- url: /(.+\.(markdown|md|txt|ya?ml))
+  static_files: \1
+  upload: (.+\.(markdown|md|txt|ya?ml))
   mime_type: text/plain; charset=utf-8
 
 - url: /accessifyhtml5.js
   static_dir: lib/accessifyhtml5
 
-- url: /browser/js/(.+)-v-(\w+)\.(min\.js|js)
-  static_files: browser/js/\1.\3
-  upload: browser/js/\1.\3
-  expiration: 20m
+- url: /(browser/js/(.+)-v-(\w+)\.(min\.js|js))
+  static_files: \1
+  upload: (browser/js/(.+)-v-(\w+)\.(min\.js|js))
+  expiration: 30m
 
 - url: /browser
   static_dir: browser
@@ -40,7 +40,7 @@ handlers:
 
 - url: /(.+example.+\.html)
   static_files: \1
-  upload: \1
+  upload: (.+example.+\.html)
   http_headers:
       X-Foo: bar
 
