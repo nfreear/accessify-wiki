@@ -35,6 +35,9 @@ def render(page, title = "Accessify Wiki prototype"):
 <div id="container" class="%(sname)s">
 
 <h1 role="banner"><span>Accessify Wiki</span> <em>prototype</em></h1>
+
+<p id=moved >This mini-site is no longer in use. Visit the <a href="http://accessify.wikia.com/">Accessify Wiki beta</a>.</p>
+
 %(navigation)s
 <div id=main role="main">
 
@@ -184,7 +187,7 @@ def getPageHead(sname = None):
 <link rel=stylesheet href="//fonts.googleapis.com/css?family=%(font_enc)s:400,700" />
 %(pygments_style)s
 <style>
-body{ background:#fbfbfb; color:#333; font:1.05em '%(font)s',sans-serif; margin:1.5em 5em; }
+body{ background:#fbfbfb; color:#333; font:.98em '%(font)s',sans-serif; margin:1.5em 5em; }
 input, button, label{ font-size:1em; display:inline-block; min-width:13em; }
 input:not([type = checkbox]){min-width:30em; padding:2px;}
 h1{ font-size:1.7em; }
@@ -204,6 +207,9 @@ li{margin:2px 0;}
   border:1px solid transparent; border-bottom-right-radius:115px;
 }
 #fork:hover{border-color:#ccc; opacity:.7;}
+
+#moved{ text-align:center; padding:.5em; margin:1.3em 0;
+  border:1px solid #caa; background:#fcf1f1; font-size:1.1em; }
 </style>
 """ % locals()
     return head
