@@ -28,6 +28,7 @@
     s_fixes,
     th,
     b_exit = browserFeatures(),
+    logi,
     logp;
 
 
@@ -148,6 +149,7 @@
       // Maybe we use a multi-line title attribute ?!
       // Was: logp.innerHTML += "&bull; " + s + "<br>\n"; //&rsaquo; //\203A
       logp.title += "  › " + s + " \n";
+      logi.innerText += "› " + s + "\n";
     }
 
     if (typeof console === "object") {
@@ -174,7 +176,10 @@
 + "color:#111;opacity:.9;border:3px solid gray;padding:6px;overflow-y:auto;cursor:help;");
       D.body.appendChild(logp);
       logp.innerHTML +=
-    '<a href="' + home_url + '" style="color:navy;text-decoration:underline;">Accessify Wiki</a> .. <span class="ico">*</span> <br>\n';
+    '<a href="' + home_url + '" style="color:navy;text-decoration:underline;">'
+        + 'Accessify Wiki</a> .. <span class="ico">*</span>'
+        + '<pre style="position:absolute;top:-9999px"></pre>';
+      logi = logp.querySelector("pre");
     }
     setIcon("loading");
   }
