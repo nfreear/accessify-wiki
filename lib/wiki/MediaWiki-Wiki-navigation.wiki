@@ -1,0 +1,11 @@
+<!-- http://accessify.wikia.com/wiki/MediaWiki:Wiki-navigation -->
+
+
+*Wiki Content
+**#newlychanged#|Recently Changed Pages
+**#category1#
+**#category2#
+*Project:Community Portal|Community
+**Blog:Recent_posts|Recent blog posts
+**Forum:Index|Forum
+
