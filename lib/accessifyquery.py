@@ -61,19 +61,32 @@ def query(url, min = None):
             }
         else:
             search_results = r.json()
-            if len(search_results) < 1:
+            # The response format has changed (23 Aug 2013).
+            if "currentUrl" not in search_results:
+                result = {
+                    "stat": "fail",
+                    "code": 500.2,
+                    "message": "Error, no 'currentUrl' index in search results."
+                }
+            elif "0" not in search_results:
                 result = {
                     "stat": "fail",
                     "code": 404.1,
                     "message": "Warning, fixes not found."
                 }
             else:
-                for result in search_results:
-                    print result
-                    if result["title"].find("Fix:") > -1:
-                        found = result
-                        break
-                else:
+                found = None
+                print ">> Search results", search_results
+                for n in range(0, 10):
+                    try:
+                        result = search_results[str(n)]
+                        if result["title"].find("Fix:") > -1:
+                            found = result
+                            break
+                    except:
+                        pass
+
+                if not found:
                     result = {
                         "stat": "fail",
                         "code": 404.2,
