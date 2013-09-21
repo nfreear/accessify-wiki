@@ -61,32 +61,20 @@ def query(url, min = None):
             }
         else:
             search_results = r.json()
-            # The response format has changed (23 Aug 2013).
-            if "currentUrl" not in search_results:
-                result = {
-                    "stat": "fail",
-                    "code": 500.2,
-                    "message": "Error, no 'currentUrl' index in search results."
-                }
-            elif "0" not in search_results:
+            # The response format has changed (23 Aug 2013), and back.
+            if len(search_results) < 1:
                 result = {
                     "stat": "fail",
                     "code": 404.1,
                     "message": "Warning, fixes not found."
                 }
             else:
-                found = None
-                print ">> Search results", search_results
-                for n in range(0, 10):
-                    try:
-                        result = search_results[str(n)]
-                        if result["title"].find("Fix:") > -1:
-                            found = result
-                            break
-                    except:
-                        pass
-
-                if not found:
+                for result in search_results:
+                    print result
+                    if result["title"].find("Fix:") > -1:
+                        found = result
+                        break
+                else:
                     result = {
                         "stat": "fail",
                         "code": 404.2,
@@ -129,7 +117,8 @@ def query(url, min = None):
             config['wk_page_url'] = page_url
             config['wk_page_id']  = page_id
 
-            if config['wk_preface'] and not config['description']:
+            #if config['wk_preface'] and not config['description']:
+            if 'wk_preface' in config and 'description' not in config:
                 config['description'] = config['wk_preface']
                 config['wk_preface'] = None
 
@@ -208,6 +197,43 @@ def parse_date_hack(text):
     return re.sub(
         r'(?P<key>(created|updated)): (?P<date>[\w\-\+\:]+)',
         r'\g<key>: "\g<date>"', text)
+
+# ===========================
+
+def parse_search_alt(search_results):
+    result = found = None
+    # The response format has changed (23 Aug 2013).
+    if "currentUrl" not in search_results:
+        result = {
+            "stat": "fail",
+            "code": 500.2,
+            "message": "Error, no 'currentUrl' index in search results."
+        }
+    elif "0" not in search_results:
+        result = {
+            "stat": "fail",
+            "code": 404.1,
+            "message": "Warning, fixes not found."
+        }
+    else:
+        found = None
+        print ">> Search results", search_results
+        for n in range(0, 10):
+            try:
+                result = search_results[str(n)]
+                if result["title"].find("Fix:") > -1:
+                    found = result
+                    break
+            except:
+                pass
+
+        if not found:
+            result = {
+                "stat": "fail",
+                "code": 404.2,
+                "message": "Warning, fixes not found (search 2)."
+            }
+    return result
 
 
 # ===========================

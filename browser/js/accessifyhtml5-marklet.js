@@ -256,19 +256,36 @@
     else if (isPlainText()) {
       b_exit = "Ignoring plain-text file";
     }
+    else if (isPluginFile()) {
+      b_exit = "Ignoring PDF or multimedia file";
+    }
 
     return b_exit;
   }
 
   function isPlainText() {
-    // Chrome plain-text test.
+    // Chrome plain-text test (inc. Javascript/ CSS file views)
     // ajax.get( self ) - stackoverflow?
     //https://github.com/rsdoiel/mimetype-js
     var
       ch = D.querySelectorAll("body > *"),
-      pre = D.querySelectorAll("body pre[style]");
+      pre = D.querySelectorAll("body > pre[style]");
 
-    return ch.length === 1 && pre.length === 1;
+    return ch.length < 4 && pre.length === 1;
+  }
+
+  /*
+   OU pod: feeds/Alan-Turing/turing01.mp3 | http://podcast.open.ac.uk/pod/Alan-Turing
+   OU pod: feeds/2284_60secondadventuresinastronomy/22898_1__the_big_bang.m4v
+   OU pod: feeds/2284_60secondadventuresinastronomy/transcript/22898_1__the_big_bang.pdf
+  */
+  function isPluginFile() {
+    var
+      ch = D.querySelectorAll("body > *"),
+      plugin = D.querySelectorAll(
+        "body > embed[height='100%'], body > video[name='media']");
+
+    return ch.length < 4 && plugin.length === 1;
   }
 
 
