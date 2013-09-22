@@ -60,6 +60,9 @@ class AccessifyQueryHandler(webapp2.RequestHandler):
         if not url:
             url = req.get('q', default_value=None)
 
+        lang = req.get('lang', default_value=None)
+        accept_lang = req.headers.get('Accept-Language')
+
         rsp.headers['Content-Type'] = 'application/json; charset=utf-8'
         rsp.headers['Access-Control-Allow-Origin'] = '*'
         rsp.headers['Cache-Control'] = 'public, max-age=300'
@@ -72,7 +75,7 @@ class AccessifyQueryHandler(webapp2.RequestHandler):
             rsp.write(json.dumps(result))
             return
 
-        result = accessifyquery.query(url, min)
+        result = accessifyquery.query(url, min, lang)
 
         #if format == 'json':
 

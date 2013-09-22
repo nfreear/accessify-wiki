@@ -20,8 +20,10 @@ WIKI_RECENT_URL = (
     "api.php?action=query&list=recentchanges&format=json" +
     "&rcnamespace=0&rclimit=15&rcprop=title&rctoponly=1")
 
+LOCALE_ATTR_RE = r"(alt|aria-label|placeholder|title)"
 
-def query(url, min = None):
+
+def query(url, min = None, lang = None):
     result = query = host = found = page_url = None
 
     if not url:
@@ -111,11 +113,12 @@ def query(url, min = None):
             config['test_urls'] = [config['test_urls'][0]]
             config['description'] = None
             config['authors'] = []
-            
+
         elif not min:
             config['wk_query'] = query
             config['wk_page_url'] = page_url
             config['wk_page_id']  = page_id
+            config['rq_lang'] = lang
 
             #if config['wk_preface'] and not config['description']:
             if 'wk_preface' in config and 'description' not in config:
@@ -128,6 +131,8 @@ def query(url, min = None):
         #    "page_url": page_url,
         #    "page_id": page_id,
         #}
+
+    result = parse_lang_attr(result, lang)
 
     return result
 
@@ -197,6 +202,31 @@ def parse_date_hack(text):
     return re.sub(
         r'(?P<key>(created|updated)): (?P<date>[\w\-\+\:]+)',
         r'\g<key>: "\g<date>"', text)
+
+# ===========================
+
+# Search for localized attributes, transform none-localized..
+def parse_lang_attr(result, lang = None):
+    if not lang or not re.search(r'^[a-z]{2}([-][A-Z]{2}|-?\.\*)$', lang, re.I):
+        return result
+
+    lang_attr_re = re.compile(LOCALE_ATTR_RE + "." + lang, re.I)
+
+    # Maybe: loop over a copy, modify the original.
+    for selector in result:
+        fixes = result[selector]
+
+        for key in fixes:
+            value = fixes[key]
+
+            m = lang_attr_re.match(key)
+            if m:
+                old_val = fixes[m.group(1)]
+                #result[selector][m.group(1) + ".xxx"] = val
+                fixes[m.group(1)] = value
+                #fixes[key] = old_val
+
+    return result
 
 # ===========================
 
