@@ -49,6 +49,9 @@ handlers:
   http_headers:
       X-Foo: bar
 
+- url: /site
+  static_dir: site
+
 #- url: /wiki/.*
 #  script: wiki/moin.application
 
