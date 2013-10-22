@@ -17,6 +17,7 @@
     D = document,
     DL = D.location,
     script = "//accessifywiki--1.appspot.com/browser/js/accessifyhtml5.js",
+    style = "//accessifywiki--1.appspot.com/browser/pix/marklet.css",
     callback = "__accessifyhtml5_bookmarklet_CB",
     fixes_url = "//accessifywiki--1.appspot.com/fix?min=1&callback=",
     home_url = "http://accessify.wikia.com",
@@ -129,6 +130,13 @@
     //D.getElementsByTagName("body")[0].appendChild(s);
   }
 
+  function addStyle() {
+    var s = D.createElement("link");
+    s.href = style;
+    s.rel = "stylesheet";
+    D.body.appendChild(s);
+  }
+
   function ieLoadBugFix(scriptEl, callback) {
     var ua = navigator.userAgent;
     if (!ua.match(/MSIE [78].0/)) return;
@@ -165,20 +173,18 @@
 
   function logInit() {
     if (!logp) {
+      addStyle();
+
       logp = D.createElement('div');
       logp.id = "AC5-log";
       logp.title = "\n Accessify HTML5 log: \n\n";
       logp.setAttribute("aria-live", "polite");
       logp.setAttribute("role", "log");
-      logp.setAttribute("style",
-"display:block;position:fixed;bottom:0;right:0;width:15.5em;height:1.5em;z-index:999;"
-+ "font:medium Arial,sans-serif;text-align:left;border-radius:2px;background:#fafafa;"
-+ "color:#111;opacity:.9;border:3px solid gray;padding:6px;overflow-y:auto;cursor:help;");
-      D.body.appendChild(logp);
       logp.innerHTML +=
-    '<a href="' + home_url + '" style="color:navy;text-decoration:underline;">'
-        + 'Accessify Wiki</a> .. <span class="ico">*</span>'
-        + '<pre style="position:absolute;top:-9999px"></pre>';
+        '<a href="' + home_url + '">Accessify Wiki</a> .. '
+        + '<span class="ico">*</span> <pre></pre>';
+      D.body.appendChild(logp);
+
       logi = logp.querySelector("pre");
     }
     setIcon("loading");
@@ -186,24 +192,7 @@
 
 
   function setIcon(key) {
-    //http://commons.wikimedia.org/wiki/Category:Silk_icons
-    //http://commons.wikimedia.org/wiki/File:Throbber_allbackgrounds_monochrome.gif
-    var res_url = "https://upload.wikimedia.org/wikipedia/commons/",
-      icons = {
-        loading: "7/7f/Throbber_allbackgrounds_monochrome.gif",
-        not_found: "8/89/Error_add.png", //"7/72/Pencil_add.png"
-        unknown: "4/43/Question-icon-darker.png",
-        fail: "c/c0/Exclamation.png", //"e/e9/Silk_cross.png"
-        ok: "3/3f/Silk_tick.png"
-      },
-      //http://quackit.com/css/css_color_codes.cfm
-      bdr = {
-        loading: "#eed700", //"gold"
-        not_found: "#ee8c00", //"darkorange"
-        unknown: "#d22",
-        fail: "#d22",
-        ok: "#181"
-      },
+    var
       texts = {
         loading: "Loading",
         not_found: "Not found",
@@ -211,17 +200,10 @@
         fail: "Error woops",
         ok: "Success"
       },
-      icon_url = res_url + icons[key],
-      el = document.querySelector("#AC5-log .ico"),
-      cs = el.style;
-
-    cs.background = "transparent url(" + icon_url + ") no-repeat right";
-    cs.display = "inline-block";
-    cs.paddingRight = "24px";
-    cs.minWidth = "4em";
+      el = document.querySelector("#AC5-log .ico");
 
     el.innerHTML = texts[key];
-    logp.style.borderColor = bdr[key];
+    logp.className = key;
   }
 
 

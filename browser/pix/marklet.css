@@ -1,0 +1,78 @@
+/*@charset "utf-8";
+/*
+  Bookmarklet CSS for Accessify wiki.
+*/
+#AC5-log {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 15.5em;
+  height: 1.5em;
+  z-index: 999;
+  font: medium Arial,sans-serif;
+  text-align: left;
+  border-radius: 2px;
+  background: #fafafa;
+  color: #111;
+  opacity: .9;
+  border: 3px solid gray;
+  padding: 6px;
+  overflow-y: auto;
+  cursor: help;
+}
+#AC5-log a {
+  color: navy;
+  text-decoration: underline;
+}
+#AC5-log pre {
+  position: absolute;
+  top: -9999px;
+}
+#AC5-log .ico {
+  /*background: transparent url() no-repeat right;*/
+  background-repeat: no-repeat;
+  background-position: right;
+  display: inline-block;
+  padding-right: 24px;
+  min-width: 4em;
+}
+
+/* http://quackit.com/css/css_color_codes.cfm */
+#AC5-log.loading { border-color: #eed700; } /*gold*/
+#AC5-log.not_found{border-color: #ee8c00; } /*darkorange*/
+#AC5-log.unknown { border-color: #d22; }
+#AC5-log.fail    { border-color: #d22; }
+#AC5-log.ok      { border-color: #181; }
+
+
+
+/*
+  http://commons.wikimedia.org/wiki/Category:Silk_icons
+  http://commons.wikimedia.org/wiki/File:Throbber_allbackgrounds_monochrome.gif
+*/
+#AC5-log.loading .ico { background-image:url(
+  //upload.wikimedia.org/wikipedia/commons/7/7f/Throbber_allbackgrounds_monochrome.gif
+)}
+#AC5-log.not_found .ico { background-image:url(
+  //upload.wikimedia.org/wikipedia/commons/8/89/Error_add.png
+)} /*7/72/Pencil_add.png */
+#AC5-log.unknown .ico { background-image:url(
+  //upload.wikimedia.org/wikipedia/commons/4/43/Question-icon-darker.png
+)}
+#AC5-log.fail .ico { background-image:url(
+  //upload.wikimedia.org/wikipedia/commons/c/c0/Exclamation.png
+)} /*e/e9/Silk_cross.png */
+#AC5-log.ok .ico { background-image:url(
+  //upload.wikimedia.org/wikipedia/commons/3/3f/Silk_tick.png
+)}
+/*
+  //accessifywiki--1.appspot.com/browser/pix/1/1c/Silk_tick.png
+*/
+
+
+@media print {
+  #AC-log { display: none; }
+}
+
+/*End */
