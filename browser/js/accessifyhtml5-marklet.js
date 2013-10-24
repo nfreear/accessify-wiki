@@ -74,7 +74,8 @@
     // Callback is global. (window["callback"])
     window.__accessifyhtml5_bookmarklet_CB = function (rsp) {
       var res,
-        fixes = rsp;
+        fixes = rsp,
+        config = rsp['_CONFIG_'] || null;
 
       clearTimeout(th);
 
@@ -91,6 +92,13 @@
         log("To add some fixes please visit our site   \n\n  ›› " + home + "\n");
 
       } else {
+
+        if (config && Object.size(fixes) <= 1) {
+          setIcon("need_fixes");
+          log("There are no fixes yet - probably a 'Stub'.");
+          log("To add some fixes please visit our site   \n\n  ›› " + home + "\n");
+          return;
+        }
 
         log("Fixes found.", fixes);
 
@@ -173,6 +181,7 @@
 
   function logInit() {
     if (!logp) {
+      bodyClasses();
       addStyle();
 
       logp = D.createElement('div');
@@ -196,6 +205,7 @@
       texts = {
         loading: "Loading",
         not_found: "Not found",
+        need_fixes: "Need fixes", //Category: Stub.
         unknown: "Unknown error",
         fail: "Error woops",
         ok: "Success"
@@ -314,5 +324,20 @@
 
     log(store_type + ': save fixes', data);
   }
+
+  function bodyClasses() {
+    var host = DL.host.replace(/\./g, "-");
+    D.body.className += " " + host + "_ac5h";
+  }
+
+
+  // Attwood, http://stackoverflow.com/questions/5223/length-of-javascript-object-ie-
+  Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+  };
 
 })();
