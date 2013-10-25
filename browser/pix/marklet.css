@@ -2,6 +2,9 @@
 /*
   Bookmarklet CSS for Accessify wiki.
 */
+#AC5-log, #AC5-log * {
+  font: medium Arial,sans-serif;
+}
 #AC5-log {
   display: block;
   position: fixed;
@@ -11,7 +14,6 @@
   height: 1.5em;
   min-height: 30px; /* ?? */
   z-index: 999;
-  font: medium Arial,sans-serif;
   text-align: left;
   border-radius: 2px;
   background: #fafafa;
@@ -24,6 +26,7 @@
 }
 #AC5-log a {
   color: navy;
+  background: transparent;
   text-decoration: underline;
 }
 #AC5-log pre {
@@ -92,7 +95,7 @@ body[class *= '-wikia-com_ac5h'] #AC5-log {
   bottom: 20px; /* Logged in. */
 }
 .www-ecosia-org_ac5h.index #AC5-log {
-  right: 60px;
+  right: 80px;
 }
 
 
