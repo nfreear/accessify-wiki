@@ -6,8 +6,10 @@
  https://github.com/nfreear/accessify-wiki
 */
 
-/*global clearTimeout, AccessifyHTML5, log */
+/*global clearTimeout, AccessifyHTML5, log, setIcon, AC5U, t */
 /*jslint browser:true, devel:true, indent:2 */
+
+var AC5U = AC5U || {};
 
 (function () {
 
@@ -34,7 +36,7 @@
 
 
   if (b_exit) {
-    log(b_exit + ". Exiting");
+    log(b_exit + ". " + t("Exiting"));
     return;
   }
 
@@ -44,10 +46,16 @@
 
   attachCallback();
 
-  s_fixes = getStorage();
+  // AC5U global. HACK - Inject test fixes.
+  if (typeof AC5U === "object" && AC5U.test_fixes) {
+    s_fixes = AC5U.test_fixes;
+  } else {
+    s_fixes = getStorage();
+  }
+
   if (s_fixes) {
 
-    log("Getting cached fixes.");
+    log(t("Getting cached fixes."));
 
     addScript(script, function () {
       __accessifyhtml5_bookmarklet_CB(s_fixes);
@@ -56,10 +64,10 @@
   } else {
     fixes_url += callback + "&url=" + encodeURIComponent(DL.href);
 
-    log("Querying for fixes..", DL.host, fixes_url);
+    log(t("Querying for fixes.."), DL.host, fixes_url);
 
     th = setTimeout(function () {
-      log("Unknown problem/ too slow/ fixes not allowed (security)");
+      log(t("Unknown problem/ too slow/ fixes not allowed (security)"));
       setIcon("unknown");
     }, query_timeout);
 
@@ -89,14 +97,14 @@
 
         setIcon("not_found");
         //log("Sorry, no domain matched.\n", host);
-        log("To add some fixes please visit our site   \n\n  ›› " + home + "\n");
+        log(t("To add some fixes please visit our site") +"   \n\n  ›› " + home + "\n");
 
       } else {
 
         if (config && Object.size(fixes) <= 1) {
           setIcon("need_fixes");
-          log("There are no fixes yet - probably a 'Stub'.");
-          log("To add some fixes please visit our site   \n\n  ›› " + home + "\n");
+          log(t("There are no fixes yet - probably a 'Stub'."));
+          log(t("To add some fixes please visit our site") + "   \n\n  ›› " + home + "\n");
           return;
         }
 
@@ -110,8 +118,10 @@
           setIcon("ok");
         }
 
-        log("OK. " + res.ok.length + " fixes applied, " + res.fail.length + " errors. \n", res);
-        log("To help improve the fixes please visit   \n\n  ›› " + home + "\n");
+        log(t("OK.") + " " + 
+        t("%nFixes fixes applied, %nErrors errors.", {
+          "%nFixes": res.ok.length, "%nErrors": res.fail.length}) + " \n", res);
+        log(t("To add some fixes please visit our site") + "   \n\n  ›› " + home + "\n");
       }
 
       if (!s_fixes) {
@@ -186,11 +196,11 @@
 
       logp = D.createElement('div');
       logp.id = "AC5-log";
-      logp.title = "\n Accessify HTML5 log: \n\n";
+      logp.title = "\n " + t("Accessify HTML5 log:") +" \n\n";
       logp.setAttribute("aria-live", "polite");
       logp.setAttribute("role", "log");
       logp.innerHTML +=
-        '<a href="' + home_url + '">Accessify Wiki</a> .. '
+        '<a href="' + home_url + '">' + t("Accessify Wiki") + '</a> .. '
         + '<span class="ico">*</span> <pre></pre>';
       D.body.appendChild(logp);
 
@@ -203,19 +213,29 @@
   function setIcon(key) {
     var
       texts = {
-        loading: "Loading",
-        not_found: "Not found",
-        need_fixes: "Need fixes", //Category: Stub.
-        unknown: "Unknown error",
-        fail: "Error woops",
-        ok: "Success"
+        loading: t("Loading"),
+        not_found: t("Not found"),
+        need_fixes: t("Need fixes"), //Category: Stub.
+        unknown: t("Unknown error"),
+        fail: t("Error woops"),
+        ok: t("Success")
       },
-      el = document.querySelector("#AC5-log .ico");
+      el = D.querySelector("#AC5-log .ico");
 
     el.innerHTML = texts[key];
     logp.className = key;
   }
 
+  // Gettext i18n/tranlation/localization placeholder.
+  function t(msgid, args) {
+    var k, str = msgid;
+    for (k in args) {
+      if (args.hasOwnProperty(k)) {
+        str = str.replace(k, args[k]);
+      }
+    }
+    return str;
+  }
 
   // ======================================================
 
@@ -224,12 +244,12 @@
       b_exit = false;
 
     if (W.parent !== W && W.top !== W.self) {  // MSIE 8 needs the "top" test.
-      b_exit = "We do not support frames at present";
+      b_exit = t("We do not support frames at present");
     }
     else if (!DL.protocol.match(/^https?:/)) {
       b_exit = "We only support HTTP/S urls";
     }
-    else if (DL.href.match(/(run\/accessify-|accessify\.wikia\.com|\/localhost)/)) {
+    else if (DL.href.match(/(run\/accessify-|accessify\.wikia\.com|\/X-localhost)/)) {
     //(/(run\/accessify-|accessify.wikia.com|accessifyw[^\.]+.appspot.com|\/localhost)/)
       b_exit = "Not fixing Accessify Wiki or localhost";
     }
@@ -298,13 +318,13 @@
     if (value) {
       delta = (dt.getTime() - dt.setTime(storage.getItem(store_prefix + 'timestamp'))) / 1000;
       if (store_max_age && store_max_age > 0 && delta > store_max_age) {
-        log(store_type + ': stale, delta: ' + delta, store_max_age);
+        log(store_type + ": " + t("stale, delta: %n", {"%n": delta}), store_max_age);
         value = false;
       } else {
-        log(store_type + ': read fixes, last update: ' + delta + 's ago', value);
+        log(store_type + ": " + t("read fixes, last update: %ns ago", {"%n": delta}), value);
       }
     } else {
-      log(store_type + ': empty');
+      log(store_type + ": " + t("empty"));
     }
 
     return value ? JSON.parse(value) : false;
@@ -322,7 +342,7 @@
     storage.setItem(store_prefix + 'timestamp', dt.getTime());
     storage.setItem(store_prefix + 'time', dt.toString());
 
-    log(store_type + ': save fixes', data);
+    log(store_type + ": " + t("save fixes"), data);
   }
 
   function bodyClasses() {
