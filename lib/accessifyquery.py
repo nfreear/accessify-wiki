@@ -105,8 +105,13 @@ def query(url, min = None, lang = None):
             print "ERROR ", page_url
             return result
 
+        # Prevent spurious warnings.
+        if 'ignore_defaults' not in config:
+            config['ignore_defaults'] = True
+
         test_urls = ''.join(config['test_urls'])
-        if test_urls.find(host) == -1:
+
+        if host and test_urls.find(host) == -1:
             print "Warning can't find host in test_urls."
 
         if min and '_CONFIG_' in result:
