@@ -226,15 +226,14 @@ var AC5U = AC5U || {};
     logp.className = key;
   }
 
-  // Gettext i18n/tranlation/localization placeholder.
+
+  /* Gettext i18n/tranlation/localization placeholder.
+   http://stackoverflow.com/questions/377961/efficient-javascript-string-replacement
+  */
   function t(msgid, args) {
-    var k, str = msgid;
-    for (k in args) {
-      if (args.hasOwnProperty(k)) {
-        str = str.replace(k, args[k]);
-      }
-    }
-    return str;
+    return args ? msgid.replace(/(%\w+)/g, function (m, key) {
+      return args.hasOwnProperty(key) ? args[key] : key;
+    }) : msgid;
   }
 
   // ======================================================
