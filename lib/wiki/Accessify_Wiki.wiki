@@ -1,0 +1,72 @@
+<!-- http://accessify.wikia.com/wiki/Accessify_Wiki -->
+
+
+<mainpage-leftcolumn-start />
+==Welcome to the Accessify Wiki==
+The Web is an important place for you and me to learn, work, play and shop. Unfortunately, many sites place barriers in the way of those with disabilities - this is [http://accessibleculture.org/why-build-accessible-websites/ bad for the visitor and the site] . There are a number of [http://www.w3.org/WAI/ standardization, education and outreach] efforts on the Web to address this problem.
+
+Accessify Wiki complements those efforts, by providing a way for anyone to [[Write fixes|create Accessibility "fixes"]] for a Web site.
+
+It provides [[Users|tools for end-users]] to use those fixes during their normal browsing experience. And, it provides [[Build fix js?q=Fix:Google_search|tools to help site owners and developers]] use the fixes to improve their Web sites.
+
+
+Working together to fix accessibility on the Web, one site at a time.
+
+
+--
+
+Help us [[Write fixes|author accessibility fixes for any site]] right here in this Wiki. We're developing some nifty ways to [[Users| deliver the fixes to end-users]] automatically as you browse the Web.
+
+==Useful pages==
+Here are some local links to get us started:
+
+* [[Fix:Google search]]
+* [[Fix:Baidu search]]
+* [[:Category:Fix| The main category for fixes]]
+* [[Template:Fix| The template to get you started writing fixes]]
+* [[Proposal| Accessify Wiki proposal]]
+
+== Create fixes ==
+
+<div id="create-fix">
+<p id="createbox-label-1">Start creating accessibility fixes for a site or part of a site:</p>
+<inputbox>
+type  = create
+break = no
+width = 24
+prefix = Fix:
+preload= Template:Fix
+buttonlabel = Create fix
+placeholder = Site short name
+</inputbox>
+</div>
+
+== External links ==
+And here are external links related to Accessify Wiki:
+
+* [https://views.scraperwiki.com/run/accessify-wiki/ Prototype Accessify tools on ScraperWiki]
+* [https://github.com/nfreear/accessify-wiki Accessify-wiki code on GitHub]
+
+Other useful links:
+
+* [http://yaml-online-parser.appspot.com/ Online YAML Parser]
+* [http://fixtheweb.net/ Fix the Web]
+* [http://accessify.com/ Accessify.com]
+* [http://www.accessifyforum.com/ Accessify Forum]
+
+
+== Contact ==
+Contact Nick Freear via [mailto:nfreear-@-yahoo.co.uk email] or [http://twitter.com/nfreear Twitter].
+
+==Latest activity==
+
+<activityfeed/>
+
+<mainpage-endcolumn />
+
+<mainpage-rightcolumn-start />
+
+Photos and videos are a great way to add visuals to your wiki. Find videos about your topic by exploring Wikia's [[w:c:video|Video Library]].
+
+[[File:200px-Gnome-preferences-desktop-accessibility2.svg.png|right|File:Gnome-preferences-desktop-accessibility2.svg]]
+<mainpage-endcolumn />

@@ -1,11 +1,14 @@
 <!-- http://accessify.wikia.com/wiki/Template:Fix -->
 
+{ FREE-FORM TEXT DESCRIPTION - optional }
+
 
 <source lang="yaml">
-
+%YAML 1.2
+---
 _CONFIG_:
     name: {{PAGENAME}}
-    description: <FREE-FORM TEXT - optional>
+    #description:
     # Required, 1+. Glob syntax.
     include:
         - http://*.example.org/*
@@ -23,11 +26,12 @@ _CONFIG_:
     title: <TITLE>
     style: <STYLE>
 
+
 # Start fixes...
 
 
 
-# ...End fixes.
+...
 </source>
 
 

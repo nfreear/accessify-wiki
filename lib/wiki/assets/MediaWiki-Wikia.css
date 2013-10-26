@@ -33,7 +33,44 @@ body.oasis-dark-theme {
     line-height:1.7em;  /*21px*/
 }
 .WikiaArticle h2 {
-    font-size:1.6em;
+    font-size: 1.6em; /*16px*/
+}
+.WikiaArticle h3 {
+    font-size: 1.4em;
+}
+.WikiaArticle h4 {
+    font-size: 1.3em;
+}
+.WikiaArticle h5 {
+    font-size: 1.2em;
+}
+
+
+/* Homepage - big links panel.
+*/
+.ac5-big-links ul {
+  margin:0 auto !important;
+}
+.ac5-big-links li {
+  display: inline-block;
+}
+.ac5-big-links a {
+  display: inline-block;
+  font-size: 1.9em;
+  background: #494949;
+  border: 2px solid #bbb;
+  border-radius: 4px;
+  margin: 1.2em .5em;
+  padding: .6em;
+  text-align: center;
+}
+.ac5-big-links a:hover {
+  background: #666;
+  border-color: #ddd;
+  text-decoration: none;
+}
+.page-Accessify_Wiki .WikiaPageHeader h1 {
+  color: #999;
 }
 
 
@@ -50,6 +87,21 @@ body.oasis-dark-theme {
 /*
   Override GeSHi Dynamically Generated Stylesheet(s)
 */
+.oasis-dark-theme .source-javascript pre, .oasis-dark-theme .source-html5 pre, .oasis-dark-theme .source-yaml pre {
+  border: 1px solid #555 !important;
+  background: #3b3a3a !important;
+  padding: 8px !important;
+  margin: 1em 0 !important;
+}
+.oasis-dark-theme .html5.source-html5 .kw2 {
+  color: #eee; /*#000*/
+}
+.oasis-dark-theme .html5.source-html5 .kw3 {
+  color: #47d; /*#000066;*/
+}
+.oasis-dark-theme .javascript.source-javascript .st0 {
+ color: #70b8ff; /*#3366CC*/
+}
 .oasis-dark-theme .yaml.source-yaml .co1 {  /*Comments */
     color:#70b8ff;
 }
