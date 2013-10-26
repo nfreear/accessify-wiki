@@ -62,3 +62,18 @@ handlers:
 libraries:
 - name: webapp2
   version: "2.5.2"
+
+
+# Ignore files.
+skip_files:
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- Makefile
+- .*\.diff
+#- .*\.pot
+
+
+#End.

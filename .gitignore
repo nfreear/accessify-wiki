@@ -4,6 +4,7 @@
 *.diff
 *.patch
 * copy.*
+*.pot
 
 # AppEngine specific?
 /index.yaml
