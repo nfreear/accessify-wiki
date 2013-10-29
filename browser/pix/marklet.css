@@ -83,19 +83,27 @@
 */
 
 
+
 @media print {
   #AC-log { display: none; }
 }
 
 
+/*============================================
+  Per-site fixes to widget.
 
-/* Per-site fixes to widget.
+  http://*.wikia.com
+  http://www.ecosia.org
+  http://mediaplayer.open.(edu|ac.uk)/embed
 */
 body[class *= '-wikia-com_ac5h'] #AC5-log {
   bottom: 20px; /* Logged in. */
 }
 .www-ecosia-org_ac5h.index #AC5-log {
   right: 80px;
+}
+body#ouplayer.oup/*[class *= 'mode-']*/ #AC5-log {
+  display: none;
 }
 
 
