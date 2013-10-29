@@ -217,7 +217,7 @@ def parse_lang_attr(result, lang = None):
     if "stat" in result and result["stat"] == "fail":
         return result
 
-    if not lang or not re.search(r'^[a-z]{2}([-][A-Z]{2}|-?\.\*)$', lang, re.I):
+    if not lang or not re.search(r'^[a-z]{2}([-][A-Z]{2}|-?\.\*)?$', lang, re.I):
         return result
 
     lang_attr_re = re.compile(LOCALE_ATTR_RE + "." + lang, re.I)
