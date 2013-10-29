@@ -212,6 +212,11 @@ def parse_date_hack(text):
 
 # Search for localized attributes, transform none-localized..
 def parse_lang_attr(result, lang = None):
+
+    # Handle 404, "not found" results.
+    if "stat" in result and result["stat"] == "fail":
+        return result
+
     if not lang or not re.search(r'^[a-z]{2}([-][A-Z]{2}|-?\.\*)$', lang, re.I):
         return result
 
