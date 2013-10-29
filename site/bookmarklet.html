@@ -14,7 +14,7 @@ javascript:(function(){AC5U={};var D=document,s=D.createElement("script")/*T*/;s
 <script>
 (function () {
 
-  "use strict",
+  "use strict";
 
   var locales = {
       en: 'Not set/ English',
@@ -24,7 +24,7 @@ javascript:(function(){AC5U={};var D=document,s=D.createElement("script")/*T*/;s
       "zh-CN": "简体中文"
     },
     DL = document.location,
-    host = DL.protocol + "//" + DL.hostname + (DL.port == 80 ? "" : ":" + DL.port),
+    host = /*DL.protocol +*/ "//" + DL.hostname + (DL.port == 80 ? "" : ":" + DL.port),
     el = $("#bookmarklets"),
     template = $("#bookmarklet-template").text()
       .replace(/https?:\/\/([^\/]+)/, host),
