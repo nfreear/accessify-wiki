@@ -2,29 +2,26 @@
 
 
 <mainpage-leftcolumn-start />
-==Welcome to the Accessify Wiki==
-The Web is an important place for you and me to learn, work, play and shop. Unfortunately, many sites place barriers in the way of those with disabilities - this is [http://accessibleculture.org/why-build-accessible-websites/ bad for the visitor and the site] . There are a number of [http://www.w3.org/WAI/ standardization, education and outreach] efforts on the Web to address this problem.
 
-Accessify Wiki complements those efforts, by providing a way for anyone to [[Write fixes|create Accessibility "fixes"]] for a Web site.
+__NOTOC__
 
-It provides [[Users|tools for end-users]] to use those fixes during their normal browsing experience. And, it provides [[Build fix js?q=Fix:Google_search|tools to help site owners and developers]] use the fixes to improve their Web sites.
+<div class="ac5-big-links">
+* [[Users| For users]]
+* [[:Category:Fix| Browse fixes]]
+* [[Write fixes]]
+</div>
 
+== What is Accessify Wiki? ==
 
-Working together to fix accessibility on the Web, one site at a time.
+* It is a Wiki where you can write accessibility and usability fixes;
+* It is an open community, where you can take action to improve the Web for all;
+* It is a way to deliver unobtrusive accessibility fixes via Javascript to the end user;
+* And, it allows site owners to get a head-start with accessibility;
 
+== What it isn't ==
 
---
-
-Help us [[Write fixes|author accessibility fixes for any site]] right here in this Wiki. We're developing some nifty ways to [[Users| deliver the fixes to end-users]] automatically as you browse the Web.
-
-==Useful pages==
-Here are some local links to get us started:
-
-* [[Fix:Google search]]
-* [[Fix:Baidu search]]
-* [[:Category:Fix| The main category for fixes]]
-* [[Template:Fix| The template to get you started writing fixes]]
-* [[Proposal| Accessify Wiki proposal]]
+* Accessify Wiki is not panacea -- it is not a way to fix all accessibility problems;
+* It is not a long-term solution to accessibility for a site -- it does not let businesses off the hook;
 
 == Create fixes ==
 
@@ -41,15 +38,22 @@ placeholder = Site short name
 </inputbox>
 </div>
 
-== External links ==
-And here are external links related to Accessify Wiki:
 
-* [https://views.scraperwiki.com/run/accessify-wiki/ Prototype Accessify tools on ScraperWiki]
+== Useful pages ==
+Here are some pages to get us started:
+
+* [[Introduction]]
+* [[How it works]]
+* [[Proposal| Accessify Wiki proposal]]
+* [[Build fix js?q=Fix:Google_search| Tools for site owners]]
+* [[Fix:Google search]]
+* [[Template:Fix| The template to get you started writing fixes]]
 * [https://github.com/nfreear/accessify-wiki Accessify-wiki code on GitHub]
 
+
+== External links ==
 Other useful links:
 
-* [http://yaml-online-parser.appspot.com/ Online YAML Parser]
 * [http://fixtheweb.net/ Fix the Web]
 * [http://accessify.com/ Accessify.com]
 * [http://www.accessifyforum.com/ Accessify Forum]
