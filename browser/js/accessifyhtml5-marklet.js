@@ -9,7 +9,7 @@
 /*global clearTimeout, AccessifyHTML5, log, setIcon, AC5U, t */
 /*jslint browser:true, devel:true, indent:2 */
 
-var AC5U = AC5U || {};
+window.AC5U = window.AC5U || {};
 
 (function () {
 
@@ -18,18 +18,21 @@ var AC5U = AC5U || {};
   var
     D = document,
     DL = D.location,
+    G = window.AC5U,
     script = "//accessifywiki--1.appspot.com/browser/js/accessifyhtml5.js",
     style = "//accessifywiki--1.appspot.com/browser/pix/marklet.css",
-    callback = "__accessifyhtml5_bookmarklet_CB",
-    fixes_url = "//accessifywiki--1.appspot.com/fix?min=1&callback=",
+    callback = "__callback",
+    fixes_url = "//accessifywiki--1.appspot.com/fix?min=1&callback=window.AC5U.",
     home_url = "http://accessify.wikia.com",
     home = home_url.replace(/https?:\/\//, ''),
+    lang = i18nSetup(),
     query_timeout = 15 * 1000, // Milli-seconds
     store_max_age = 15 * 60, // Seconds
     store_type = 'sessionStorage', //Or 'local'
-    store_prefix = 'acfy.',
+    store_prefix = 'acfy.' + lang + '.',
     s_fixes,
     th,
+    lang = i18nSetup(),
     b_exit = browserFeatures(),
     logi,
     logp;
@@ -47,22 +50,18 @@ var AC5U = AC5U || {};
   attachCallback();
 
   // AC5U global. HACK - Inject test fixes.
-  if (typeof AC5U === "object" && AC5U.test_fixes) {
-    s_fixes = AC5U.test_fixes;
-  } else {
-    s_fixes = getStorage();
-  }
+  s_fixes = G.test_fixes ? G.test_fixes : getStorage();
 
   if (s_fixes) {
 
     log(t("Getting cached fixes."));
 
     addScript(script, function () {
-      __accessifyhtml5_bookmarklet_CB(s_fixes);
+      G[callback](s_fixes);
     });
 
   } else {
-    fixes_url += callback + "&url=" + encodeURIComponent(DL.href);
+    fixes_url += callback + "&url=" + encodeURIComponent(DL.href) + "&lang=" + lang;
 
     log(t("Querying for fixes.."), DL.host, fixes_url);
 
@@ -80,7 +79,7 @@ var AC5U = AC5U || {};
 
   function attachCallback() {
     // Callback is global. (window["callback"])
-    window.__accessifyhtml5_bookmarklet_CB = function (rsp) {
+    G[callback] = function (rsp) {
       var res,
         fixes = rsp,
         config = rsp['_CONFIG_'] || null;
@@ -108,7 +107,7 @@ var AC5U = AC5U || {};
           return;
         }
 
-        log("Fixes found.", fixes);
+        log(t("Fixes found."), fixes);
 
         res = AccessifyHTML5(false, fixes);
 
@@ -227,13 +226,20 @@ var AC5U = AC5U || {};
   }
 
 
-  /* Gettext i18n/tranlation/localization placeholder.
+  /* Gettext i18n/translation/localization placeholder.
    http://stackoverflow.com/questions/377961/efficient-javascript-string-replacement
   */
   function t(msgid, args) {
-    return args ? msgid.replace(/(%\w+)/g, function (m, key) {
+    var str = (G.texts && G.texts[msgid]) ? G.texts[msgid] : msgid;
+    return args ? str.replace(/(%\w+)/g, function (m, key) {
       return args.hasOwnProperty(key) ? args[key] : key;
-    }) : msgid;
+    }) : str;
+  }
+
+  function i18nSetup() {
+    var lang = G.lang || navigator.language;
+    log(t("Setup translation: ") + lang, G);
+    return lang;
   }
 
   // ======================================================
