@@ -1,0 +1,109 @@
+# French translation for Accessify Wiki.
+#
+# Copyright 2013 Nick Freear/Accessify Wiki.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Accessify-wiki-user-JS\n"
+"Report-Msgid-Bugs-To: nfreear+@+yahoo.co.uk\n"
+"POT-Creation-Date: 2013-10-29 17:27+0000\n"
+"PO-Revision-Date: 2013-10-29 17:37-0000\n"
+"Last-Translator: Nick Freear <n.d.freear@open.ac.uk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"Language: French (fr)\n"
+
+#: browser/js/accessifyhtml5-marklet.js:43
+msgid "Exiting"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:58
+msgid "Getting cached fixes."
+msgstr "Obtention de correctifs mis en cache."
+
+#: browser/js/accessifyhtml5-marklet.js:67
+msgid "Querying for fixes.."
+msgstr "Interrogation des correctifs.."
+
+#: browser/js/accessifyhtml5-marklet.js:70
+msgid "Unknown problem/ too slow/ fixes not allowed (security)"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:100
+#: browser/js/accessifyhtml5-marklet.js:107
+#: browser/js/accessifyhtml5-marklet.js:124
+msgid "To add some fixes please visit our site"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:106
+msgid "There are no fixes yet - probably a 'Stub'."
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:111
+msgid "Fixes found."
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:121
+msgid "OK."
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:122
+msgid "%nFixes fixes applied, %nErrors errors."
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:199
+msgid "Accessify HTML5 log:"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:203
+msgid "Accessify Wiki"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:216
+msgid "Loading"
+msgstr "Chargement"
+
+#: browser/js/accessifyhtml5-marklet.js:217
+msgid "Not found"
+msgstr "Introuvable"
+
+#: browser/js/accessifyhtml5-marklet.js:218
+msgid "Need fixes"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:219
+msgid "Unknown error"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:220
+msgid "Error woops"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:221
+msgid "Success"
+msgstr "Succès"
+
+#: browser/js/accessifyhtml5-marklet.js:256
+msgid "We do not support frames at present"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:330
+msgid "stale, delta: %n"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:333
+msgid "read fixes, last update: %ns ago"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:336
+msgid "empty"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:354
+msgid "save fixes"
+msgstr ""

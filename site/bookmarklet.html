@@ -1,0 +1,56 @@
+<!doctype html><html lang=en><meta charset=utf-8>
+<title>Accessify Wiki - Localized bookmarklet</title>
+
+<h1>Localized bookmarklet (customization)</h1>
+
+<form id=custom-bookmark method=get>
+
+<p><label for=lang>Choose your language</label>
+<select id=lang>
+  <option value="">Not set/ English (en)</option>
+  <option value="es">Español - Internacional (es)</option>
+  <option value="fr">Français (fr)</option>
+  <option value="zh-CN">简体中文 (zh-CN)</option>
+</select>
+
+<p><button type=submit>Customize</button>
+
+<p><a id=bookmark href=
+"
+javascript:(function(){AC5U={};var D=document,s=D.createElement('script');s.src='https://accessifywiki--1.appspot.com/browser/js/accessifyhtml5-marklet.js?x='+(Math.random());D.body.appendChild(s)})();"
+>Accessify</html>
+
+</form>
+
+<script src="//dnmrmlfxy5gpj.cloudfront.net/jeesh.min.js"></script>
+<script>
+(function () {
+  $('form#custom-bookmark').submit(function (ev) {
+    var url = $('#url').val(),
+      glob = $('#glob').val(),
+      lang = $('#lang').val(),
+      bookmark = $('#bookmark')[0];
+
+      console.log(url, ev.target.validity);
+      if (! ev.target.validity) {
+      }
+
+      bookmark.href = bookmark.href.replace(/AC5U=\{[^\}]*\}/, function (m, p1, p2) {
+        console.log(arguments);
+        return "AC5U={"
+          + "lang:'" + lang + "'"
+          //"," + "_:''"
+          + "}";
+      });
+
+      $('#bookmark').text("Accessify (" + lang + ")");
+
+      console.log(bookmark.href);
+
+      ev.preventDefault();
+      return false;
+  });
+}());
+</script>
+
+</html>
