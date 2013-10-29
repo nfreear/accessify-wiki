@@ -1,55 +1,53 @@
 <!doctype html><html lang=en><meta charset=utf-8>
-<title>Accessify Wiki - Localized bookmarklet</title>
+<title>Accessify Wiki - Localized bookmarklets (customization)</title>
 
-<h1>Localized bookmarklet (customization)</h1>
+<h1>Localized bookmarklets</h1>
 
-<form id=custom-bookmark method=get>
+<div id=bookmarklets ></div>
 
-<p><label for=lang>Choose your language</label>
-<select id=lang>
-  <option value="">Not set/ English (en)</option>
-  <option value="es">Español - Internacional (es)</option>
-  <option value="fr">Français (fr)</option>
-  <option value="zh-CN">简体中文 (zh-CN)</option>
-</select>
+<script id=bookmarklet-template type=template >
+javascript:(function(){AC5U={};var D=document,s=D.createElement("script")/*T*/;s.src="https://accessifywiki--1.appspot.com/browser/js/accessifyhtml5-marklet.js?x="+(Math.random());D.body.appendChild(s)})();
+</script>
 
-<p><button type=submit>Customize</button>
-
-<p><a id=bookmark href=
-"
-javascript:(function(){AC5U={};var D=document,s=D.createElement('script');s.src='https://accessifywiki--1.appspot.com/browser/js/accessifyhtml5-marklet.js?x='+(Math.random());D.body.appendChild(s)})();"
->Accessify</html>
-
-</form>
 
 <script src="//dnmrmlfxy5gpj.cloudfront.net/jeesh.min.js"></script>
 <script>
 (function () {
-  $('form#custom-bookmark').submit(function (ev) {
-    var url = $('#url').val(),
-      glob = $('#glob').val(),
-      lang = $('#lang').val(),
-      bookmark = $('#bookmark')[0];
 
-      console.log(url, ev.target.validity);
-      if (! ev.target.validity) {
-      }
+  "use strict",
 
-      bookmark.href = bookmark.href.replace(/AC5U=\{[^\}]*\}/, function (m, p1, p2) {
-        console.log(arguments);
-        return "AC5U={"
-          + "lang:'" + lang + "'"
-          //"," + "_:''"
-          + "}";
-      });
+  var locales = {
+      en: 'Not set/ English',
+      de: 'Deutsch',
+      es: 'Español - Internacional',
+      fr: 'Français',
+      "zh-CN": "简体中文"
+    },
+    DL = document.location,
+    host = DL.protocol + "//" + DL.hostname + (DL.port == 80 ? "" : ":" + DL.port),
+    el = $("#bookmarklets"),
+    template = $("#bookmarklet-template").text()
+      .replace(/https?:\/\/([^\/]+)/, host),
+    html = "<ul>",
+    code, label, bm;
 
-      $('#bookmark').text("Accessify (" + lang + ")");
+  for (code in locales) {
+    label = locales[code];
+    bm = template
+      .replace(/AC5U=\{[^\}]*\}/, 'AC5U={lang:"' + code + '"}');
+    if (!code.match(/^en.*/)) {
+      bm = bm.replace("/*T*/", ',t=D.createElement("script");t.src="'
+        + host + '/browser/locale/ac5u.' + code + '.js";D.body.appendChild(t);');
+    }
+    html += "<li>" + label + " : <a href='" + bm
+      + "'>Accessify (" + code + ")</a></li>";
+  }
 
-      console.log(bookmark.href);
+  html += "</ul>";
+  el.html(html);
+  //el.innerHTML = html;
+  //console.log(el, html);
 
-      ev.preventDefault();
-      return false;
-  });
 }());
 </script>
 

@@ -52,6 +52,10 @@ handlers:
 - url: /site
   static_dir: site
 
+- url: /translate
+  static_dir: translate
+  mime_type: text/plain; charset=utf-8
+
 #- url: /wiki/.*
 #  script: wiki/moin.application
 

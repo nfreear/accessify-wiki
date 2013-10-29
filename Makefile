@@ -37,7 +37,7 @@ srv-help:
 gettext-userjs:
 	$(XGETTEXT) --language=JavaScript -kt:1 \
 	--from-code=utf-8 --add-comments=/ $(META) \
-	-o accessify-wiki-userjs.pot \
+	-o translate/accessify.pot \
 	browser/js/accessifyhtml5-marklet.js
 
 
