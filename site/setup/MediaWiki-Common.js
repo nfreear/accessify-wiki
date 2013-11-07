@@ -1,0 +1,1 @@
+../../lib/wiki/assets/MediaWiki-Common.js
