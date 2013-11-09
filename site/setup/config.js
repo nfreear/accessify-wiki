@@ -58,10 +58,10 @@ var AcfyWiki = AcfyWiki || {};
 
   }*/
 
-  console.log(configs);
+  AcfyWiki.log(configs);
 
   cfg = configs.app[configs.env];
-  console.log(cfg);
+  //AcfyWiki.log(cfg);
 
   for (idx = 0; idx < cfg.length; idx++) {
     AcfyWiki.addScript(cfg[idx]);
