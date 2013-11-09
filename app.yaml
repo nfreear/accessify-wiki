@@ -76,6 +76,10 @@ skip_files:
 - ^(.*/)?.*/RCS/.*
 - ^(.*/)?\..*
 - Makefile
+- ^browser/firefox/.*
+- ^lib/wiki/.*
+- ^site/py/.*
+- ^translate/.*\.py
 - .*\.diff
 #- .*\.pot
 
