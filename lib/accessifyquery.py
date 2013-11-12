@@ -157,14 +157,19 @@ def parse_fixes(page, page_title, min = None):
     matchObj = re.search(r"""
         (?P<preface>.+?)?
         (?P<newlines>[\r\n]*)
-        <source[^>]*>
-            (?P<fixes>.*)
+        <source([^>]*)>
+            (?P<fixes>.*?)
         </source>
+        (?P<styleplus>.*?
+        <source[^>]*>
+            (?P<style>.*?)
+        </source>)?
         """, page, re.I|re.M|re.S|re.X)
 
     if matchObj:
         preface = matchObj.group('preface')
         fixes_yaml = matchObj.group('fixes')
+        style = matchObj.group('style')
 
         fixes_yaml = fixes_yaml.replace(
             "&lt;", "<").replace("{{PAGENAME}}", page_title)
@@ -188,6 +193,9 @@ def parse_fixes(page, page_title, min = None):
         config = result['_CONFIG_']
         config['wk_keywords'] = category_list
         config['wk_preface'] = preface
+
+    if style:
+        result['_STYLE_'] = style
 
     return result
 
