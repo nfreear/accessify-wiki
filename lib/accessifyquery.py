@@ -102,7 +102,7 @@ def query(url, min = None, lang = None):
         try:
             config = result['_CONFIG_']
         except:
-            print "ERROR ", page_url
+            print ">> ERROR ", page_url
             return result
 
         # Prevent spurious warnings.
@@ -233,6 +233,9 @@ def parse_lang_attr(result, lang = None):
     # Maybe: loop over a copy, modify the original.
     for selector in result:
         fixes = result[selector]
+
+        if isinstance(fixes, basestring):
+            continue
 
         for key in fixes:
             value = fixes[key]
