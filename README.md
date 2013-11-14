@@ -10,6 +10,7 @@ Using Accessify Wiki, person A who has no affiliation to or control over site B,
  * `/data/` contains sample site-fixes in [YAML][def-yaml] format.
  * `/lib/` contains Python libraries for the `webapp2` based service.
  * `/schema/` contains a [JSON Schema][json-schema] for site-fix files.
+ * `/site/js` contains site-enhancement Javascript for Accessify Wiki.
  * `/site/py` contains a prototype site and web-service, currently mostly written in Python to be hosted on [ScraperWiki][scraper-py] - Deprecated.
 
 
@@ -50,7 +51,9 @@ Python third-party:
  * Eric Eggert @yatil for [accessifyhtml5.js][accessifyhtml5]
 
 
-[Accessify-wiki][accessify-wiki]: Copyright 2013 Nick Freear & contributors. License: [MIT][mit] & [GPLv2][gpl].
+[Accessify-wiki][accessify-wiki]: Copyright 2013 Nick Freear & contributors.
+
+ * License for software code and accessibility fixes: [GNU GPLv2][gpl].
 
 
 [accessify-wiki]: http://accessify.wikia.com/wiki/Accessify_Wiki
@@ -71,4 +74,3 @@ Python third-party:
 [def-addon]: http://en.wikipedia.org/wiki/Browser_extension
 [def-userjs]: http://en.wikipedia.org/wiki/Greasemonkey
 [gpl]: http://gnu.org/licenses/gpl-2.0.html
-[mit]: http://nfreear.mit-license.org/
