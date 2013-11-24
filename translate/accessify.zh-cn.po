@@ -1,0 +1,109 @@
+# Simplified Chinese translation for Accessify Wiki.
+#
+# Copyright 2013 Nick Freear/Accessify Wiki.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Accessify-wiki-user-JS\n"
+"Report-Msgid-Bugs-To: nfreear+@+yahoo.co.uk\n"
+"POT-Creation-Date: 2013-10-29 17:27+0000\n"
+"PO-Revision-Date: 2013-11-23 22:56-0000\n"
+"Last-Translator: Guangyu Yang Freear <nfreear+@+yahoo.co.uk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"Language: Simplified Mandarin Chinese (zh-CN)\n"
+
+#: browser/js/accessifyhtml5-marklet.js:43
+msgid "Exiting"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:58
+msgid "Getting cached fixes."
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:67
+msgid "Querying for fixes.."
+msgstr "检查修复"
+
+#: browser/js/accessifyhtml5-marklet.js:70
+msgid "Unknown problem/ too slow/ fixes not allowed (security)"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:100
+#: browser/js/accessifyhtml5-marklet.js:107
+#: browser/js/accessifyhtml5-marklet.js:124
+msgid "To add some fixes please visit our site"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:106
+msgid "There are no fixes yet - probably a 'Stub'."
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:111
+msgid "Fixes found."
+msgstr "修复发现"
+
+#: browser/js/accessifyhtml5-marklet.js:121
+msgid "OK."
+msgstr "OK"
+
+#: browser/js/accessifyhtml5-marklet.js:122
+msgid "%nFixes fixes applied, %nErrors errors."
+msgstr "％nFixes 修复加载，%nErrors 错误"
+
+#: browser/js/accessifyhtml5-marklet.js:199
+msgid "Accessify HTML5 log:"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:203
+msgid "Accessify Wiki"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:216
+msgid "Loading"
+msgstr "加载"
+
+#: browser/js/accessifyhtml5-marklet.js:217
+msgid "Not found"
+msgstr "未发现"
+
+#: browser/js/accessifyhtml5-marklet.js:218
+msgid "Need fixes"
+msgstr "需要修复"
+
+#: browser/js/accessifyhtml5-marklet.js:219
+msgid "Unknown error"
+msgstr "不可知错误"
+
+#: browser/js/accessifyhtml5-marklet.js:220
+msgid "Error woops"
+msgstr "失误错误"
+
+#: browser/js/accessifyhtml5-marklet.js:221
+msgid "Success"
+msgstr "成功"
+
+#: browser/js/accessifyhtml5-marklet.js:256
+msgid "We do not support frames at present"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:330
+msgid "stale, delta: %n"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:333
+msgid "read fixes, last update: %ns ago"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:336
+msgid "empty"
+msgstr ""
+
+#: browser/js/accessifyhtml5-marklet.js:354
+msgid "save fixes"
+msgstr ""
