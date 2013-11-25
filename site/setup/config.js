@@ -45,6 +45,7 @@ var AcfyWiki = AcfyWiki || {};
     "site/js/accessify-editor.js",
     //create_fix_widget, bookmarklet_js, iframes.
     "site/js/accessify-widgets.js",
+    "site/js/accessify-social.js",
     "site/js/build-fix.js",
     "site/js/accessify-analytics.js"
   ];
