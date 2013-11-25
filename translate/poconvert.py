@@ -6,19 +6,26 @@
 # http://polib.readthedocs.org/en/latest/quickstart.html
 #
 #import gettext
-import json, polib
+import glob, re, datetime, json
+import polib
 
 #fp = open("translate/accessify.fr.mo")
 #cat = gettext.GNUTranslations(fp)
 #print cat.info()
 
+#http://stackoverflow.com/questions/2225564/python-get-a-filtered-list-of-files-in-directory
+po_files = glob.glob('translate/*.po')
+print po_files
 
-codes = ["fr"]
+dt_now = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
 
-for code in codes:
 
-    po_file = "".join(["translate/accessify.", code, ".po"])
-    js_file = "browser/locale/ac5u." + code + ".js"
+for po_file in po_files:
+
+    m = re.match(r'.*\.([^\.]+)\.po', po_file)
+    lang_code = m.group(1)
+
+    js_file = "browser/locale/ac5u." + lang_code + ".js"
 
     po = polib.pofile(po_file)
     #print po.metadata
@@ -27,14 +34,25 @@ for code in codes:
     dict = {}
     for entry in po.translated_entries():
         #print entry.msgid, entry.msgstr
-        dict[entry.msgid] = entry.msgstr
+        try:
+            where = entry.occurrences[0][0]
+        except:
+            where = ""
 
+        if re.match(r'^browser\/.*\.js', where):
+            dict[entry.msgid] = entry.msgstr
+        else:
+            print "Not a 'browser' Javascript", where
 
-    print "/*",lang_name,"translation/ language pack for Accessify Wiki user-JS."
-    print "*/"
-    print "window.AC5U = window.AC5U || {};"
-    print ""
-    print "window.AC5U.texts_locale =", json.dumps(code), ";"
-    print "window.AC5U.texts =", json.dumps(dict,
-        sort_keys=True, indent=4, separators=(',', ': '))
+    f = open(js_file, "w")
+    f.write("/* DO NOT EDIT - Auto-generated. $" + dt_now + "$\n")
+    f.write("*/\n")
+    f.write("window.AC5U = window.AC5U || {};\n")
+    #f.write("")
+    f.write("window.AC5U.texts_locale = " + json.dumps(lang_name) + ";\n")
+    f.write("window.AC5U.texts = " + json.dumps(dict,
+        sort_keys=True, indent=2, separators=(',', ': '))
+    )
+    f.close()
 
+#End.
