@@ -111,6 +111,8 @@ window.AC5U = window.AC5U || {};
 
         res = AccessifyHTML5(false, fixes);
 
+        addFixStyles(fixes);
+
         if (res.fail.length > 0) {
           setIcon("fail");
         } else {
@@ -154,6 +156,27 @@ window.AC5U = window.AC5U || {};
     D.body.appendChild(s);
   }
 
+
+  function addFixStyles(obj) {
+    if (!obj._STYLE_) {
+      log("No _STYLE_ found.", obj);
+      return;
+    }
+    if ("string" !== typeof obj._STYLE_) {
+      log("Error, expecing string for _STYLE_.", typeof obj._STYLE_);
+      return;
+    }
+    log("OK. Style found.", obj._STYLE_);
+
+    var style = D.createElement("style");
+    //style.setAttribute("type", "text/css");
+	style.id = "acfy-fixes-style";
+	style.textContent = obj._STYLE_;
+
+    D.head.appendChild(style);
+  }
+
+
   function ieLoadBugFix(scriptEl, callback) {
     var ua = navigator.userAgent;
     if (!ua.match(/MSIE [78].0/)) return;
@@ -170,7 +193,7 @@ window.AC5U = window.AC5U || {};
   function log(s) {
     var ua = navigator.userAgent;
 
-    if (logp && !s.match(/Storage/)) {
+    if (logp && !s.match(/Storage|Style/i)) {
       // Maybe we use a multi-line title attribute ?!
       // Was: logp.innerHTML += "&bull; " + s + "<br>\n"; //&rsaquo; //\203A
       logp.title += "  › " + s + " \n";
