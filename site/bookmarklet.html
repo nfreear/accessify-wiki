@@ -56,7 +56,7 @@ javascript:(function(){AC5U={};var D=document,s=D.createElement("script")/*T*/;s
       .replace(/AC5U=\{[^\}]*\}/, 'AC5U={lang:"' + code + '"}');
     if (!code.match(/^en.*/)) {
       bm = bm.replace("/*T*/", ',t=D.createElement("script");t.src="'
-        + host + '/browser/locale/ac5u.' + code + '.js";D.body.appendChild(t);');
+        + host + '/browser/locale/ac5u.' + code.toLowerCase() + '.js";D.body.appendChild(t);');
     }
     html += "<li>" + label + " : <a href='" + bm
       + "'>Accessify (" + code + ")</a></li>";

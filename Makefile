@@ -24,8 +24,9 @@ help:
 	@echo "		make cfg-help"
 	@echo "		make srv-help"
 	@echo "		make update"
-	@echo "		make gettext-userjs
-
+	@echo "		make gettext-userjs"
+	@echo "		make i18n-po-convert"
+	@echo ""
 
 # Was 'app-help'.
 cfg-help:
@@ -33,7 +34,7 @@ cfg-help:
 
 # Was 'app-update'.  version_RE = '^(?:^(?!-)[a-z\d\-]{0,62}[a-z\d]$)$'
 update:
-	$(PYTHON) $(APPCFG) $(OPTS_CFG) $(APP_ID)--1 --version=$(APP_VER) update app.yaml
+	$(PYTHON) $(APPCFG) $(OPTS_CFG) $(APP_ID)--1 --version=1 update app.yaml
 
 srv-help:
 	$(PYTHON) $(APPSERVER) --help
@@ -43,6 +44,9 @@ gettext-userjs:
 	--from-code=utf-8 --add-comments=/ $(META) \
 	-o translate/accessify.pot \
 	browser/js/accessifyhtml5-marklet.js
+
+i18n-po-convert:
+	$(PYTHON) translate/poconvert.py
 
 app-version:
 	@echo $(APP_VER)

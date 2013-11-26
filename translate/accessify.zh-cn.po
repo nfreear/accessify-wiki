@@ -50,11 +50,11 @@ msgstr "修复发现"
 
 #: browser/js/accessifyhtml5-marklet.js:121
 msgid "OK."
-msgstr "OK"
+msgstr "OK."
 
 #: browser/js/accessifyhtml5-marklet.js:122
 msgid "%nFixes fixes applied, %nErrors errors."
-msgstr "％nFixes 修复加载，%nErrors 错误"
+msgstr "%nFixes 修复加载，%nErrors 错误"
 
 #: browser/js/accessifyhtml5-marklet.js:199
 msgid "Accessify HTML5 log:"
