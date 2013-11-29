@@ -46,8 +46,13 @@ body.oasis-dark-theme {
 }
 
 
-/* Homepage - big links panel.
+/*==================================
+  Homepage - big links panel.
 */
+
+.ac5-big-links {
+  font-size: 1.9em;
+}
 .ac5-big-links ul {
   margin:0 auto !important;
 }
@@ -56,7 +61,6 @@ body.oasis-dark-theme {
 }
 .ac5-big-links a {
   display: inline-block;
-  font-size: 1.9em;
   background: #494949;
   border: 2px solid #bbb;
   border-radius: 4px;
@@ -84,9 +88,10 @@ body.oasis-dark-theme {
 }
 
 
-/*
+/*==================================
   Override GeSHi Dynamically Generated Stylesheet(s)
 */
+
 .oasis-dark-theme .source-javascript pre, .oasis-dark-theme .source-html5 pre, .oasis-dark-theme .source-yaml pre {
   border: 1px solid #555 !important;
   background: #3b3a3a !important;
@@ -133,8 +138,10 @@ body.oasis-dark-theme {
 }
 
 
-/* Bookmarklet / User-JS.
+/*==================================
+  Bookmarklet / User-JS.
 */
+
 a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
   display: inline-block;
   font-size: 1.18em;
@@ -159,8 +166,10 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
 }
 
 
-/* Create-fix inputbox.
+/*==================================
+  Create-fix inputbox.
 */
+
 #create-fix, .big.notice {
   font-size:1.2em; text-align:center; padding:.7em; margin:1em;
   background:#4c4b4b; border:1px solid #777;
@@ -182,8 +191,10 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
 }
 
 
-/* Accessibility fix editor/ page.
+/*==================================
+  Accessibility fix editor/ page.
 */
+
 .acfy-fix-editor #EditPageToolbar,
 .acfy-fix-editor .module_insert,
 .acfy-fix-editor .cke_button_ModeWysiwyg {
@@ -210,8 +221,10 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
 }
 
 
-/* Build Javascript fixes.
+/*==================================
+  Build Javascript fixes.
 */
+
 .page-Build_fix_js .acfy-fix-editor-msg,
 .page-Build_fix_js .LatestPhotosModule,
 .page-Build_fix_js .WikiaActivityModule {
@@ -232,6 +245,89 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
   margin: .3em 0;
   height: auto;
   width: auto;
+}
+
+
+/*==================================
+  Social widget.
+*/
+
+a.twitter-alt {
+  position: absolute;
+  display: block;
+  height: 1em;
+  width: 1px;
+  overflow: hidden;
+  /*
+  left: -999px;
+  text-indent: -999px;
+  */
+  padding: 0;
+  background: #4c4b4b;
+  color: #eee;
+  font-size: 1.2em;
+}
+a.twitter-alt:focus {
+  /*
+  text-indent: 0;
+  left: 0;
+  */
+  z-index: 10;
+  width: auto;
+  padding: 3px 8px;
+}
+
+.WikiaRail .acfy-social-wdg {
+  padding: 10px;
+}
+.acfy-social-wdg li {
+  display: inline-block;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0 8px 0 0;
+  padding: 1px;
+}
+.acfy-social-wdg iframe {
+  margin-left: 2px;
+}
+.acfy-social-wdg li:hover, .acfy-social-wdg li:focus {
+  border-color: #70b8ff;
+}
+.acfy-social-wdg iframe[src *= 'facebook'] {
+  x-border: none;
+  overflow: hidden;
+  width: 80px;
+  height: 21px;
+  x-margin-right: 5px;
+}
+
+
+/*==================================
+  Link-focus box; Skip links.
+*/
+
+a:focus, input:focus, button:focus, iframe:focus {
+  outline: 2px solid #70b8ff;
+  outline-offset: 2px;
+  outline-radius: 3px;
+}
+
+.skiplinkcontainer {
+  position: absolute;
+  left: 0;
+  right: auto;
+}
+.skiplinkcontainer .skiplink:focus {
+  top: 3px;
+  left: 3px;
+  right: auto;
+  width: auto;
+  padding: 9px;
+  background: #f8f8f8;
+  color: #222;
+  font-size: 1.3em;
+  z-index: 20000010;
 }
 
 
