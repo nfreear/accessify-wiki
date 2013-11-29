@@ -159,14 +159,14 @@ window.AC5U = window.AC5U || {};
 
   function addFixStyles(obj) {
     if (!obj._STYLE_) {
-      log("No _STYLE_ found.", obj);
+      log(t("No _STYLE_ found."), obj);
       return;
     }
     if ("string" !== typeof obj._STYLE_) {
       log("Error, expecing string for _STYLE_.", typeof obj._STYLE_);
       return;
     }
-    log("OK. Style found.", obj._STYLE_);
+    log(t("OK. Style found."), obj._STYLE_);
 
     var style = D.createElement("style");
     //style.setAttribute("type", "text/css");
