@@ -73,6 +73,9 @@ body.oasis-dark-theme {
   border-color: #ddd;
   text-decoration: none;
 }
+.page-Accessify_Wiki .ac5-big-links a {
+  margin-top: 0;
+}
 .page-Accessify_Wiki .WikiaPageHeader h1 {
   color: #999;
 }
@@ -92,7 +95,8 @@ body.oasis-dark-theme {
   Override GeSHi Dynamically Generated Stylesheet(s)
 */
 
-.oasis-dark-theme .source-javascript pre, .oasis-dark-theme .source-html5 pre, .oasis-dark-theme .source-yaml pre {
+.oasis-dark-theme .source-javascript pre, .oasis-dark-theme .source-html5 pre,
+.oasis-dark-theme .source-yaml pre, .oasis-dark-theme .source-css pre {
   border: 1px solid #555 !important;
   background: #3b3a3a !important;
   padding: 8px !important;
@@ -173,6 +177,7 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
 #create-fix, .big.notice {
   font-size:1.2em; text-align:center; padding:.7em; margin:1em;
   background:#4c4b4b; border:1px solid #777;
+  max-width: 36em;
 }
 #mw-content-text .createbox input {
   font-size:1.25em; padding:4px 9px; x-height:1.6em;
@@ -249,7 +254,7 @@ a[href $= '.user.js'], .WikiaArticle a[href ^= 'javascript:'], .big.inline.js {
 
 
 /*==================================
-  Social widget.
+  Social sharing widget  (Twitter, Facebook..)
 */
 
 a.twitter-alt {
@@ -277,8 +282,13 @@ a.twitter-alt:focus {
   padding: 3px 8px;
 }
 
-.WikiaRail .acfy-social-wdg {
-  padding: 10px;
+
+.WikiaRail .acfy-social-wdg, .page-Accessify_Wiki .acfy-social-wdg {
+  padding: 6px 8px;
+}
+.acfy-social-wdg ul {
+  margin: 0;
+  padding: 0;
 }
 .acfy-social-wdg li {
   display: inline-block;
@@ -287,6 +297,7 @@ a.twitter-alt:focus {
   cursor: pointer;
   margin: 0 8px 0 0;
   padding: 1px;
+  text-indent: 0;
 }
 .acfy-social-wdg iframe {
   margin-left: 2px;
@@ -301,13 +312,30 @@ a.twitter-alt:focus {
   height: 21px;
   x-margin-right: 5px;
 }
+.acfy-social-wdg #twitter-widget-0 {
+  max-width: 95px;
+}
+.acfy-social-wdg h3 {
+  font-size: .9em;
+  margin: 0;
+}
+.page-Accessify_Wiki .acfy-social-wdg {
+  width: 284px;
+  margin-bottom: 9px;
+  float: right;
+  border: 1px solid #6b6a6a;
+  background: #4c4b4b;
+}
+.home-top-right-ads { /* float: right */
+  clear: right;
+}
 
 
 /*==================================
   Link-focus box; Skip links.
 */
 
-a:focus, input:focus, button:focus, iframe:focus {
+a:focus, input:focus, button:focus, iframe:focus, [role=button]:focus {
   outline: 2px solid #70b8ff;
   outline-offset: 2px;
   outline-radius: 3px;
