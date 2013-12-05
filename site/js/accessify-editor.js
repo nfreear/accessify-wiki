@@ -6,14 +6,16 @@ var AcfyWiki = AcfyWiki || {};
   
   'use strict';
 
-  var DL = document.location,
+  var
+    G = AcfyWiki,
+    DL = document.location,
     pg = DL.pathname.replace("/wiki/", ""),
     build = "/wiki/Build_fix_js?q=" + pg,
     write = "/wiki/Write_fixes";
 
-  if (! AcfyWiki.editor) return;
+  if (!G.editor) return;
 
-  if (DL.href.match(/Fix(\:|%3A)/) && DL.search.match(/action=edit/)) {
+  if (G.is_fix_editor()) {
 /*
     setTimeout(function () {
     $("a.cke_button_ModeSource").trigger("click");
@@ -28,7 +30,7 @@ var AcfyWiki = AcfyWiki || {};
     + "<a href='" + build + "'>Site owners</a>."
     + "</div>");
   }
-  else if (DL.toString().match(/Fix\:/)) {
+  else if (G.is_fix_page()) {
 
     $("body").addClass("acfy-fix-viewer");
 

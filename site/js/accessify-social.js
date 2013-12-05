@@ -1,29 +1,41 @@
 
+var AcfyWiki = AcfyWiki || {};
+
 (function () {
 
   'use strict';
 
   var
+    G = AcfyWiki,
     lang = 'en', //'fr', //'zh-CN',
     twitter_ac = 'AccessifyWiki',
     tags = 'usability',
     ref = encodeURIComponent(document.location.href),
     url = document.location.href,
     //url = 'http://accessify.wikia.com/wiki/Fix:Google_search#Fixes',
-    //IF (is fix page())...
     //  title = $("meta[property = 'og:title']").attr("content").replace("Fix:", ""),
     title = $(".WikiaPageHeader h1").text().replace("Fix:", ""),
-    //title = 'Google search',
-    msg = ('Check out these accessibility fixes for %s').replace("%s", title),
+    msg = ('Check out these accessibility fixes for "%s"').replace("%s", title),
     url_enc = encodeURIComponent(url),
-    msg_enc = encodeURIComponent(msg);
+    msg_enc;
 
 
-  //TODO: Not for 'Special:' or '?..action=edit' pages.
+  //TODO: Not for 'Special:' or '?..action=edit' pages - or use a different text.
+  if (!G.is_fix_page()) {
+    msg = 'Help write accessibility fixes and enhancements for your Web';
+  }
+  msg_enc = encodeURIComponent(msg);
 
 
-  //$("#share").after(
-  $("#WikiaSearch").after(
+  if ("home" === wikiaPageType) {
+    $("#WikiaArticle").prepend(widget());
+  } else {
+    $("#WikiaSearch").after(widget());
+  }
+
+
+  function widget() {
+    return '' +
     '<div class="acfy-social-wdg module"><h3 id="acfy-social-wdg-hd">Sharing buttons</h3>' +
     '<ul aria-labelledby="acfy-social-wdg-hd" role="navigation">' +
     //Twitter-ALT + Twitter.
@@ -40,11 +52,11 @@
     '<li class="LinkedIn"><scr' + 'ipt src="//platform.linkedin.com/in.js">lang: en_US</scr' + 'ipt>' +
     '<scr' + 'ipt type="IN/Share" data-url="' + url +'" data-counter="right"></scr' + 'ipt></li>' +
 
-    '</ul></div>'
-  );
+    '</ul></div>';
+  }
 
 
-  $(".social-btn-nav li").each(function (idx, el) {
+  $("#acfy-social-wdg li").each(function (idx, el) {
     var cls = el.className;
 
     $(el).attr({

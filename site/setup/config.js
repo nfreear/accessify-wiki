@@ -12,17 +12,30 @@ var AcfyWiki = AcfyWiki || {};
 
   'use strict';
 
-  AcfyWiki.tools_url = AcfyWiki.tools_url
-      || "https://accessifywiki--1.appspot.com/";
-  AcfyWiki.iframe_re = "[^\\/]+.ac.uk|accessifywiki(--\\d)?.appspot.com"
-      + "|docs.google.com|www.youtube.com|www.slideshare.net|upload.wikimedia.org";
-  AcfyWiki.editor = true;  //Crashing Chrome? 30 July.
+  var
+    G = AcfyWiki,
+    DL = document.location;
 
-  AcfyWiki.log = function (s) {
+  G.tools_url = G.tools_url
+      || "https://accessifywiki--1.appspot.com/";
+  G.iframe_re = "[^\\/]+.ac.uk|accessifywiki(--\\d)?.appspot.com"
+      + "|docs.google.com|www.youtube.com|www.slideshare.net|upload.wikimedia.org";
+  G.editor = true;  //Crashing Chrome? 30 July.
+
+  // Utility functions.
+  G.log = function (s) {
     if (typeof console !== "undefined") {
       console.log(arguments > 1 ? arguments : s);
     }
   };
+  // Tests.
+  G.is_fix_page = function () {
+    return DL.href.match(/Fix(\:|%3A)/);
+  };
+  G.is_fix_editor = function () {
+    return DL.href.match(/Fix(\:|%3A)/) && DL.search.match(/action=edit/);
+  };
+
 
   var configs = {
     // Default environnment
@@ -30,7 +43,7 @@ var AcfyWiki = AcfyWiki || {};
     templates : {},
     app : {}
   },
-  cfg, idx, script;
+  cfg, idx;
 
   configs.templates.dev = [
 	"app/templates/dasboard.html",
@@ -59,13 +72,13 @@ var AcfyWiki = AcfyWiki || {};
 
   }*/
 
-  AcfyWiki.log(configs);
+  G.log(configs);
 
   cfg = configs.app[configs.env];
   //AcfyWiki.log(cfg);
 
   for (idx = 0; idx < cfg.length; idx++) {
-    AcfyWiki.addScript(cfg[idx]);
+    G.addScript(cfg[idx]);
   }
 
 })();
