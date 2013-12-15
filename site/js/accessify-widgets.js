@@ -5,8 +5,23 @@ var AcfyWiki = AcfyWiki || {};
 
   'use strict';
 
+  var G = AcfyWiki;
+
+  // Alternative to: https://github.com/allmarkedup/purl
+  String.prototype.url_get = function (key, pattern, def) {
+    var
+      str = decodeURIComponent(this),
+      pattern = pattern || "[^&;=#]+",
+      re = new RegExp(":\/\/.+[\?&#!]" + key + "=(" + pattern + ")#?"),  //+ ")(&.*)?$"
+      m = str.match(re);
+    //G.log(">> url_get() ", this, m);
+    return m && m[1] ? m[1] : def;
+  }
+
+
   setup_create_fix_widget();
   setup_bookmarklet_js();
+  setup_bookmarklet_dev_js();
   setup_iframes();
 
 
@@ -17,31 +32,87 @@ var AcfyWiki = AcfyWiki || {};
       "aria-label": "Start creating fixes for a site or part of a site. Site short name",
       title: "Site short name",
       required: true,
-      maxlength: 16,
+      maxlength: 24, //16,
       id: "createboxInput-fix-1"
     });
   }
 
 
   function setup_bookmarklet_js() {
-    var js = "javascript:(function(){"
-      + "var D=document,s=D.createElement('script');s.src='"
-      + AcfyWiki.tools_url
-      + "browser/js/accessifyhtml5-marklet.js"
-      + "?x='+(Math.random());D.body.appendChild(s)"
-      + "})();";
- 
- 
     $("a[href = '#_ACFY_BOOKMARKLET']").attr({
       role : "button",
       "aria-label": "Accessify bookmarklet",
       title: "Accessify",
-      href : js,
+      href : get_bookmarklet_js(),
       id : "bookmark"
     })
     .click(function (e) {
       e.preventDefault();
+
+      alert(get_bookmarklet_message());
+    });
+
  
+    $("a[href $= '.user.js']").attr({
+      role : "button",
+      title: "User Javascript",
+      id: "userjs"
+    });
+  }
+
+
+  function setup_bookmarklet_dev_js() {
+    var
+      el = $("a[href = '#_ACFY_BOOKMARKLET_DEV']"),
+	  href = document.location.href,
+	  fx_url_re = "https?:\/\/.+\/.+\.ya?ml",
+	  fx_url  = href.url_get("url", fx_url_re),
+	  fx_glob = href.url_get("glob");
+
+	G.log(">> Dev bookmarklet", el, fx_url);
+
+	if (fx_url && fx_glob) {
+	  // Success.
+	  el.attr("href", get_bookmarklet_js().replace(/AC5U=\{[^\}]*\}/,
+	        'AC5U={url:"' + fx_url + '",glob:"' + fx_glob + '"}'));
+
+	  G.log(">> Dev bookmarklet: OK");
+	}
+	else {
+	  // Warning.
+	  console.log(">> Dev bookmarklet: Warning: url and glob either missing or invalid.");
+	  el.hide();
+	}
+
+	el.before(dev_bookmarklet_form(fx_url_re));
+
+	$("input[name = url]").val(fx_url);
+	$("input[name = glob]").val(fx_glob);
+  }
+
+
+  function dev_bookmarklet_form(url_re) {
+    return "" +
+	  "<form id='acfy-dev-bookmarklet-fm'>" +
+	  "<p><label>Fixes URL <input name=url required type=url placeholder=" +
+	  "'http://example/path/to/fixes.yaml' " +
+	  "pattern='" + url_re + "' title='A URL starting `http` and ending `.yaml`'></label>" +
+	  "<p><label>Pattern <input name=glob required placeholder='http://example.site/*' ></label>" +
+	  " <input type=submit ></form>";
+  }
+
+  function get_bookmarklet_js() {
+    return "" +
+      "javascript:(function(){" +
+	  "AC5U={};" +
+      "var D=document,s=D.createElement('script')/*T*/;s.src='" +
+      AcfyWiki.tools_url +
+      "browser/js/accessifyhtml5-marklet.js" +
+      "?x='+(Math.random());D.body.appendChild(s)" +
+      "})();";
+  }
+
+  function get_bookmarklet_message() {
       var ua = navigator.userAgent,
         msg = "'Bookmark This Link' in your 'Bookmarks Toolbar'. (Firefox)";
       if (ua.match(/WebKit/)) {
@@ -50,15 +121,8 @@ var AcfyWiki = AcfyWiki || {};
       else if (ua.match(/MSIE/)) {
         msg = "'Add to Favorites...', then 'Create in' the 'Favorites bar'. (Internet Explorer)";
       }
-      alert("Bookmarklet. To add me to your browser:\n\nRight-click and " + msg);
-    });
- 
- 
-    $("a[href $= '.user.js']").attr({
-      role : "button",
-      title: "User Javascript",
-      id: "userjs"
-    });
+
+      return "Bookmarklet. To add me to your browser:\n\nRight-click and " + msg;
   }
 
 
@@ -70,7 +134,7 @@ var AcfyWiki = AcfyWiki || {};
         at = "allowfullscreen mozallowfullscreen webkitallowfullscreen",
         mw = url.match(/width=(\d+)/),
         mh = url.match(/height=(\d+)/),
-        width  = mw ? mw[1] : "98%",
+        width  = mw ? mw[1] : "99%",
         height = mh ? mh[1] : 250;
 
       if (! url.match(new RegExp("^https?:\\/\\/(" + AcfyWiki.iframe_re + ")\\/"))) {
