@@ -30,10 +30,15 @@ var AcfyWiki = AcfyWiki || {};
   };
   // Tests.
   G.is_fix_page = function () {
-    return DL.href.match(/Fix(\:|%3A)/);
+    return DL.href.match(/(title=|\/)Fix(\:|%3A)/);
   };
   G.is_fix_editor = function () {
     return DL.href.match(/Fix(\:|%3A)/) && DL.search.match(/action=edit/);
+  };
+//http://stackoverflow.com/questions/16755655/simplest-way-to-detect-if-mobile-device-with-j..
+  G.is_mobile = function () {
+    return (/iPad|iPhone|iPod|Android|Blackberry|Opera Mini|IEMobile/i)
+        .test(navigator.userAgent) || DL.search.match(/[&\?]mobile=1/);
   };
 
 

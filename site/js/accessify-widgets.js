@@ -5,7 +5,8 @@ var AcfyWiki = AcfyWiki || {};
 
   'use strict';
 
-  var G = AcfyWiki;
+  var G = AcfyWiki,
+    DL = document.location;
 
   // Alternative to: https://github.com/allmarkedup/purl
   String.prototype.url_get = function (key, pattern, def) {
@@ -44,15 +45,26 @@ var AcfyWiki = AcfyWiki || {};
       "aria-label": "Accessify bookmarklet",
       title: "Accessify",
       href : get_bookmarklet_js(),
-      id : "bookmark"
+      "class": "acfy-marklet"
     })
     .click(function (e) {
-      e.preventDefault();
 
-      alert(get_bookmarklet_message());
+      if (G.is_mobile()) {
+        $("title").text("Accessify*");
+      }
+      else {
+        e.preventDefault();
+
+        alert(get_bookmarklet_message());
+      }
     });
 
- 
+    /*if (DL.hash.match("javascript:")) {
+      //$("title").text("*Accessify");
+      G.log(">> Bookmarklet - set title.");
+    }*/
+
+
     $("a[href $= '.user.js']").attr({
       role : "button",
       title: "User Javascript",
@@ -73,8 +85,11 @@ var AcfyWiki = AcfyWiki || {};
 
 	if (fx_url && fx_glob) {
 	  // Success.
-	  el.attr("href", get_bookmarklet_js().replace(/AC5U=\{[^\}]*\}/,
-	        'AC5U={url:"' + fx_url + '",glob:"' + fx_glob + '"}'));
+	  el.attr({
+	    href: get_bookmarklet_js().replace(/AC5U=\{[^\}]*\}/,
+	        'AC5U={url:"' + fx_url + '",glob:"' + fx_glob + '"}'),
+	    "class": "acfy-marklet-dev"
+	  });
 
 	  G.log(">> Dev bookmarklet: OK");
 	}
@@ -102,7 +117,7 @@ var AcfyWiki = AcfyWiki || {};
   }
 
   function get_bookmarklet_js() {
-    return "" +
+    return (G.is_mobile() ? "#" : "") +
       "javascript:(function(){" +
 	  "AC5U={};" +
       "var D=document,s=D.createElement('script')/*T*/;s.src='" +

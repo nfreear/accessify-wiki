@@ -18,6 +18,7 @@ var AcfyWiki = AcfyWiki || {};
   'use strict';
 
   var G = AcfyWiki,
+    bm_events = "click dragstart contextmenu",
     hash = document.location.hash;
 
   ga('create', 'UA-40194374-3', 'auto'); //'wikia.com');
@@ -33,11 +34,12 @@ var AcfyWiki = AcfyWiki || {};
     return ga_track_download(ev);
   });
 
-  $("a[href ^= 'javascript:'], a[href = '#_ACFY_BOOKMARKLET']").on("click dragstart contextmenu", function (ev) {
-    return ga_track_download(ev, "Bookmarklet.JS");
+  //Was: a[href ^= 'javascript:'],
+  $(".acfy-marklet, [href='#_ACFY_BOOKMARKLET']").on(bm_events, function (ev) {
+    return ga_track_download(ev);
   });
 
-  $("a[href = '#_ACFY_BOOKMARKLET_DEV']").on("click dragstart contextmenu", function (ev) {
+  $(".acfy-marklet-dev, [href='#_ACFY_BOOKMARKLET_DEV']").on(bm_events, function (ev) {
     return ga_track_download(ev, "Bookmarklet-DEV.JS");
   });
 
@@ -45,7 +47,7 @@ var AcfyWiki = AcfyWiki || {};
     var
       href = event.target.href,
       file = href.match(/([^\/]+\.(js|pdf))/i),
-      is_bookmarklet = href.match(/^javascript:/i);
+      is_bookmarklet = href.match(/javascript:/); //(/^#?javascript:/i);
 
     if (!value) {
       try {
@@ -82,11 +84,13 @@ var AcfyWiki = AcfyWiki || {};
 
     G.log && G.log(category, 'event:', event.type, label, value, event);
 
-    if ('click' === event.type) {
+    // Why?
+    /*if ('click' === event.type) {
       event.preventDefault();
       return false;
     }
     return true;
+    */
   }
 
 })();

@@ -15,7 +15,7 @@ var AcfyWiki = AcfyWiki || {};
     //url = 'http://accessify.wikia.com/wiki/Fix:Google_search#Fixes',
     //  title = $("meta[property = 'og:title']").attr("content").replace("Fix:", ""),
     title = $(".WikiaPageHeader h1").text().replace("Fix:", ""),
-    msg = ('Check out these accessibility fixes for "%s"').replace("%s", title),
+    msg = ('Check out these accessibility fixes for &quot;%s&quot;').replace("%s", title),
     url_enc = encodeURIComponent(url),
     msg_enc;
 
