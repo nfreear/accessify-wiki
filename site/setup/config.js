@@ -19,6 +19,7 @@ var AcfyWiki = AcfyWiki || {};
   G.tools_url = G.tools_url
       || "https://accessifywiki--1.appspot.com/";
   G.iframe_re = "[^\\/]+.ac.uk|accessifywiki(--\\d)?.appspot.com"
+      + "|[a-z]{2,3}\\d\\.googleusercontent\\.com"
       + "|docs.google.com|www.youtube.com|www.slideshare.net|upload.wikimedia.org";
   G.editor = true;  //Crashing Chrome? 30 July.
 

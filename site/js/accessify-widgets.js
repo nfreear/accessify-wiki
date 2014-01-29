@@ -121,7 +121,7 @@ var AcfyWiki = AcfyWiki || {};
       "javascript:(function(){" +
 	  "AC5U={};" +
       "var D=document,s=D.createElement('script')/*T*/;s.src='" +
-      AcfyWiki.tools_url +
+      G.tools_url +
       "browser/js/accessifyhtml5-marklet.js" +
       "?x='+(Math.random());D.body.appendChild(s)" +
       "})();";
@@ -142,21 +142,27 @@ var AcfyWiki = AcfyWiki || {};
 
 
   function setup_iframes() {
-    if (! AcfyWiki.iframe_re) return;
+    if (! G.iframe_re) return;
 
     $("a[href *= 'EMBED_ME']").each(function (i, el) {
       var url = $(el).attr("href"),
+        text = $(el).text(),
         at = "allowfullscreen mozallowfullscreen webkitallowfullscreen",
         mw = url.match(/width=(\d+)/),
         mh = url.match(/height=(\d+)/),
         width  = mw ? mw[1] : "99%",
         height = mh ? mh[1] : 250;
 
-      if (! url.match(new RegExp("^https?:\\/\\/(" + AcfyWiki.iframe_re + ")\\/"))) {
+      if (! url.match(new RegExp("^https?:\\/\\/(" + G.iframe_re + ")\\/"))) {
         return;
       }
 
-      $(el).replaceWith("<iframe class='acfy-ifr' width='"
+      if (url.match(/\.(gif|png|jpe?g)/)) {
+        $(el).replaceWith("<img class='acfy-ifr' alt='" + text + "' src='" + url + "' />");
+        return;
+      }
+
+      $(el).replaceWith("<iframe class='acfy-ifr' aria-label='" + text + "' width='"
         + width + "' height='" + height + "' src='" + url + "' " 
         + at +"></iframe>");
     });
