@@ -1,0 +1,1 @@
+../../../js/accessifyhtml5-marklet.js

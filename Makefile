@@ -9,6 +9,9 @@ APP_ID=--application=accessifywiki
 APPSERVER=$(GAE_BASE)google_appengine/dev_appserver.py
 OPTS_SRV=--skip_sdk_update_check=yes --port=8081 --admin_port=8002 app.yaml
 APP_VER=`git rev-parse --short HEAD`
+CFX_SDK=../../../addon-sdk-1.14
+CFX_ACT=cd $(CFX_SDK); source bin/activate
+#MY_DIR=`pwd`
 
 
 # Requires Gettext 0.18.3 or higher.
@@ -51,5 +54,11 @@ i18n-po-convert:
 app-version:
 	@echo $(APP_VER)
 
+cfx-run:
+	# One line - one bash session.
+	$(CFX_ACT); cd -; cd browser/firefox-addon; cfx run
+
+cfx-build:
+	$(CFX_ACT); cd -; cd browser/firefox-addon; cfx xpi
 
 # End.

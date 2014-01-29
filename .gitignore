@@ -6,6 +6,13 @@
 * copy.*
 *.pot
 
+# Firefox add-on.
+*.xpi
+*/firefox-addon/README.*
+*/firefox-addon/doc/*
+#firefox-addon/test
+*/lib/my-script.*
+
 # AppEngine specific?
 /index.yaml
 
