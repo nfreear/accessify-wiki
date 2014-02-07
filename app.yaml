@@ -80,7 +80,8 @@ skip_files:
 - ^(.*/)?.*/RCS/.*
 - ^(.*/)?\..*
 - Makefile
-- ^browser/firefox/.*
+- ^browser/firefox-addon/.*
+- ^browser/opera-w3c-widget/.*
 - ^lib/wiki/.*
 - ^site/py/.*
 - ^translate/.*\.py

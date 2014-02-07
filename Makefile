@@ -37,6 +37,9 @@ cfg-help:
 
 # Was 'app-update'.  version_RE = '^(?:^(?!-)[a-z\d\-]{0,62}[a-z\d]$)$'
 update:
+	$(PYTHON) $(APPCFG) $(OPTS_CFG) $(APP_ID) --version=1 update app.yaml
+
+update-1:
 	$(PYTHON) $(APPCFG) $(OPTS_CFG) $(APP_ID)--1 --version=1 update app.yaml
 
 srv-help:

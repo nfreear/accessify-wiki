@@ -1,1 +1,1 @@
-../../../js/accessifyhtml5-marklet.js
+../../js/accessifyhtml5-marklet.js
