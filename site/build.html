@@ -1,0 +1,116 @@
+<!doctype html><title>*Accessify Wiki compiler (Google Closure)</title>
+
+<style>
+  body { margin: 2em; font: 1em sans-serif; background: #fdfdfd; color: #444; }
+  label{ display: inline-block; width: 9em; vertical-align: top; }
+  input, textarea { font-size: .95em; width: 37em; }
+  button { font-size: 1.1em; padding: 4px; width: 9em; }
+  fieldset { padding: 4px; margin: .8em 0; border: 1px solid #aaa; }
+  p { margin: .3em 0; }
+</style>
+
+<h1>Accessify Wiki compiler</h1>
+
+<form id=acfy-build action="http://closure-compiler.appspot.com/compile" method="POST">
+  <p id=_site_id><label for=site-id >Site ID</label> <input id=site-id
+    value="Fix:Example_fixes" />
+
+  <fieldset>
+  <p><label for=r-cl >Compilation level</label> <input id=r-cl name="compilation_level"
+    data-js-value="SIMPLE_OPTIMIZATIONS" value="WHITESPACE_ONLY">
+  <p><label for=r-of >Output format</label> <input id=r-of name="output_format"
+    data-js-value="json" value="text" />
+  <p><label for=r-oi >Output info</label> <input id=r-oi name="output_info"
+    value="compiled_code" />
+
+  <p><label for=r-fn >File name</label> <input id=r-fn name=output_file_name
+    value="accessifyhtml5-My_Site.min.js" />
+  <p><label for=r-ff >Formatting</label> <input id=r-ff name=formatting
+    value="print_input_delimiter" />
+
+  <p><label for=url-1 >Code URL 1</label> <input id=url-1 name=code_url value=
+    "http://dl.dropbox.com/u/3203144/wai-aria/inpage-header.js" />
+  <p><label for=url-2 >Code URL 2</label> <input id=url-2 name=code_url value=
+    "http://accessifywiki.appspot.com/browser/js/accessifyhtml5.js" />
+  <p><label for=url-fx >Fixes URL</label> <input id=url-fx name=code_url value=
+  "http://accessifywiki.appspot.com/fix?q=Fix:Example_fixes&min=1&callback=__accessify_IPG"
+  />
+
+  <p id=_js_code ><label for=js_code >Javascript code</label>
+  <textarea id=js_code name="js_code" cols="50" rows="5">
+  function __accessify_IPG(fixes) {
+    "use strict";
+
+    var res,
+      pat = /debug/,
+      L = document.location;
+
+    function log(s) {
+      if (typeof console !== "undefined" && (L.search.match(pat) || L.hash.match(pat))) {
+        console.log(arguments.length > 1 ? arguments : s);
+      }
+    }
+
+    log("AccessifyHTML5");
+
+    res = AccessifyHTML5(false, fixes);
+
+    log(res);
+  }
+  </textarea>
+  </fieldset>
+
+  <p><button type=submit >Build</button> <button id=bd >Details</button>
+</form>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+(function () {
+
+  var
+    $form = $("form#acfy-build"),
+    $site_id = $("#site-id"),
+    $code_url_fx = $("#url-fx"),
+    DL = document.location;
+
+  process();
+
+  $("fieldset input, textarea", $form).prop("readonly", "readonly");
+
+  $form.on("submit", function (e) {
+    //e.preventDefault();
+
+    process();
+
+    alert("Submit");
+  });
+
+
+  function process() {
+    var
+      m = DL.search.match(/(q|id)=(Fix:[\w\-_]+)/),
+      site_id = m ? m[2] : $site_id.val(),
+      code_url_fx = $code_url_fx.val().replace("Fix:Example_fixes", site_id);
+
+    $site_id.val(site_id);
+    $code_url_fx.val(code_url_fx);
+
+    console.log("Site ID:", site_id, code_url_fx);
+  }
+
+})();
+</script>
+
+
+
+<pre>
+
+NDF, 28 March 2014.
+
+* http://accessify.wikia.com/wiki/Build_fix_js?q=Fix:Example_fixes
+* https://developers.google.com/closure/compiler/docs/gettingstarted_api
+* https://developers.google.com/closure/compiler/docs/api-ref
+
+</pre>
+
