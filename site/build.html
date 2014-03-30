@@ -1,27 +1,28 @@
-<!doctype html><title>*Accessify Wiki compiler (Google Closure)</title>
+<!doctype html><html lang=en id=acfy-build ><meta charset=utf-8 />
+<title>Accessify Wiki compiler (Google Closure)</title>
 
-<style>
-  body { margin: 2em; font: 1em sans-serif; background: #fdfdfd; color: #444; }
-  label{ display: inline-block; width: 9em; vertical-align: top; }
-  input, textarea { font-size: .95em; width: 37em; }
-  button { font-size: 1.1em; padding: 4px; width: 9em; }
-  fieldset { padding: 4px; margin: .8em 0; border: 1px solid #aaa; }
-  p { margin: .3em 0; }
-</style>
+<link rel=stylesheet href="pix/site.css" />
+
 
 <h1>Accessify Wiki compiler</h1>
 
-<form id=acfy-build action="http://closure-compiler.appspot.com/compile" method="POST">
+<form action="http://closure-compiler.appspot.com/compile" method="POST">
   <p id=_site_id><label for=site-id >Site ID</label> <input id=site-id
     value="Fix:Example_fixes" />
 
-  <fieldset>
-  <p><label for=r-cl >Compilation level</label> <input id=r-cl name="compilation_level"
-    data-js-value="SIMPLE_OPTIMIZATIONS" value="WHITESPACE_ONLY">
+  <p><label for=r-cl >Compilation level</label>
+   <select id=r-cl name="compilation_level">
+     <option value="WHITESPACE_ONLY">Whitespace only (readable)</option>
+     <option value="SIMPLE_OPTIMIZATIONS" selected >Simple optimizations (small)</option>
+   </select>
+
+  <fieldset id=detail >
   <p><label for=r-of >Output format</label> <input id=r-of name="output_format"
-    data-js-value="json" value="text" />
+    value="json" title="'text' or 'json'" />
   <p><label for=r-oi >Output info</label> <input id=r-oi name="output_info"
     value="compiled_code" />
+  <p><label for=r-oi-2 >Output info 2</label> <input id=r-oi-2 name="output_info"
+    value="statistics" />
 
   <p><label for=r-fn >File name</label> <input id=r-fn name=output_file_name
     value="accessifyhtml5-My_Site.min.js" />
@@ -36,7 +37,7 @@
   "http://accessifywiki.appspot.com/fix?q=Fix:Example_fixes&min=1&callback=__accessify_IPG"
   />
 
-  <p id=_js_code ><label for=js_code >Javascript code</label>
+  <p id=_js_code ><label for=js_code >Javascript glue code</label>
   <textarea id=js_code name="js_code" cols="50" rows="5">
   function __accessify_IPG(fixes) {
     "use strict";
@@ -60,7 +61,15 @@
   </textarea>
   </fieldset>
 
-  <p><button type=submit >Build</button> <button id=bd >Details</button>
+  <p><button type=submit >Build</button> <button id=bn-d type=button >Details</button>
+      <span id=status ><!--TODO: --></span>
+
+  <fieldset id=output >
+  <p><label for=op-js >Output Javascript</label> <textarea id=op-js ></textarea>
+  <p><label>Output file</label> <a id=op-url href="#_placeholder_">default.js</a>
+  <p><label>Statistics</label> <span id=op-num ></span>
+  </fieldset>
+  
 </form>
 
 
@@ -69,9 +78,12 @@
 (function () {
 
   var
-    $form = $("form#acfy-build"),
-    $site_id = $("#site-id"),
-    $code_url_fx = $("#url-fx"),
+    $form = $("#acfy-build form"),
+    $site_id = $("#site-id", $form),
+    $code_url_fx = $("#url-fx", $form),
+    $detail = $("#detail", $form),
+    stub = "http://closure-compiler.appspot.com",
+    sh_time = 600, //400;
     DL = document.location;
 
   process();
@@ -79,11 +91,52 @@
   $("fieldset input, textarea", $form).prop("readonly", "readonly");
 
   $form.on("submit", function (e) {
-    //e.preventDefault();
+    e.preventDefault();
 
     process();
 
-    alert("Submit");
+    var
+      data = $form.serialize(),
+      url = $form.attr("action");
+
+    $.ajax({
+      type: "POST",
+      url:  url,
+      data: data,
+      dataType: "json"
+      })
+      .done(function (data, stat, jqXHR) {
+        var st = data.statistics;
+
+        $("#op-js").val(data.compiledCode);
+        $("#op-url")
+          .attr("href", stub + data.outputFilePath)
+          .text($("#r-fn").val());
+        $("#op-num").text("original "+ st.originalSize +
+            " bytes; compressed "+st.compressedSize +" bytes.");
+
+        $("#status").text("Compilation was a success!").addClass("ok");
+        $("#output").show(sh_time);
+        console.log("Success:", jqXHR);
+      })
+      .fail(function (jqXHR, stat, er) {
+        $("#status").text("Compilation errors :(.").addClass("error");
+        console.log("Fail:", stat, er, jqXHR);
+      });
+
+    console.log("POST:", url);
+
+    $detail.hide(sh_time);
+  });
+
+  var show = false;
+  $("#bn-d", $form).on("click", function () {
+    if (show) {
+      $detail.hide(sh_time);
+    } else {
+      $detail.show(sh_time);
+    }
+    show = !show;
   });
 
 
@@ -99,9 +152,16 @@
     console.log("Site ID:", site_id, code_url_fx);
   }
 
+  (function embed_test() {
+    var DL = document.location;
+    if (DL.hash.match(/embed/i) || DL.search.match(/embed/i)) {
+      document.body.className += " embed_me";
+    }
+  })();
+
 })();
 </script>
-
+<script src="js/accessify-analytics.js"></script>
 
 
 <pre>
@@ -114,3 +174,4 @@ NDF, 28 March 2014.
 
 </pre>
 
+</html>

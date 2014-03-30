@@ -27,6 +27,8 @@ help:
 	@echo "		make cfg-help"
 	@echo "		make srv-help"
 	@echo "		make update"
+	@echo "		make update-1"
+	@echo "		make update-all"
 	@echo "		make gettext-userjs"
 	@echo "		make i18n-po-convert"
 	@echo ""
@@ -41,6 +43,8 @@ update:
 
 update-1:
 	$(PYTHON) $(APPCFG) $(OPTS_CFG) $(APP_ID)--1 --version=1 update app.yaml
+
+update-all: update update-1
 
 srv-help:
 	$(PYTHON) $(APPSERVER) --help

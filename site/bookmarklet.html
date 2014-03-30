@@ -1,20 +1,7 @@
-<!doctype html><html lang=en><meta charset=utf-8>
+<!doctype html><html lang=en id=marklet-i18n ><meta charset=utf-8 />
 <title>Accessify Wiki - Localized bookmarklets / customization</title>
 
-<style>
-body{ font:1.05em sans-serif; }
-body.embed_me {
-  margin: 0;
-  background: #363535;
-  color: #e6e5e5; /*body.oasis-dark-theme*/
-}
-.embed_me a {
-  color: #70b8ff;
-  text-decoration: none;
-}
-.embed_me a:hover{ text-decoration:underline; }
-.embed_me h1{ display:none; }
-</style>
+<link rel=stylesheet href="pix/site.css" />
 
 
 <h1>Localized bookmarklets</h1>
@@ -32,8 +19,6 @@ javascript:(function(){AC5U={};var D=document,s=D.createElement("script")/*T*/;s
 (function () {
 
   "use strict";
-
-  embed_test();
 
   var locales = {
       en: 'Not set/ English',
@@ -66,13 +51,12 @@ javascript:(function(){AC5U={};var D=document,s=D.createElement("script")/*T*/;s
   el.html(html);
 
 
-
-  function embed_test() {
+  (function embed_test() {
     var DL = document.location;
     if (DL.hash.match(/embed/i) || DL.search.match(/embed/i)) {
       document.body.className += " embed_me";
     }
-  }
+  })();
 
 }());
 </script>
