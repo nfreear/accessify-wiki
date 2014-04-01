@@ -7,8 +7,10 @@
 <h1>Accessify Wiki compiler</h1>
 
 <form action="http://closure-compiler.appspot.com/compile" method="POST">
+  <p><a id=ret-url href="http://accessify.wikia.com/wiki/">Return to fixes</a>
+
   <p id=_site_id><label for=site-id >Site ID</label> <input id=site-id
-    value="Fix:Example_fixes" />
+    value="Fix:Example_fixes" placeholder="Fix:My_fixes" required pattern="Fix:[\w\-_]+" />
 
   <p><label for=r-cl >Compilation level</label>
    <select id=r-cl name="compilation_level">
@@ -17,18 +19,6 @@
    </select>
 
   <fieldset id=detail >
-  <p><label for=r-of >Output format</label> <input id=r-of name="output_format"
-    value="json" title="'text' or 'json'" />
-  <p><label for=r-oi >Output info</label> <input id=r-oi name="output_info"
-    value="compiled_code" />
-  <p><label for=r-oi-2 >Output info 2</label> <input id=r-oi-2 name="output_info"
-    value="statistics" />
-
-  <p><label for=r-fn >File name</label> <input id=r-fn name=output_file_name
-    value="accessifyhtml5-My_Site.min.js" />
-  <p><label for=r-ff >Formatting</label> <input id=r-ff name=formatting
-    value="print_input_delimiter" />
-
   <p><label for=url-1 >Code URL 1</label> <input id=url-1 name=code_url value=
     "http://dl.dropbox.com/u/3203144/wai-aria/inpage-header.js" />
   <p><label for=url-2 >Code URL 2</label> <input id=url-2 name=code_url value=
@@ -59,6 +49,19 @@
     log(res);
   }
   </textarea>
+
+  <p><label for=r-of >Output format</label> <input id=r-of name="output_format"
+    value="json" title="'text' or 'json'" />
+  <p><label for=r-oi >Output info</label> <input id=r-oi name="output_info"
+    value="compiled_code" />
+  <p><label for=r-oi-2 >Output info 2</label> <input id=r-oi-2 name="output_info"
+    value="statistics" />
+
+  <p><label for=r-fn >File name</label> <input id=r-fn name=output_file_name
+    value="accessifyhtml5-My_Site.min.js" />
+  <p><label for=r-ff >Formatting</label> <input id=r-ff name=formatting
+    value="print_input_delimiter" />
+
   </fieldset>
 
   <p><button type=submit >Build</button> <button id=bn-d type=button >Details</button>
@@ -82,18 +85,20 @@
     $site_id = $("#site-id", $form),
     $code_url_fx = $("#url-fx", $form),
     $detail = $("#detail", $form),
+    $ret_url = $("#ret-url", $form),
+    ret_url = $ret_url.attr("href"),
     stub = "http://closure-compiler.appspot.com",
     sh_time = 600, //400;
     DL = document.location;
 
-  process();
+  parse_params_site_id();
 
   $("fieldset input, textarea", $form).prop("readonly", "readonly");
 
   $form.on("submit", function (e) {
     e.preventDefault();
 
-    process();
+    parse_params_site_id();
 
     var
       data = $form.serialize(),
@@ -117,14 +122,14 @@
 
         $("#status").text("Compilation was a success!").addClass("ok");
         $("#output").show(sh_time);
-        console.log("Success:", jqXHR);
+        log("Success:", jqXHR);
       })
       .fail(function (jqXHR, stat, er) {
         $("#status").text("Compilation errors :(.").addClass("error");
-        console.log("Fail:", stat, er, jqXHR);
+        log("Fail:", stat, er, jqXHR);
       });
 
-    console.log("POST:", url);
+    log("POST:", url);
 
     $detail.hide(sh_time);
   });
@@ -140,16 +145,22 @@
   });
 
 
-  function process() {
+  function parse_params_site_id() {
     var
       m = DL.search.match(/(q|id)=(Fix:[\w\-_]+)/),
       site_id = m ? m[2] : $site_id.val(),
-      code_url_fx = $code_url_fx.val().replace("Fix:Example_fixes", site_id);
+      code_url_fx = $code_url_fx.val().replace(/(Fix:[\w\-_]+)/, site_id);
+
+    if (!site_id) {
+      log("Invalid site ID - not updating");
+      return;
+    }
 
     $site_id.val(site_id);
     $code_url_fx.val(code_url_fx);
+    $ret_url.attr("href", ret_url + site_id);
 
-    console.log("Site ID:", site_id, code_url_fx);
+    log("Site ID:", site_id, code_url_fx);
   }
 
   (function embed_test() {
@@ -160,6 +171,16 @@
   })();
 
 })();
+
+// usage: log('inside coolFunc',this,arguments);
+// http://paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
+window.log = function () {
+  log.history = log.history || [];   // store logs to an array for reference
+  log.history.push(arguments);
+  if (this.console) {
+    console.log( Array.prototype.slice.call(arguments) );
+  }
+};
 </script>
 <script src="js/accessify-analytics.js"></script>
 
