@@ -1,5 +1,5 @@
 <!doctype html><html lang=en id=acfy-build ><meta charset=utf-8 />
-<title>Accessify Wiki compiler (Google Closure)</title>
+<title>Accessify Wiki compiler (Google Closure) &hearts;</title>
 
 <link rel=stylesheet href="pix/site.css" />
 
@@ -10,7 +10,7 @@
   <p><a id=ret-url href="http://accessify.wikia.com/wiki/">Return to fixes</a>
 
   <p id=_site_id><label for=site-id >Site ID</label> <input id=site-id
-    value="Fix:Example_fixes" placeholder="Fix:My_fixes" required pattern="Fix:[\w\-_]+" />
+    placeholder="Fix:My_fixes" required pattern="Fix:[\w\-_]+" />
 
   <p><label for=r-cl >Compilation level</label>
    <select id=r-cl name="compilation_level">
@@ -78,7 +78,7 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
-(function () {
+$(function ($) {
 
   var
     $form = $("#acfy-build form"),
@@ -95,10 +95,14 @@
 
   $("fieldset input, textarea", $form).prop("readonly", "readonly");
 
-  $form.on("submit", function (e) {
-    e.preventDefault();
+  $site_id.on("input", function (ev) {
+    parse_params_site_id(ev);
+  });
 
-    parse_params_site_id();
+  $form.on("submit", function (ev) {
+    ev.preventDefault();
+
+    parse_params_site_id(ev);
 
     var
       data = $form.serialize(),
@@ -145,11 +149,12 @@
   });
 
 
-  function parse_params_site_id() {
+  function parse_params_site_id(ev) {
     var
-      m = DL.search.match(/(q|id)=(Fix:[\w\-_]+)/),
-      site_id = m ? m[2] : $site_id.val(),
-      code_url_fx = $code_url_fx.val().replace(/(Fix:[\w\-_]+)/, site_id);
+      re = /()(Fix:[\w\-_]+)/,
+      m = ev ? $site_id.val().match(re) : DL.search.match(/(q|id)=(Fix:[\w\-_]+)/),
+      site_id = m ? m[2] : false,
+      code_url_fx = $code_url_fx.val().replace(re, site_id);
 
     if (!site_id) {
       log("Invalid site ID - not updating");
@@ -170,11 +175,12 @@
     }
   })();
 
-})();
+});
+
 
 // usage: log('inside coolFunc',this,arguments);
 // http://paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
-window.log = function () {
+function log() {
   log.history = log.history || [];   // store logs to an array for reference
   log.history.push(arguments);
   if (this.console) {
