@@ -4,10 +4,10 @@
 <link rel=stylesheet href="pix/site.css" />
 
 
-<h1>Accessify Wiki compiler</h1>
+<h1 id=hd >Accessify Wiki compiler</h1>
 
-<form action="http://closure-compiler.appspot.com/compile" method="POST">
-  <p><a id=ret-url href="http://accessify.wikia.com/wiki/">Return to fixes</a>
+<form action="http://closure-compiler.appspot.com/compile" method=POST role=form aria-labelledby=hd >
+  <p><a id=ret-url href="http://accessify.wikia.com/wiki/"><span></span>Return to fixes</a>
 
   <p id=_site_id><label for=site-id >Site ID</label> <input id=site-id
     placeholder="Fix:My_fixes" required pattern="Fix:[\w\-_]+" />
@@ -190,6 +190,13 @@ function log() {
 </script>
 <script src="js/accessify-analytics.js"></script>
 
+
+
+<div role=contentinfo >
+<ul>
+<li><a href="http://closure-compiler.appspot.com">Powered by Closure Compiler</a>
+<li><a href="http://accessify.wikia.com">&copy; Accessify Wiki</a>
+</ul>
 
 <pre>
 

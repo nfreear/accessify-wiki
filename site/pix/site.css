@@ -1,7 +1,18 @@
 
+body{
+  font: 1.05em sans-serif;
+  background: #fdfdfd;
+  color: #333;
+  margin: 2em;
+}
+[role=contentinfo] {
+  margin: 3em 0 0; padding: 0; border-top: 1px solid #bbb;
+}
+[role=contentinfo] pre { display:none; }
+
+
 /* Embed styles.
 */
-body{ font:1.05em sans-serif; }
 body.embed_me {
   margin:  0;
   padding: 2px;
@@ -33,7 +44,10 @@ body.embed_me {
   height: 19px; line-height: 20px; margin: 0; padding: 0 10px;
   text-decoration: none; white-space: nowrap; */
 }
-.embed_me h1, .embed_me pre { display:none; }
+.embed_me [role=contentinfo] { display:none; }
+.embed_me h1  {
+  font-size: 1em; margin: 0; position: absolute; top: -999px;
+}
 
 
 /* site/build.html
@@ -42,7 +56,7 @@ body.embed_me {
 label{ display: inline-block; width: 9em; vertical-align: top; }
 input, textarea { font-size: .95em; width: 37em; }
 button { font-size: 1.1em; padding: 4px 0; width: 9em; margin-right: 1em; }
-fieldset { padding: 4px; margin: .8em 0; border: 1px solid #aaa; }
+fieldset { padding: 4px; margin: .8em 0; border: 1px solid #ccc; }
 fieldset p { margin: .3em 0; }
 
 select { font-size: 1.1em; padding: 2px; min-width: 17em; }
@@ -56,6 +70,9 @@ select { font-size: 1.1em; padding: 2px; min-width: 17em; }
   content: "\2190"; /* &larr; http://ikreator.com/special-characters */
 }
 
-#status.ok   { color: #2f2; }
-#status.error{ color: #f22; }
+#status.ok   { color: #0c0; }
+#status.error{ color: #d00; }
+
+.embed_me #status.ok   { color: #2f2; }
+.embed_me #status.error{ color: #f22; }
 
