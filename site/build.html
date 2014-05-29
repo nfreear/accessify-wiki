@@ -1,6 +1,7 @@
 <!doctype html><html lang=en id=acfy-build ><meta charset=utf-8 />
 <title>Accessify Wiki compiler (Google Closure) &hearts;</title>
 
+<base target="_top" />
 <link rel=stylesheet href="pix/site.css" />
 
 
@@ -71,6 +72,7 @@
   <p><label for=op-js >Output Javascript</label> <textarea id=op-js ></textarea>
   <p><label>Output file</label> <a id=op-url href="#_placeholder_">default.js</a>
   <p><label>Statistics</label> <span id=op-num ></span>
+  <p id=pby ><small>Powered by: <a href="http://closure-compiler.appspot.com/">Closure Compiler</a></small>
   </fieldset>
   
 </form>
@@ -89,6 +91,7 @@ $(function ($) {
     ret_url = $ret_url.attr("href"),
     stub = "http://closure-compiler.appspot.com",
     sh_time = 600, //400;
+    site_id,
     DL = document.location;
 
   parse_params_site_id();
@@ -102,16 +105,15 @@ $(function ($) {
   $form.on("submit", function (ev) {
     ev.preventDefault();
 
-    parse_params_site_id(ev);
-
     var
-      data = $form.serialize(),
+      fix_url = parse_params_site_id(ev);
+      form_data = $form.serialize(),
       url = $form.attr("action");
 
     $.ajax({
       type: "POST",
       url:  url,
-      data: data,
+      data: form_data,
       dataType: "json"
       })
       .done(function (data, stat, jqXHR) {
@@ -126,10 +128,19 @@ $(function ($) {
 
         $("#status").text("Compilation was a success!").addClass("ok");
         $("#output").show(sh_time);
+
+        data.stat = "ok";
+        data.site_id = site_id;
+        data.fix_url = fix_url;
+        data.compiler_url = stub;
+        data.compiledCode = "/*removed*/";
+
+        do_post_message(data);
         log("Success:", jqXHR);
       })
       .fail(function (jqXHR, stat, er) {
         $("#status").text("Compilation errors :(.").addClass("error");
+        do_post_message({ stat: "fail", error: er, site_id: site_id });
         log("Fail:", stat, er, jqXHR);
       });
 
@@ -152,9 +163,11 @@ $(function ($) {
   function parse_params_site_id(ev) {
     var
       re = /()(Fix:[\w\-_]+)/,
-      m = ev ? $site_id.val().match(re) : DL.search.match(/(q|id)=(Fix:[\w\-_]+)/),
-      site_id = m ? m[2] : false,
-      code_url_fx = $code_url_fx.val().replace(re, site_id);
+      mid = ev ? $site_id.val().match(re) : DL.search.match(/(q|id)=(Fix:[\w\-_]+)/),
+      code_url_fx;
+
+    site_id = mid ? mid[2] : false;
+    code_url_fx = $code_url_fx.val().replace(re, site_id);
 
     if (!site_id) {
       log("Invalid site ID - not updating");
@@ -166,13 +179,31 @@ $(function ($) {
     $ret_url.attr("href", ret_url + site_id);
 
     log("Site ID:", site_id, code_url_fx);
+    return code_url_fx;
   }
 
-  (function embed_test() {
-    var DL = document.location;
-    if (DL.hash.match(/embed/i) || DL.search.match(/embed/i)) {
-      document.body.className += " embed_me";
+  function do_post_message(data) {
+    var W = window,
+      mo = DL.search.match(/origin=([^&]+)/),
+      origin = mo ? mo[1] : null;
+
+    if (W.location === W.parent.location
+      || typeof W.postMessage === "undefined") {
+      return;
     }
+    W.parent.postMessage("ACFY_BUILD=" + JSON.stringify(data), origin);
+  }
+
+
+  (function embed_test() {
+    var D = document,
+      DL = D.location,
+      match;
+    if (DL.hash.match(/embed/i) || DL.search.match(/embed/i)) {
+      D.body.className += " embed_me ";
+    }
+    match = DL.search.match(/theme=([\w\-]+)/);
+    D.body.className += match && match[1];
   })();
 
 });

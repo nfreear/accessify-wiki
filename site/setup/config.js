@@ -1,7 +1,8 @@
 /**
  * Accessify Wiki site Javascript, v2.
  * Nick Freear, 16 October 2013.
- *
+
+http://accessify.wikia.com/wiki/MediaWiki:Common.js
 http://position-absolute.com/articles/simple-build-script-to-minify-and-concatenate-files-using-node-js
  */
 
@@ -17,7 +18,7 @@ var AcfyWiki = AcfyWiki || {};
     DL = document.location;
 
   G.tools_url = G.tools_url
-      || "https://accessifywiki--1.appspot.com/";
+      || "https://accessifywiki.appspot.com/";  //WAS: '--1'
   G.iframe_re = "[^\\/]+.ac.uk|accessifywiki(--\\d)?.appspot.com"
       + "|[a-z]{2,3}\\d\\.googleusercontent\\.com"
       + "|docs.google.com|www.youtube.com|www.slideshare.net|upload.wikimedia.org";
@@ -25,10 +26,9 @@ var AcfyWiki = AcfyWiki || {};
 
   // Utility functions.
   G.log = function (s) {
-    if (typeof console !== "undefined") {
-      console.log(arguments > 1 ? arguments : s);
-    }
+    window.console && console.log(arguments.length > 1 ? arguments : s);
   };
+
   // Tests.
   G.is_fix_page = function () {
     return DL.href.match(/(title=|\/)Fix(\:|%3A)/);
@@ -53,7 +53,8 @@ var AcfyWiki = AcfyWiki || {};
 
   configs.templates.dev = [
 	"app/templates/dasboard.html",
-	"app/templates/listing.html"
+	"site/bookmarklet.html",
+	"site/build.html"
   ];
   configs.app.dev = [
 	// Dependencies
@@ -65,7 +66,7 @@ var AcfyWiki = AcfyWiki || {};
     //create_fix_widget, bookmarklet_js, iframes.
     "site/js/accessify-widgets.js",
     "site/js/accessify-social.js",
-    "site/js/build-fix.js",
+    //"site/js/build-fix.js", (28 May 2014)
     "site/js/accessify-analytics.js"
   ];
 
@@ -78,7 +79,7 @@ var AcfyWiki = AcfyWiki || {};
 
   }*/
 
-  G.log(configs);
+  G.log("config.js", configs, G);
 
   cfg = configs.app[configs.env];
   //AcfyWiki.log(cfg);

@@ -52,10 +52,14 @@ javascript:(function(){AC5U={};var D=document,s=D.createElement("script")/*T*/;s
 
 
   (function embed_test() {
-    var DL = document.location;
+    var D = document,
+      DL = D.location,
+      match;
     if (DL.hash.match(/embed/i) || DL.search.match(/embed/i)) {
-      document.body.className += " embed_me";
+      D.body.className += " embed_me ";
     }
+    match = DL.search.match(/theme=([\w\-]+)/);
+    D.body.className += match && match[1];
   })();
 
 }());

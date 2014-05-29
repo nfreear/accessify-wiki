@@ -1,3 +1,6 @@
+/*!
+  Styles for bookmarklet.html and build.html embeds.
+*/
 
 body{
   font: 1.05em sans-serif;
@@ -16,13 +19,16 @@ body{
 body.embed_me {
   margin:  0;
   padding: 2px;
-  background: #363535;
-  color: #e6e5e5; /*body.oasis-dark-theme*/
 }
-.embed_me a {
+body.oasis-dark-theme {
+  background: #363535;
+  color: #e6e5e5;
+}
+.oasis-dark-theme.embed_me a {
   color: #70b8ff;
   text-decoration: none;
 }
+.embed_me ul { margin: .5em 0; }
 .embed_me a:hover{ text-decoration:underline; }
 .embed_me input, .embed_me textarea, .embed_me select {
   background: #f9f9f9; border-radius: 3px;
@@ -50,16 +56,22 @@ body.embed_me {
 }
 
 
+/* site/bookmarklet.html
+*/
+#bookmarklets li { line-height: 1.7em; }
+
+
 /* site/build.html
 */
 ._body { margin: 2em; font: 1em sans-serif; background: #fdfdfd; color: #444; }
-label{ display: inline-block; width: 9em; vertical-align: top; }
-input, textarea { font-size: .95em; width: 37em; }
+label{ display: inline-block; width: 8.5em; vertical-align: top; }
+input, textarea { font-size: .95em; width: 32.5em; }
+input#site-id { font-size: 1.05em; width: 30em; padding: 3px; }
 button { font-size: 1.1em; padding: 4px 0; width: 9em; margin-right: 1em; }
 fieldset { padding: 4px; margin: .8em 0; border: 1px solid #ccc; }
 fieldset p { margin: .3em 0; }
 
-select { font-size: 1.1em; padding: 2px; min-width: 17em; }
+select { font-size: 1.05em; padding: 2px; min-width: 17em; }
 #acfy-build fieldset { display: none; x-height: 1px; x-overflow: hidden; }
 #acfy-build fieldset.show { height: auto; transition: all 2s; }
 #output textarea { min-height: 10em; }

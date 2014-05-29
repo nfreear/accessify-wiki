@@ -1,3 +1,6 @@
+/*!
+  Fix form-input widget, bookmarklets, iframe-embeds.
+*/
 
 var AcfyWiki = AcfyWiki || {};
 
@@ -95,7 +98,7 @@ var AcfyWiki = AcfyWiki || {};
 	}
 	else {
 	  // Warning.
-	  console.log(">> Dev bookmarklet: Warning: url and glob either missing or invalid.");
+	  G.log(">> Dev bookmarklet: Warning: url and glob either missing or invalid.");
 	  el.hide();
 	}
 
@@ -148,9 +151,14 @@ var AcfyWiki = AcfyWiki || {};
       var url = $(el).attr("href"),
         text = $(el).text(),
         at = "allowfullscreen mozallowfullscreen webkitallowfullscreen",
+        mid = DL.search.match(/q=(Fix[^&]+)/),  /* /q=(Fix:[\w\-_]+)/) */
+        mq = url.match(/q=(Fix[^&]+)/),
+        site_id = mid ? mid[1] : (mq ? mq[1] : ""),
+        mth = $("body").attr("class").match(/(oasis-dark-theme)/),
+        theme = mth ? mth[1] : "",
         mw = url.match(/width=(\d+)/),
         mh = url.match(/height=(\d+)/),
-        width  = mw ? mw[1] : "99%",
+        width  = mw ? mw[1] : "99.5%",
         height = mh ? mh[1] : 250;
 
       if (! url.match(new RegExp("^https?:\\/\\/(" + G.iframe_re + ")\\/"))) {
@@ -161,6 +169,8 @@ var AcfyWiki = AcfyWiki || {};
         $(el).replaceWith("<img class='acfy-ifr' alt='" + text + "' src='" + url + "' />");
         return;
       }
+
+      url += "&theme=" + theme + "&q=" + site_id;
 
       $(el).replaceWith("<iframe class='acfy-ifr' aria-label='" + text + "' width='"
         + width + "' height='" + height + "' src='" + url + "' " 
