@@ -3,7 +3,8 @@
 # Environment: Mac OS X.
 PYTHON=/usr/local/bin/python2.7
 GAE_BASE=/Applications/Utilities/GoogleAppEngineLauncher.app/Contents/Resources/GoogleAppEngine-default.bundle/Contents/Resources/
-APPCFG=$(GAE_BASE)google_appengine/appcfg.py
+APPCFG=/usr/local/bin/appcfg.py
+#APPCFG=$(GAE_BASE)google_appengine/appcfg.py
 OPTS_CFG=--no_cookies --email=n.d.freear@gmail.com --passin --verbose
 APP_ID=--application=accessifywiki
 APPSERVER=$(GAE_BASE)google_appengine/dev_appserver.py

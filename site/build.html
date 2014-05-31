@@ -30,24 +30,31 @@
 
   <p id=_js_code ><label for=js_code >Javascript glue code</label>
   <textarea id=js_code name="js_code" cols="50" rows="5">
+  AC5U = window.AC5U || {};
+
   function __accessify_IPG(fixes) {
+
     "use strict";
 
-    var res,
+    var G = AC5U,
+      L = document.location,
       pat = /debug/,
-      L = document.location;
+      debug = G.debug || L.search.match(pat) || L.hash.match(pat);
 
     function log(s) {
-      if (typeof console !== "undefined" && (L.search.match(pat) || L.hash.match(pat))) {
+      window.console && debug &&
         console.log(arguments.length > 1 ? arguments : s);
-      }
     }
 
-    log("AccessifyHTML5");
+    if (G.result) {
+      return log("AccessifyHTML5: already run");
+    }
 
-    res = AccessifyHTML5(false, fixes);
+    log("AccessifyHTML5: run");
 
-    log(res);
+    G.result = AccessifyHTML5(false, fixes);
+
+    log(G.result);
   }
   </textarea>
 
